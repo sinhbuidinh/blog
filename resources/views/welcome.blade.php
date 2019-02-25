@@ -64,6 +64,10 @@
         </style>
     </head>
     <body>
+        @php
+            var_dump(config('division.master'));
+            exit;
+        @endphp
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">

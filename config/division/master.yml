@@ -1,0 +1,9 @@
+not_specified: 0
+
+http_status:
+  code:
+    ok: 200
+    moved_permanently: 301
+  name:
+    ok: OK
+    moved_permanently: Moved Permanently

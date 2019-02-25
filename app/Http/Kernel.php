@@ -77,4 +77,10 @@ class Kernel extends HttpKernel
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
     ];
+
+    protected function bootstrappers()
+    {
+        $this->bootstrappers[] = 'Devitek\Core\Config\LoadYamlConfiguration';
+        return $this->bootstrappers;
+    }
 }
