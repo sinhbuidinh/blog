@@ -46,6 +46,9 @@ class Customer extends BaseModel
             case 'company':
                  $query->orderByCompany();
                 break;
+            case 'birthday':
+                 $query->orderByBirthday();
+                break;
             default:
                 break;
         }
@@ -59,6 +62,14 @@ class Customer extends BaseModel
     public function scopeOrderByCompany($query)
     {
         $query->orderBySub(Company::select('name')->whereRaw('customers.company_id = companies.id'));
+    }
+
+    /**
+     * Order by (month & day) DESC not care about year
+     */
+    public function scopeOrderByBirthday($query)
+    {
+        $query->orderbyRaw("DATE_FORMAT(birth_date, 'MMDD')");
     }
 
     public function scopeWithLastInteractionDate($query)

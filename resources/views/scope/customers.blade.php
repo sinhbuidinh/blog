@@ -23,7 +23,7 @@
         @endphp
         <th><a class="{{ $order_field === 'name' ? 'text-dark' : '' }}" href="{{ route('customers', ['order' => 'name'] + $route_param) }}">Name</a></th>
         <th><a class="{{ $order_field === 'company' ? 'text-dark' : '' }}" href="{{ route('customers', ['order' => 'company'] + $route_param) }}">Company</a></th>
-        <th>Birthday</th>
+        <th><a class="{{ $order_field === 'birthday' ? 'text-dark' : '' }}" href="{{ route('customers', ['order' => 'birthday'] + $route_param) }}">Birthday</a></th>
         <th>Last Interaction</th>
     </tr>
     @foreach ($customers as $customer)
