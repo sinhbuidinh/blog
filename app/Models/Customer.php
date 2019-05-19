@@ -8,7 +8,6 @@ class Customer extends BaseModel
 {
     protected $casts = [
         'birth_date' => 'date',
-        'last_interaction_date' => 'datetime',
     ];
 
     public function company()
@@ -19,6 +18,23 @@ class Customer extends BaseModel
     public function interactions()
     {
         return $this->hasMany(Interaction::class);
+    }
+
+    public function lastInteraction()
+    {
+        return $this->hasOne(Interaction::class, 'id', 'last_interaction_id');
+    }
+
+    /**
+     * Load latest interaction.id by sub_select
+     * Then eager_loading interaction by interaction.id above
+     */
+    public function scopeWithLastInteraction($query)
+    {
+        $query->addSubSelect('last_interaction_id', Interaction::select('id')
+            ->whereRaw('customer_id = customers.id')
+            ->latest()
+        )->with('lastInteraction');
     }
 
     public function scopeOrderByName($query)
