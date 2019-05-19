@@ -10,11 +10,16 @@ class CustomersController extends Controller
 {
     public function index(Request $request)
     {
+        //don't have order => default order by name
+        $order_field = $request->get('order');
         $customers = Customer::with('company')
             ->withLastInteraction()
-            ->orderByName()
+            ->orderByField($order_field)
             ->paginate();
 
-        return view('scope.customers', ['customers' => $customers]);
+        return view('scope.customers', [
+            'customers' => $customers,
+            'order_field' => $order_field
+        ]);
     }
 }

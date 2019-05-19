@@ -37,9 +37,28 @@ class Customer extends BaseModel
         )->with('lastInteraction');
     }
 
+    public function scopeOrderByField($query, $field)
+    {
+        switch ($field) {
+            case 'name':
+                 $query->orderByName();
+                break;
+            case 'company':
+                 $query->orderByCompany();
+                break;
+            default:
+                break;
+        }
+    }
+
     public function scopeOrderByName($query)
     {
         $query->orderBy('last_name')->orderBy('first_name');
+    }
+
+    public function scopeOrderByCompany($query)
+    {
+        $query->join('companies', 'companies.id', '=', 'customers.company_id')->orderBy('companies.name');
     }
 
     public function scopeWithLastInteractionDate($query)
