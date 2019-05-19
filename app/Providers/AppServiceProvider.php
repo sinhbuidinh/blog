@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
             }
              return $this->selectSub($query->limit(1)->getQuery(), $column);
         });
+
+        Builder::macro('orderBySub', function ($query, $direction = 'asc') {
+            return $this->orderByRaw("({$query->limit(1)->toSql()}) {$direction}");
+        });
     }
 
     /**
