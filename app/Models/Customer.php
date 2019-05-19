@@ -49,6 +49,9 @@ class Customer extends BaseModel
             case 'birthday':
                  $query->orderByBirthday();
                 break;
+            case 'last_interaction':
+                 $query->orderByLastInteractionDate();
+                break;
             default:
                 break;
         }
@@ -70,6 +73,11 @@ class Customer extends BaseModel
     public function scopeOrderByBirthday($query)
     {
         $query->orderbyRaw("DATE_FORMAT(birth_date, 'MMDD')");
+    }
+
+    public function scopeOrderByLastInteractionDate($query)
+    {
+        $query->orderBySub(Interaction::select('created_at')->whereRaw('customers.id = interactions.customer_id')->latest(), 'desc');
     }
 
     public function scopeWithLastInteractionDate($query)
