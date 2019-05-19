@@ -64,10 +64,6 @@
         </style>
     </head>
     <body>
-        @php
-            var_dump(config('division.master'));
-            exit;
-        @endphp
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
@@ -97,6 +93,11 @@
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
             </div>
+        </div>
+        <div class="test-devitek-yml">
+            @php
+                dd(config('division.master'));
+            @endphp
         </div>
     </body>
 </html>
