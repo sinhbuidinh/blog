@@ -34,6 +34,14 @@ class Customer extends BaseModel
         );
     }
 
+    public function scopeWithLastInteractionType($query)
+    {
+        $query->addSubSelect('last_interaction_type', Interaction::select('type')
+            ->whereRaw('customer_id = customers.id')
+            ->latest()
+        );
+    }
+
     public function getCompanyNameAttribute()
     {
         return data_get($this->company, 'name');
