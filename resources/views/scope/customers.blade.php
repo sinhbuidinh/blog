@@ -28,7 +28,7 @@
             <td><a>{{ $customer->last_name }}, {{ $customer->first_name }}</a></td>
             <td>{{ $customer->companyName }}</td>
             <td>{{ $customer->birth_date->format('F j') }}</td>
-            <td>{{ $customer->interactions()->latest()->first()->created_at->diffForHumans() }}</td>
+            <td>{{ $customer->last_interaction_date->diffForHumans() }}</td>
         </tr>
     @endforeach
 </table>
