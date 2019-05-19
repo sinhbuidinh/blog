@@ -10,7 +10,9 @@ class CustomersController extends Controller
 {
     public function index(Request $request)
     {
-        $customers = Customer::with('company')->orderByName()->paginate();
+        $customers = Customer::with('company', 'interactions')
+            ->orderByName()
+            ->paginate();
 
         return view('scope.customers', ['customers' => $customers]);
     }

@@ -18,15 +18,17 @@
 
 <table class="table my-4">
     <tr>
-        <th><a>Name</a></th>
-        <th><a>Company</a></th>
-        <th><a>Birthday</a></th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Birthday</th>
+        <th>Last Interaction</th>
     </tr>
     @foreach ($customers as $customer)
         <tr>
             <td><a>{{ $customer->last_name }}, {{ $customer->first_name }}</a></td>
             <td>{{ $customer->companyName }}</td>
             <td>{{ $customer->birth_date->format('F j') }}</td>
+            <td>{{ $customer->interactions->sortByDesc('created_at')->first()->created_at->diffForHumans() }}</td>
         </tr>
     @endforeach
 </table>
