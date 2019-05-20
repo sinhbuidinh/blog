@@ -72,7 +72,7 @@ class Customer extends BaseModel
      */
     public function scopeOrderByBirthday($query)
     {
-        $query->orderbyRaw("DATE_FORMAT(birth_date, 'MMDD')");
+        $query->orderbyRaw("DATE_FORMAT(birth_date, '%m%d')");
     }
 
     public function scopeOrderByLastInteractionDate($query)
@@ -88,6 +88,19 @@ class Customer extends BaseModel
         );
     }
 
+    /**
+     * Include search and filter by input
+     */
+    public function scopeWhereFilters($query, array $filters)
+    {
+        $filters = collect($filters);
+        $query->when($filters->get('search'), function ($query, $search) {
+            $query->whereSearch($search);
+        })->when($filters->get('filter') === 'birthday_this_week', function ($query, $filter) {
+            $query->whereBirthdayThisWeek();
+        });
+    }
+
     public function scopeWhereSearch($query, $search)
     {
         foreach (explode(' ', $search) as $term) {
@@ -99,6 +112,25 @@ class Customer extends BaseModel
                    });
             });
         }
+    }
+
+    /**
+     * Get begin date & end date of week
+     * From 2 Carbon date above create list array date format md
+     *  [from begin->end]
+     * Apply array in query search with customer.birth_date
+     */
+    public function scopeWhereBirthdayThisWeek($query)
+    {
+        $start = Carbon::now()->startOfWeek();
+        $end = Carbon::now()->endOfWeek();
+        $date_range = new \DatePeriod($start, new \DateInterval('P1D'), $end);
+        //format from DatePeriod to collection
+        $dates = collect($date_range)->map(function ($date) {
+            return $date->format('md');
+        });
+        return $query->whereNotNull('birth_date')
+            ->whereIn(\DB::raw("DATE_FORMAT(birth_date, '%m%d')"), $dates);
     }
 
     public function scopeWithLastInteractionType($query)

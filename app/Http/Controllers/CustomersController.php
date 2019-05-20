@@ -12,17 +12,15 @@ class CustomersController extends Controller
     {
         //don't have order => default order by name
         $order_field = $request->get('order');
-        $search = $request->get('search');
         $customers = Customer::with('company')
             ->withLastInteraction()
-            ->whereSearch($search)
+            ->whereFilters($request->only(['search', 'filter']))
             ->orderByField($order_field)
             ->paginate();
 
         return view('scope.customers', [
             'customers' => $customers,
             'order_field' => $order_field,
-            'search' => $search
         ]);
     }
 }
