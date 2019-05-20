@@ -6,11 +6,8 @@
 
 <form class="input-group my-4" action="{{ route('customers') }}" method="get">
     <input type="hidden" name="order" value="{{ request('order') }}">
-    <input type="text" class="w-50 form-control" placeholder="Search..." name="search" value="{{ request('search') }}">
-    <select name="filter" class="custom-select">
-        <option value="">Filters...</option>
-        <option value="birthday_this_week" {{ request('filter') === 'birthday_this_week' ? 'selected' : '' }}>Birthday this week</option>
-    </select>
+    <input type="text" class="w-50 form-control" placeholder="Search..." 
+        name="search" value="{{ $search }}">
     <div class="input-group-append">
         <button class="btn btn-primary" type="submit">Search</button>
     </div>
