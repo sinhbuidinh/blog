@@ -12,4 +12,21 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+   .js('resources/js/jquery-1.11.3.min.js', 'public/js')
+   .js('resources/js/base/jquery-3.2.1.min.js', 'public/js')
+   .js('resources/js/base/jquery-migrate-3.0.0.js', 'public/js')
+   .js('resources/js/base/bootstrap.min.js', 'public/js')
+   .js('resources/js/base/owl.carousel.min.js', 'public/js')
+   .js('resources/js/base/jquery.waypoints.min.js', 'public/js')
+   .js('resources/js/base/jquery.stellar.min.js', 'public/js')
+   .js('resources/js/base/main.js', 'public/js')
+   .copy("resources/images/", "public/images/")
+   .sass('resources/sass/fonts_api_josefin-sans-300-400-700.scss', 'public/css')
+   .sass('resources/sass/base/style.scss', 'public/css')
+   .sass('resources/sass/base/bootstrap.scss', 'public/css')
+   .sass('resources/sass/base/animate.scss', 'public/css')
+   .sass('resources/sass/base/owl.carousel.min.scss', 'public/css')
+   .sass('resources/fonts/ionicons/css/ionicons.min.scss', 'public/fonts/ionicons')
+   .sass('resources/fonts/fontawesome/css/font-awesome.min.scss', 'public/fonts/fontawesome')
+   .sass('resources/fonts/flaticon/font/flaticon.scss', 'public/fonts/flaticon')
    .sass('resources/sass/app.scss', 'public/css');
