@@ -3,9 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-9 social">
-                    <a href="https://twitter.com/sinhbuidinh"><span class="fa fa-twitter"></span></a>
-                    <a href="https://www.facebook.com/bluestart9d"><span class="fa fa-facebook"></span></a>
-                    <a href="https://www.youtube.com/channel/UCA3QxFbaBpFryZpAhsBjiQQ"><span class="fa fa-youtube-play"></span></a>
+                    @include('user.layouts.social')
                 </div>
                 <div class="col-3 search-top">
                     <form action="#search" class="search-top-form">
@@ -46,14 +44,14 @@
                         <a class="nav-link {{ isActiveClass('user.contact') }}" href="{{ route('user.contact') }}">Contact</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {{ isActiveClass('user.category') }}" id="dropdown05"
+                        @php
+                            $active_category = ('/'.request()->path() == route('user.category', ['type' => $type ?? ''], false)) ? ' active' : '';
+                        @endphp
+                        <a class="nav-link dropdown-toggle{{ $active_category }}" id="dropdown05"
                             data-toggle="dropdown" aria-haspopup="true"
                             href="#categories" aria-expanded="false">Categories</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown05">
-                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'code']) }}" href="{{ route('user.category', ['type' => 'code']) }}">Coding</a>
-                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'food']) }}" href="{{ route('user.category', ['type' => 'food']) }}">Food</a>
-                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'travel']) }}" href="{{ route('user.category', ['type' => 'travel']) }}">Travel</a>
-                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'life']) }}" href="{{ route('user.category', ['type' => 'life']) }}">Lifestyle</a>
+                            @include('user.layouts.categories', ['is_menu' => true])
                         </div>
                     </li>
                 </ul>

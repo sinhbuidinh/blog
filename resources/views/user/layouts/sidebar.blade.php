@@ -10,24 +10,16 @@
     <!-- END sidebar-box -->
     <div class="sidebar-box">
         <div class="bio text-center">
-            <img src="{{ asset('images/person_1.jpg') }}" alt="Image Placeholder" class="img-fluid">
+            <img src="{{ asset('images/my_photo.jpg') }}" alt="Image Placeholder" class="img-fluid">
             <div class="bio-body">
-                <h2>Meagan Smith</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.</p>
+                <h2>Bùi Đình Sinh</h2>
+                <p>Yêu thể thao, thích chơi game, đam mê hồng, yêu tím thủy chung và ghét sự giả dối. Làm hết sức, chơi hết mình, ai hết hồn ráng chịu.</p>
                 <p>
-                    <a href="#" 
+                    <a href="https://www.linkedin.com/in/sinhbui/" 
                         class="btn btn-primary btn-sm">Read my bio</a>
                 </p>
                 <p class="social">
-                    <a href="#" class="p-2">
-                        <span class="fa fa-facebook"></span>
-                    </a>
-                    <a href="#" class="p-2">
-                        <span class="fa fa-twitter"></span>
-                    </a>
-                    <a href="#" class="p-2">
-                        <span class="fa fa-youtube-play"></span>
-                    </a>
+                    @include('user.layouts.social')
                 </p>
             </div>
         </div>
@@ -36,11 +28,34 @@
     <div class="sidebar-box">
         @include('user.layouts.post.popular', [
             'populars' => [
-                '1',
-                '2',
-                '3',
-                '4',
-                '5',
+                [
+                    'id' => 1,
+                    'image_name' => 'img_1.jpg',
+                    'title' => 'Travel with me',
+                    'date_from' => 'March 15, 2018',
+                    'comments' => '2',
+                ],
+                [
+                    'id' => 2,
+                    'image_name' => 'img_2.jpg',
+                    'title' => 'How to enjoy work',
+                    'date_from' => 'April 2, 2018',
+                    'comments' => '3',
+                ],
+                [
+                    'id' => 3,
+                    'image_name' => 'img_3.jpg',
+                    'title' => 'How to enjoy life',
+                    'date_from' => 'Jan 4, 2018',
+                    'comments' => '4',
+                ],
+                [
+                    'id' => 4,
+                    'image_name' => 'img_4.jpg',
+                    'title' => 'How to enjoy cooking',
+                    'date_from' => 'July 5, 2018',
+                    'comments' => '11',
+                ],
             ]
         ])
     </div>
@@ -48,13 +63,13 @@
 
     <!-- START categories -->
     <div class="sidebar-box">
-        @include('user.layouts.categories')
+        @include('user.layouts.categories', ['is_sidebar' => true])
     </div>
     <!-- END categories -->
 
     <!-- START tags -->
     <div class="sidebar-box">
-        @include('user.layouts.tags')
+        @include('user.layouts.categories', ['is_tag' => true])
     </div>
     <!-- END tags -->
 </div>

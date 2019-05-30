@@ -18,72 +18,84 @@ Category Page
                         @php
                             $category_posts = [
                                 [
+                                    'id' => '5',
                                     'image_name' => 'img_4.jpg',
                                     'category_name' => 'Food',
                                     'date_from' => 'March 15, 2018',
                                     'comments' => '3',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '6',
                                     'image_name' => 'img_5.jpg',
                                     'category_name' => 'Lifestyle',
                                     'date_from' => 'March 15, 2018',
                                     'comments' => '4',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '7',
                                     'image_name' => 'img_6.jpg',
                                     'category_name' => 'Travel',
                                     'date_from' => 'March 15, 2018',
                                     'comments' => '6',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '8',
                                     'image_name' => 'img_7.jpg',
                                     'category_name' => 'Food',
                                     'date_from' => 'March 12, 2018',
                                     'comments' => '5',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '9',
                                     'image_name' => 'img_8.jpg',
                                     'category_name' => 'Lifestyle',
                                     'date_from' => 'Jun 12, 2018',
                                     'comments' => '9',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '11',
                                     'image_name' => 'img_9.jpg',
                                     'category_name' => 'Travel',
                                     'date_from' => 'July 12, 2018',
                                     'comments' => '1',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '10',
                                     'image_name' => 'img_10.jpg',
                                     'category_name' => 'Travel',
                                     'date_from' => 'Jan 23, 2018',
                                     'comments' => '11',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '12',
                                     'image_name' => 'img_11.jpg',
                                     'category_name' => 'Lifestyle',
                                     'date_from' => 'Jan 23, 2018',
                                     'comments' => '8',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                                 [
+                                    'id' => '13',
                                     'image_name' => 'img_12.jpg',
                                     'category_name' => 'Food',
                                     'date_from' => 'Jan 6, 2018',
                                     'comments' => '6',
-                                    'detail' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+                                    'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
                                 ],
                             ];
                         @endphp
                         @foreach($category_posts as $info)
-                            @include('user.layouts.post.short_detail', $info)
+                            @include('user.layouts.post.intro', [
+                                'big_intro' => true,
+                                'item' => $info
+                            ])
                         @endforeach
                     </div>
                 </div>

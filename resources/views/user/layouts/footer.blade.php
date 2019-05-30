@@ -71,9 +71,9 @@
                         <div class="mb-5">
                             <h3>Social</h3>
                             <ul class="list-unstyled footer-social">
-                                <li><a href="#"><span class="fa fa-twitter"></span> Twitter</a></li>
-                                <li><a href="#"><span class="fa fa-facebook"></span> Facebook</a></li>
-                                <li><a href="#"><span class="fa fa-youtube-play"></span> Youtube</a></li>
+                                @include('user.layouts.social', [
+                                    'have_li' => true,
+                                ])
                             </ul>
                         </div>
                     </div>
