@@ -25,7 +25,9 @@
     <!-- END header -->
 
     <!-- START section -->
-    @include('user.layouts.slider')
+    @include('user.layouts.slider', [
+        'have_suggest' => isset($have_suggest) ? $have_suggest : true
+    ])
     <!-- END section -->
 
     @yield('content')

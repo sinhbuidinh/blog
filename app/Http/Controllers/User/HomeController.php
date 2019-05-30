@@ -19,7 +19,8 @@ class HomeController extends Controller
 
     public function contact(Request $request)
     {
-        return view('user.home.contact');
+        $have_suggest = false;
+        return view('user.home.contact', compact('have_suggest'));
     }
 
     public function category(Request $request)

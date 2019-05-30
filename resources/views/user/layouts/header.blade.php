@@ -27,7 +27,7 @@
                     aria-expanded="false" aria-controls="navbarMenu">
                     <span class="burger-lines"></span>
                 </a>
-                <h1 class="site-logo"><a href="{{ route('user.index') }}">Balita</a></h1>
+                <h1 class="site-logo"><a href="{{ route('user.index') }}">SINH</a></h1>
             </div>
         </div>
     </div>
@@ -37,23 +37,23 @@
             <div class="collapse navbar-collapse" id="navbarMenu">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('user.index') }}">Home</a>
+                        <a class="nav-link {{ isActiveClass('user.index') }}" href="{{ route('user.index') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.about') }}">About</a>
+                        <a class="nav-link {{ isActiveClass('user.about') }}" href="{{ route('user.about') }}">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.contact') }}">Contact</a>
+                        <a class="nav-link {{ isActiveClass('user.contact') }}" href="{{ route('user.contact') }}">Contact</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="dropdown05"
+                        <a class="nav-link dropdown-toggle {{ isActiveClass('user.category') }}" id="dropdown05"
                             data-toggle="dropdown" aria-haspopup="true"
                             href="#categories" aria-expanded="false">Categories</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown05">
-                            <a class="dropdown-item" href="{{ route('user.category') }}#code">Coding</a>
-                            <a class="dropdown-item" href="{{ route('user.category') }}#food">Food</a>
-                            <a class="dropdown-item" href="{{ route('user.category') }}#travel">Travel</a>
-                            <a class="dropdown-item" href="{{ route('user.category') }}#life">Lifestyle</a>
+                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'code']) }}" href="{{ route('user.category', ['type' => 'code']) }}">Coding</a>
+                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'food']) }}" href="{{ route('user.category', ['type' => 'food']) }}">Food</a>
+                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'travel']) }}" href="{{ route('user.category', ['type' => 'travel']) }}">Travel</a>
+                            <a class="dropdown-item {{ isActiveClass('user.category', ['type' => 'life']) }}" href="{{ route('user.category', ['type' => 'life']) }}">Lifestyle</a>
                         </div>
                     </li>
                 </ul>

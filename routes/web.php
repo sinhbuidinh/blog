@@ -21,7 +21,7 @@ Route::prefix('user')->namespace('User')->group(function(){
     Route::get('/', 'HomeController@index')->name('user.index');
     Route::get('/contact', 'HomeController@contact')->name('user.contact');
     Route::get('/about', 'HomeController@about')->name('user.about');
-    Route::get('/category', 'HomeController@category')->name('user.category');
+    Route::get('/category/{type?}', 'HomeController@category')->name('user.category');
     Route::get('/blog', 'HomeController@blog')->name('user.blog');
 });
 
