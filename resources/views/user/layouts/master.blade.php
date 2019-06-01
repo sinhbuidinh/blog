@@ -24,11 +24,13 @@
     @include('user.layouts.header')
     <!-- END header -->
 
+    @if(!isset($without_slider))
     <!-- START section -->
     @include('user.layouts.slider', [
         'have_suggest' => isset($have_suggest) ? $have_suggest : true
     ])
     <!-- END section -->
+    @endif
 
     @yield('content')
 

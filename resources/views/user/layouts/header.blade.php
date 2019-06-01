@@ -30,7 +30,10 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-md  navbar-light bg-light">
+    @php
+        $nav_bt = isset($without_slider) ? ' none-bt' : '';
+    @endphp
+    <nav class="navbar navbar-expand-md navbar-light bg-light{{ $nav_bt }}">
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarMenu">
                 <ul class="navbar-nav mx-auto">

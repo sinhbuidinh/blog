@@ -10,10 +10,10 @@
     <!-- END sidebar-box -->
     <div class="sidebar-box">
         <div class="bio text-center">
-            <img src="{{ asset('images/my_photo.jpg') }}" alt="Image Placeholder" class="img-fluid">
+            <img src="{{ asset('images/my_photo.jpg') }}" 
+                alt="sinh's cover" class="img-fluid">
             <div class="bio-body">
-                <h2>Bùi Đình Sinh</h2>
-                <p>Yêu thể thao, thích chơi game, đam mê hồng, yêu tím thủy chung và ghét sự giả dối. Làm hết sức, chơi hết mình, ai hết hồn ráng chịu.</p>
+                @include('user.layouts.selfinfo')
                 <p>
                     <a href="https://www.linkedin.com/in/sinhbui/" 
                         class="btn btn-primary btn-sm">Read my bio</a>

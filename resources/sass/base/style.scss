@@ -50,6 +50,10 @@ header .navbar {
   background: transparent !important;
 }
 
+header > .navbar.none-bt > .container {
+  border-bottom: 0;
+}
+
 @media (max-width: 767.98px) {
   header .navbar {
     background: #e6e6e6 !important;

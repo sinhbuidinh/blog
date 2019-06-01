@@ -50,7 +50,9 @@ class HomeController extends Controller
     public function about(Request $request)
     {
         $categories = $this->getCategories();
-        return view('user.home.about', compact('categories'));
+        $without_slider = true;
+        $without_sidebar = true;
+        return view('user.home.about', compact('categories', 'without_slider', 'without_sidebar'));
     }
 
     public function contact(Request $request)
