@@ -66,10 +66,4 @@
         @include('user.layouts.categories', ['is_sidebar' => true])
     </div>
     <!-- END categories -->
-
-    <!-- START tags -->
-    <div class="sidebar-box">
-        @include('user.layouts.categories', ['is_tag' => true])
-    </div>
-    <!-- END tags -->
 </div>
