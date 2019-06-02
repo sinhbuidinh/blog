@@ -37,26 +37,7 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarMenu">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ isActiveClass('user.index') }}" href="{{ route('user.index') }}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ isActiveClass('user.about') }}" href="{{ route('user.about') }}">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ isActiveClass('user.contact') }}" href="{{ route('user.contact') }}">Contact</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        @php
-                            $active_category = ('/'.request()->path() == route('user.category', ['type' => $type ?? ''], false)) ? ' active' : '';
-                        @endphp
-                        <a class="nav-link dropdown-toggle{{ $active_category }}" id="dropdown05"
-                            data-toggle="dropdown" aria-haspopup="true"
-                            href="#categories" aria-expanded="false">Categories</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown05">
-                            @include('user.layouts.categories', ['is_menu' => true])
-                        </div>
-                    </li>
+                    @include('user.layouts.menu')
                 </ul>
             </div>
         </div>

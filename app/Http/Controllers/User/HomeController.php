@@ -44,7 +44,8 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $categories = $this->getCategories();
-        return view('user.home.index', compact('categories'));
+        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
+        return view('user.home.index', compact('categories', 'footer_latest'));
     }
 
     public function about(Request $request)
@@ -52,25 +53,100 @@ class HomeController extends Controller
         $categories = $this->getCategories();
         $without_slider = true;
         $without_sidebar = true;
-        return view('user.home.about', compact('categories', 'without_slider', 'without_sidebar'));
+        $all_latest_post = $this->getLatestPost();
+        $footer_latest = array_slice($all_latest_post, 0, 3);
+        return view('user.home.about', compact('categories', 'without_slider', 'without_sidebar', 'all_latest_post', 'footer_latest'));
+    }
+
+    private function getLatestPost()
+    {
+        return [
+            [
+                'id' => 1,
+                'image_name' => 'img_10.jpg',
+                'category' => 'Travel',
+                'create_from' => 'Mar 15, 2018',
+                'comments' => '3',
+                'title' => 'Beauty highlight from rope bridge',
+            ],
+            [
+                'id' => 2,
+                'image_name' => 'img_11.jpg',
+                'category' => 'Lifestyle',
+                'create_from' => 'Jan 1, 2018',
+                'comments' => '2',
+                'title' => 'Cool way for take a picture beauty',
+            ],
+            [
+                'id' => 3,
+                'image_name' => 'img_12.jpg',
+                'category' => 'Food',
+                'create_from' => 'Feb 2, 2018',
+                'comments' => '4',
+                'title' => 'Healthy food for life',
+            ],
+            [
+                'id' => 4,
+                'image_name' => 'img_9.jpg',
+                'category' => 'Travel',
+                'create_from' => 'Apr 5, 2018',
+                'comments' => '5',
+                'title' => 'Beauty of nature',
+            ],
+            [
+                'id' => 5,
+                'image_name' => 'img_7.jpg',
+                'category' => 'Food',
+                'create_from' => 'May 10, 2018',
+                'comments' => '12',
+                'title' => 'Organic food and beauty of art decorate',
+            ],
+            [
+                'id' => 6,
+                'image_name' => 'img_6.jpg',
+                'category' => 'Travel',
+                'create_from' => 'Jun 2, 2018',
+                'comments' => '22',
+                'title' => 'High moutain for fresh air',
+            ],
+            [
+                'id' => 7,
+                'image_name' => 'img_5.jpg',
+                'category' => 'Lifestyle',
+                'create_from' => 'Jul 8, 2018',
+                'comments' => '9',
+                'title' => 'Enjoy breakfast',
+            ],
+            [
+                'id' => 8,
+                'image_name' => 'img_4.jpg',
+                'category' => 'Food',
+                'create_from' => 'Aug 31, 2018',
+                'comments' => '11',
+                'title' => 'Experience for travel with street food',
+            ],
+        ];
     }
 
     public function contact(Request $request)
     {
         $categories = $this->getCategories();
         $have_suggest = false;
-        return view('user.home.contact', compact('have_suggest', 'categories'));
+        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
+        return view('user.home.contact', compact('have_suggest', 'categories', 'footer_latest'));
     }
 
     public function category(Request $request, string $type = null)
     {
         $categories = $this->getCategories();
-        return view('user.home.category', compact('categories', 'type'));
+        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
+        return view('user.home.category', compact('categories', 'type', 'footer_latest'));
     }
 
     public function blog(Request $request)
     {
         $categories = $this->getCategories();
-        return view('user.home.blog-single', compact('categories'));
+        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
+        return view('user.home.blog-single', compact('categories', 'footer_latest'));
     }
 }
