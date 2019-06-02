@@ -69,6 +69,7 @@ class HomeController extends Controller
                 'create_from' => 'Mar 15, 2018',
                 'comments' => '3',
                 'title' => 'Beauty highlight from rope bridge',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
             [
                 'id' => 2,
@@ -77,6 +78,7 @@ class HomeController extends Controller
                 'create_from' => 'Jan 1, 2018',
                 'comments' => '2',
                 'title' => 'Cool way for take a picture beauty',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
             [
                 'id' => 3,
@@ -85,6 +87,7 @@ class HomeController extends Controller
                 'create_from' => 'Feb 2, 2018',
                 'comments' => '4',
                 'title' => 'Healthy food for life',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
             [
                 'id' => 4,
@@ -93,6 +96,7 @@ class HomeController extends Controller
                 'create_from' => 'Apr 5, 2018',
                 'comments' => '5',
                 'title' => 'Beauty of nature',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
             [
                 'id' => 5,
@@ -101,6 +105,7 @@ class HomeController extends Controller
                 'create_from' => 'May 10, 2018',
                 'comments' => '12',
                 'title' => 'Organic food and beauty of art decorate',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
             [
                 'id' => 6,
@@ -109,6 +114,7 @@ class HomeController extends Controller
                 'create_from' => 'Jun 2, 2018',
                 'comments' => '22',
                 'title' => 'High moutain for fresh air',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
             [
                 'id' => 7,
@@ -117,6 +123,7 @@ class HomeController extends Controller
                 'create_from' => 'Jul 8, 2018',
                 'comments' => '9',
                 'title' => 'Enjoy breakfast',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
             [
                 'id' => 8,
@@ -125,6 +132,7 @@ class HomeController extends Controller
                 'create_from' => 'Aug 31, 2018',
                 'comments' => '11',
                 'title' => 'Experience for travel with street food',
+                'short_body' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!',
             ],
         ];
     }
@@ -136,29 +144,107 @@ class HomeController extends Controller
                 'id' => 1,
                 'image_name' => 'img_1.jpg',
                 'title' => 'Travel with me',
-                'date_from' => 'March 15, 2018',
+                'create_from' => 'March 15, 2018',
                 'comments' => '2',
             ],
             [
                 'id' => 2,
                 'image_name' => 'img_2.jpg',
                 'title' => 'How to enjoy work',
-                'date_from' => 'April 2, 2018',
+                'create_from' => 'April 2, 2018',
                 'comments' => '3',
             ],
             [
                 'id' => 3,
                 'image_name' => 'img_3.jpg',
                 'title' => 'How to enjoy life',
-                'date_from' => 'Jan 4, 2018',
+                'create_from' => 'Jan 4, 2018',
                 'comments' => '4',
             ],
             [
                 'id' => 4,
                 'image_name' => 'img_4.jpg',
                 'title' => 'How to enjoy cooking',
-                'date_from' => 'July 5, 2018',
+                'create_from' => 'July 5, 2018',
                 'comments' => '11',
+            ],
+        ];
+    }
+
+    private function getCategoriesPost()
+    {
+        return [
+            [
+                'id' => '5',
+                'image_name' => 'img_4.jpg',
+                'category_name' => 'Food',
+                'create_from' => 'March 15, 2018',
+                'comments' => '3',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '6',
+                'image_name' => 'img_5.jpg',
+                'category_name' => 'Lifestyle',
+                'create_from' => 'March 15, 2018',
+                'comments' => '4',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '7',
+                'image_name' => 'img_6.jpg',
+                'category_name' => 'Travel',
+                'create_from' => 'March 15, 2018',
+                'comments' => '6',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '8',
+                'image_name' => 'img_7.jpg',
+                'category_name' => 'Food',
+                'create_from' => 'March 12, 2018',
+                'comments' => '5',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '9',
+                'image_name' => 'img_8.jpg',
+                'category_name' => 'Lifestyle',
+                'create_from' => 'Jun 12, 2018',
+                'comments' => '9',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '11',
+                'image_name' => 'img_9.jpg',
+                'category_name' => 'Travel',
+                'create_from' => 'July 12, 2018',
+                'comments' => '1',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '10',
+                'image_name' => 'img_10.jpg',
+                'category_name' => 'Travel',
+                'create_from' => 'Jan 23, 2018',
+                'comments' => '11',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '12',
+                'image_name' => 'img_11.jpg',
+                'category_name' => 'Lifestyle',
+                'create_from' => 'Jan 23, 2018',
+                'comments' => '8',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
+            ],
+            [
+                'id' => '13',
+                'image_name' => 'img_12.jpg',
+                'category_name' => 'Food',
+                'create_from' => 'Jan 6, 2018',
+                'comments' => '6',
+                'title' => 'There’s a Cool New Way for Men to Wear Socks and Sandals',
             ],
         ];
     }
@@ -166,10 +252,10 @@ class HomeController extends Controller
     public function contact(Request $request)
     {
         $categories = $this->getCategories();
-        $have_suggest = false;
         $footer_latest = array_slice($this->getLatestPost(), 0, 3);
         $popular_post = $this->getPopularPost();
-        return view('user.home.contact', compact('have_suggest', 'categories', 'footer_latest', 'popular_post'));
+        $have_suggest = true;
+        return view('user.home.contact', compact('categories', 'footer_latest', 'popular_post', 'have_suggest'));
     }
 
     public function category(Request $request, string $type = null)
@@ -177,7 +263,8 @@ class HomeController extends Controller
         $categories = $this->getCategories();
         $footer_latest = array_slice($this->getLatestPost(), 0, 3);
         $popular_post = $this->getPopularPost();
-        return view('user.home.category', compact('categories', 'type', 'footer_latest', 'popular_post'));
+        $category_posts = $this->getCategoriesPost();
+        return view('user.home.category', compact('categories', 'type', 'footer_latest', 'popular_post', 'category_posts'));
     }
 
     public function blog(Request $request)

@@ -1,11 +1,12 @@
 @php
     $is_footer       = isset($menu_footer) ? true : false;
-    $class_li        = 'nav-link' . ($is_footer ? '' : 'nav-item');
-    $class_home      = 'nav-link' . ($is_footer ? '' : ' ' . isActiveClass('user.index'));
-    $class_about     = 'nav-link' . ($is_footer ? '' : ' ' . isActiveClass('user.about'));
-    $class_contact   = 'nav-link' . ($is_footer ? '' : ' ' . isActiveClass('user.contact'));
+    $class_li        = $is_footer ? '' : 'nav-item';
+    $class_li_drop   = $is_footer ? '' : 'nav-item dropdown';
+    $class_home      = $is_footer ? '' : 'nav-link ' . isActiveClass('user.index');
+    $class_about     = $is_footer ? '' : 'nav-link ' . isActiveClass('user.about');
+    $class_contact   = $is_footer ? '' : 'nav-link ' . isActiveClass('user.contact');
     $active_category = ('/'.request()->path() == route('user.category', ['type' => $type ?? ''], false)) ? ' active' : '';
-    $class_category  = ' nav-link' . ($is_footer ? '' : $active_category);
+    $class_category  = $is_footer ? '' : $active_category;
 @endphp
 <li class="{{ $class_li }}">
     <a class="{{ $class_home }}" href="{{ route('user.index') }}">Home</a>
@@ -16,11 +17,11 @@
 <li class="{{ $class_li }}">
     <a class="{{ $class_contact }}" href="{{ route('user.contact') }}">Contact</a>
 </li>
-<li class="{{ $class_li }}">
+<li class="{{ $class_li_drop }}">
     @if($is_footer)
-        <a class="{{ $class_category }}" href="{{ route('user.category') }}">Categories</a>
+        <a class="nav-link{{ $class_category }}" href="{{ route('user.category') }}">Categories</a>
     @else
-        <a class="dropdown-toggle{{ $class_category }}" id="dropdown05"
+        <a class="nav-link dropdown-toggle{{ $class_category }}" id="dropdown05"
             data-toggle="dropdown" aria-haspopup="true"
             href="#categories" aria-expanded="false">Categories</a>
         <div class="dropdown-menu" aria-labelledby="dropdown05">

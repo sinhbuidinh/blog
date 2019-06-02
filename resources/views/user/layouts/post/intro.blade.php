@@ -7,7 +7,7 @@
         <div class="text">
             <h4>{{ data_get($item, 'title') }}</h4>
             <div class="post-meta">
-                <span class="mr-2">{{ data_get($item, 'date_from') }} </span> &bullet;
+                <span class="mr-2">{{ data_get($item, 'create_from') }} </span> &bullet;
                 <span class="ml-2"><span class="fa fa-comments"></span> {{ data_get($item, 'comments') }}</span>
             </div>
         </div>
@@ -22,7 +22,7 @@
         <span class="text">
             <div class="post-meta">
                 <span class="category">{{ data_get($item, 'category_name') }}</span>
-                <span class="mr-2">{{ data_get($item, 'date_from') }}</span> &bullet;
+                <span class="mr-2">{{ data_get($item, 'create_from') }}</span> &bullet;
                 <span class="ml-2"><span class="fa fa-comments"></span> {{ data_get($item, 'comments') }}</span>
             </div>
             <h2>{{ data_get($item, 'title') }}</h2>

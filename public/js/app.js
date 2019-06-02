@@ -35104,15 +35104,27 @@ try {
 
 /***/ }),
 
+/***/ "./resources/sass/scss/navbar.scss":
+/*!*****************************************!*\
+  !*** ./resources/sass/scss/navbar.scss ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/fonts_api_josefin-sans-300-400-700.scss ./resources/sass/base/style.scss ./resources/sass/base/bootstrap.scss ./resources/sass/base/animate.scss ./resources/sass/base/owl.carousel.min.scss ./resources/fonts/ionicons/css/ionicons.min.scss ./resources/fonts/fontawesome/css/font-awesome.min.scss ./resources/fonts/flaticon/font/flaticon.scss ./resources/sass/app.scss ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/fonts_api_josefin-sans-300-400-700.scss ./resources/sass/scss/navbar.scss ./resources/sass/base/style.scss ./resources/sass/base/bootstrap.scss ./resources/sass/base/animate.scss ./resources/sass/base/owl.carousel.min.scss ./resources/fonts/ionicons/css/ionicons.min.scss ./resources/fonts/fontawesome/css/font-awesome.min.scss ./resources/fonts/flaticon/font/flaticon.scss ./resources/sass/app.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\js\app.js */"./resources/js/app.js");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\fonts_api_josefin-sans-300-400-700.scss */"./resources/sass/fonts_api_josefin-sans-300-400-700.scss");
+__webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\scss\navbar.scss */"./resources/sass/scss/navbar.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\base\style.scss */"./resources/sass/base/style.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\base\bootstrap.scss */"./resources/sass/base/bootstrap.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\base\animate.scss */"./resources/sass/base/animate.scss");

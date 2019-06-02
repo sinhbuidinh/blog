@@ -3,51 +3,34 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="owl-carousel owl-theme home-slider">
+                    @foreach($footer_latest as $post)
                     <div>
-                        <a href="{{ route('user.blog') }}" class="a-block d-flex align-items-center height-lg" style="background-image: url({{ asset('images/img_1.jpg') }}); ">
-                            <div class="text half-to-full">
-                                <div class="post-meta">
-                                <span class="category">Lifestyle</span>
-                                <span class="mr-2">March 15, 2018 </span> &bullet;
-                                <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                                </div>
-                                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!</p>
+                        <a href="{{ route('user.blog', ['blog_id' => data_get($post, 'id')]) }}" 
+                            class="a-block d-flex align-items-center height-lg" 
+                            style="background-image: url({{ asset('images/'.data_get($post, 'image_name')) }}); ">
+                        <div class="text half-to-full">
+                            <div class="post-meta">
+                                <span class="category">{{ data_get($post, 'category') }}</span>
+                                <span class="mr-2">{{ data_get($post, 'create_from') }} </span> &bullet;
+                                <span class="ml-2">
+                                    <span class="fa fa-comments"></span>
+                                    <span>{{ data_get($post, 'comments') }}</span>
+                                </span>
                             </div>
+                            <h3>{{ data_get($post, 'title') }}</h3>
+                            <p>{{ data_get($post, 'short_body') }}</p>
+                        </div>
                         </a>
                     </div>
-                    <div>
-                        <a href="{{ route('user.blog') }}" class="a-block d-flex align-items-center height-lg" style="background-image: url({{ asset('images/img_2.jpg') }}); ">
-                            <div class="text half-to-full">
-                                <div class="post-meta">
-                                    <span class="category">Lifestyle</span>
-                                    <span class="mr-2">March 15, 2018 </span> &bullet;
-                                    <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                                </div>
-                                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="{{ route('user.blog') }}" class="a-block d-flex align-items-center height-lg" style="background-image: url({{ asset('images/img_3.jpg') }}); ">
-                            <div class="text half-to-full">
-                                <div class="post-meta">
-                                    <span class="category">Lifestyle</span>
-                                    <span class="mr-2">March 15, 2018 </span> &bullet;
-                                    <span class="ml-2"><span class="fa fa-comments"></span> 3</span>
-                                </div>
-                                <h3>There’s a Cool New Way for Men to Wear Socks and Sandals</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem nobis, ut dicta eaque ipsa laudantium!</p>
-                            </div>
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-        @if (!empty($have_suggest))
+        @if($have_suggest)
         <div class="row">
-            @include('user.layouts.post.suggest')
+            @include('user.layouts.post.suggest', [
+                'suggest_post' => $footer_latest ?? []
+            ])
         </div>
         @endif
     </div>

@@ -27,7 +27,7 @@
     @if(!isset($without_slider))
     <!-- START section -->
     @include('user.layouts.slider', [
-        'have_suggest' => isset($have_suggest) ? $have_suggest : true
+        'have_suggest' => isset($have_suggest) ? $have_suggest : false
     ])
     <!-- END section -->
     @endif
