@@ -27,36 +27,7 @@
     <!-- END sidebar-box -->    
     <div class="sidebar-box">
         @include('user.layouts.post.popular', [
-            'populars' => [
-                [
-                    'id' => 1,
-                    'image_name' => 'img_1.jpg',
-                    'title' => 'Travel with me',
-                    'date_from' => 'March 15, 2018',
-                    'comments' => '2',
-                ],
-                [
-                    'id' => 2,
-                    'image_name' => 'img_2.jpg',
-                    'title' => 'How to enjoy work',
-                    'date_from' => 'April 2, 2018',
-                    'comments' => '3',
-                ],
-                [
-                    'id' => 3,
-                    'image_name' => 'img_3.jpg',
-                    'title' => 'How to enjoy life',
-                    'date_from' => 'Jan 4, 2018',
-                    'comments' => '4',
-                ],
-                [
-                    'id' => 4,
-                    'image_name' => 'img_4.jpg',
-                    'title' => 'How to enjoy cooking',
-                    'date_from' => 'July 5, 2018',
-                    'comments' => '11',
-                ],
-            ]
+            'populars' => $popular_post
         ])
     </div>
     <!-- END sidebar-box -->

@@ -1,3 +1,4 @@
+@if($populars)
 <h3 class="heading">Popular Posts</h3>
 <div class="post-entry-sidebar">
     <ul>
@@ -9,3 +10,4 @@
         @endforeach
     </ul>
 </div>
+@endif

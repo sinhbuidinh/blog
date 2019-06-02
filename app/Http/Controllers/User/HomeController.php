@@ -45,7 +45,8 @@ class HomeController extends Controller
     {
         $categories = $this->getCategories();
         $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        return view('user.home.index', compact('categories', 'footer_latest'));
+        $popular_post = $this->getPopularPost();
+        return view('user.home.index', compact('categories', 'footer_latest', 'popular_post'));
     }
 
     public function about(Request $request)
@@ -128,25 +129,62 @@ class HomeController extends Controller
         ];
     }
 
+    private function getPopularPost()
+    {
+        return [
+            [
+                'id' => 1,
+                'image_name' => 'img_1.jpg',
+                'title' => 'Travel with me',
+                'date_from' => 'March 15, 2018',
+                'comments' => '2',
+            ],
+            [
+                'id' => 2,
+                'image_name' => 'img_2.jpg',
+                'title' => 'How to enjoy work',
+                'date_from' => 'April 2, 2018',
+                'comments' => '3',
+            ],
+            [
+                'id' => 3,
+                'image_name' => 'img_3.jpg',
+                'title' => 'How to enjoy life',
+                'date_from' => 'Jan 4, 2018',
+                'comments' => '4',
+            ],
+            [
+                'id' => 4,
+                'image_name' => 'img_4.jpg',
+                'title' => 'How to enjoy cooking',
+                'date_from' => 'July 5, 2018',
+                'comments' => '11',
+            ],
+        ];
+    }
+
     public function contact(Request $request)
     {
         $categories = $this->getCategories();
         $have_suggest = false;
         $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        return view('user.home.contact', compact('have_suggest', 'categories', 'footer_latest'));
+        $popular_post = $this->getPopularPost();
+        return view('user.home.contact', compact('have_suggest', 'categories', 'footer_latest', 'popular_post'));
     }
 
     public function category(Request $request, string $type = null)
     {
         $categories = $this->getCategories();
         $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        return view('user.home.category', compact('categories', 'type', 'footer_latest'));
+        $popular_post = $this->getPopularPost();
+        return view('user.home.category', compact('categories', 'type', 'footer_latest', 'popular_post'));
     }
 
     public function blog(Request $request)
     {
         $categories = $this->getCategories();
         $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        return view('user.home.blog-single', compact('categories', 'footer_latest'));
+        $popular_post = $this->getPopularPost();
+        return view('user.home.blog-single', compact('categories', 'footer_latest', 'popular_post'));
     }
 }
