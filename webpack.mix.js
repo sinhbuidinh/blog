@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+let mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -21,6 +21,7 @@ mix.js('resources/js/app.js', 'public/js')
    .js('resources/js/base/jquery.stellar.min.js', 'public/js')
    .js('resources/js/base/main.js', 'public/js')
    .copy("resources/images/", "public/images/")
+   .sass('resources/sass/admin/index.scss', 'public/css/admin')
    .sass('resources/sass/fonts_api_josefin-sans-300-400-700.scss', 'public/css')
    .sass('resources/sass/base/style.scss', 'public/css')
    .sass('resources/sass/base/bootstrap.scss', 'public/css')
@@ -29,4 +30,5 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/fonts/ionicons/css/ionicons.min.scss', 'public/fonts/ionicons')
    .sass('resources/fonts/fontawesome/css/font-awesome.min.scss', 'public/fonts/fontawesome')
    .sass('resources/fonts/flaticon/font/flaticon.scss', 'public/fonts/flaticon')
-   .sass('resources/sass/app.scss', 'public/css');
+   .sass('resources/sass/app.scss', 'public/css')
+   .version();

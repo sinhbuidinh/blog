@@ -1,5 +1,15 @@
 <?php
 
+function parseErrorsExceptInput($errors)
+{
+    $exceptInputs = array_filter($errors, function($key){
+        return is_numeric($key);
+    }, ARRAY_FILTER_USE_KEY);
+    if (empty($exceptInputs)) {
+        return '';
+    }
+    return parseMessage($exceptInputs);
+}
 function parseMessage($messages)
 {
     $result = '<div class="message">';

@@ -33,6 +33,13 @@ class AppServiceProvider extends ServiceProvider
         Builder::macro('orderBySub', function ($query, $direction = 'asc') {
             return $this->orderByRaw("({$query->limit(1)->toSql()}) {$direction}");
         });
+
+        app('view')->composer('admin.layouts.master', function ($view) {
+            $action = app('request')->route()->getAction();
+            $controller = class_basename($action['controller']);
+            list($controller, $action) = explode('@', $controller);
+            $view->with(compact('controller', 'action'));
+        });
     }
 
     /**
