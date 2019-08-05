@@ -32,9 +32,10 @@ class ParcelController extends Controller
             'services'         => $services,
             'services_display' => $services_display,
             'default'          => config('setting.default'),
+            'provincials'      => $this->parcelService->getProvincials(),
         ];
         // dd($services, $services_display);
-        // dd($data['default']);
+        // dd($data['provincials']);
         return view('admin.parcel.input', $data);
     }
 
@@ -43,5 +44,10 @@ class ParcelController extends Controller
         dd('parcel create');
         //valid => back index
         //invalid => view input with error
+    }
+
+    public function ajaxGetDistricts(Request $request, $provinceId = null) {
+        $districts = $this->parcelService->getDistrictByProvinceId($provinceId);
+        return response()->json($districts);
     }
 }

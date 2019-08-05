@@ -42,4 +42,30 @@ class ParcelService
         }
         return [$raw, $result];
     }
+
+    public function getProvincials()
+    {
+        $provinces = readJsonFile(config_path('address/provincial.json'));
+        $sorted = array_sort($provinces, function($value) {
+            return $value['code'];
+        });
+        return $sorted;
+    }
+
+    public function getDistrictByProvinceId($id)
+    {
+        if (empty($id)) {
+            return [];
+        }
+        $fileName = sprintf('%02d', $id);
+        $path = config_path('address/district/'.$fileName.'.json');
+        $districts = readJsonFile($path);
+        if (empty($districts)) {
+            return $districts;
+        }
+        $sorted = array_sort($districts, function($value) {
+            return $value['code'];
+        });
+        return $sorted;
+    }
 }

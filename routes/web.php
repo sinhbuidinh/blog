@@ -46,5 +46,7 @@ Route::group([
         Route::get('/', 'ParcelController@index')->name('parcel');
         Route::get('/create', 'ParcelController@input')->name('parcel.input');
         Route::post('/create', 'ParcelController@create')->name('parcel.create');
+        Route::post('/ajax/get_districts/{province}', 'ParcelController@ajaxGetDistricts')->name('district.by.province');
+        Route::post('/ajax/get_wards/{district}', 'ParcelController@ajaxGetWards')->name('ward.by.district');
     });
 });

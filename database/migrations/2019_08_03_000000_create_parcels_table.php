@@ -31,7 +31,7 @@ class CreateParcelsTable extends Migration
             $table->string('receiver_tel')->comment('sdt-nguoi-nhan');
             $table->string('provincial')->comment('tinh-tp');
             $table->string('district')->comment('quan-huyen');
-            $table->string('commune_ward')->comment('xa-phuong');
+            $table->string('ward')->comment('xa-phuong');
             $table->string('address');
             $table->string('price');
             $table->string('cod');

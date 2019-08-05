@@ -6,6 +6,8 @@ return [
     'receiver_info' => 'Thông tin người nhận',
     'guest_name' => 'Tên khách',
     'receiver' => 'Người nhận',
+    'tel' => 'SDT',
+    'full_name' => 'Họ tên',
     'parcel' => 'Bưu phẩm',
     'parcel_info' => 'Thông tin bưu phẩm',
     'parcel_type' => 'Loại bưu phẩm',

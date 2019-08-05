@@ -14,6 +14,10 @@
     #price_info td.rate_value input:first-child {
         width: 80px;
     }
+    .left .row,
+    .right .row {
+        margin: 5px;
+    }
 </style>
 @endsection
 
@@ -36,7 +40,7 @@
                 </div>
                 <div class="row">
                     <!-- left -->
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 left">
                         <p class="file_form_top_title">{{ trans('label.guest_info') }}</p>
                         <div class="row">
                             <div class="col-sm-4">{{ trans('label.guest_name') }}</div>
@@ -64,12 +68,87 @@
                         </div>
                     </div>
                     <!-- right -->
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 right">
                         <p class="file_form_top_title">{{ trans('label.receiver_info') }}</p>
                         <div class="row">
-                            <div class="col-sm-4">{{ trans('label.receiver') }}</div>
-                            <div class="col-sm-8">
-                                <input type="text" name="tel" value="{{ old('tel') }}">
+                            <div class="col-sm-3">{{ trans('label.full_name') }}</div>
+                            <div class="col-sm-5">
+                                <input type="text" class="full_width" name="receiver" value="{{ old('receiver') }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">{{ trans('label.tel') }}</div>
+                            <div class="col-sm-5">
+                                <input type="text" class="full_width" name="receiver_tel" value="{{ old('receiver_tel') }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">{{ trans('label.provincial') }}</div>
+                            <div class="col-sm-5">
+                                <select id="province" class="full_width" name="province">
+                                    <option value="">{{ trans('label.please_choose') }}</option>
+                                    @if(!empty($provincials))
+                                    @foreach ($provincials as $code => $info)
+                                        @php
+                                            $check = '';
+                                            if (old('province', -999) == data_get($info, 'code')) {
+                                                $check = ' selected="selected"';
+                                            }
+                                        @endphp
+                                        <option value="{{ data_get($info, 'code') }}" 
+                                        data-districts="{{ route('district.by.province', data_get($info, 'code')) }}"
+                                        {{ $check }}>{{ data_get($info, 'name') }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">{{ trans('label.district') }}</div>
+                            <div class="col-sm-5" id="div_districts">
+                                <select name="district" class="full_width" id="district">
+                                    <option>{{ trans('label.please_choose') }}</option>
+                                    @if(!empty($districts))
+                                    @foreach ($districts as $id => $name)
+                                        @php
+                                            $districted = '';
+                                            if (old('district', -999) == $id) {
+                                                $districted = ' selected="selected"';
+                                            }
+                                        @endphp
+                                        <option value="{{ $id }}" {{$districted}}>{{ $name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('district'))
+                                <p class="common_form_error">
+                                    {{ $errors->first('district') }}
+                                </p>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">{{ trans('label.ward') }}</div>
+                            <div class="col-sm-5" id="div_wards">
+                                <select name="ward" class="full_width" id="ward">
+                                    <option>{{ trans('label.please_choose') }}</option>
+                                    @if(!empty($wards))
+                                    @foreach ($wards as $id => $name)
+                                        @php
+                                            $ward_checked = '';
+                                            if (old('ward', -999) == $id) {
+                                                $ward_checked = ' selected="selected"';
+                                            }
+                                        @endphp
+                                        <option value="{{ $id }}" {{$ward_checked}}>{{ $name }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @if ($errors->has('ward'))
+                                <p class="common_form_error">
+                                    {{ $errors->first('ward') }}
+                                </p>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -88,12 +167,12 @@
                                         @if(!empty($parcel_types))
                                         @foreach ($parcel_types as $type_id => $type_name)
                                             @php
-                                                $selected_type = '';
+                                                $parcel_check = '';
                                                 if (old('type', -999) == $type_id) {
-                                                    $selected_type = ' selected="selected"';
+                                                    $parcel_check = ' selected="selected"';
                                                 }
                                             @endphp
-                                            <option value="{{ $type_id }}" {{$selected_type}}>{{ $type_name }}</option>
+                                            <option value="{{ $type_id }}" {{$parcel_check}}>{{ $type_name }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -203,12 +282,12 @@
                                         @if(!empty($type_transfer))
                                         @foreach ($type_transfer as $id => $name)
                                             @php
-                                                $selected_type = '';
+                                                $transfer_check = '';
                                                 if (old('type_transfer', -999) == $id) {
-                                                    $selected_type = ' selected="selected"';
+                                                    $transfer_check = ' selected="selected"';
                                                 }
                                             @endphp
-                                            <option value="{{ $id }}" {{$selected_type}}>{{ $name }}</option>
+                                            <option value="{{ $id }}" {{$transfer_check}}>{{ $name }}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -241,90 +320,6 @@
                                 <div class="col-sm-7">
                                     <button type="button" name="service_list" id="service_list" class="full_width" data-toggle="modal" data-target="#services_list_model">{{ trans('label.services') }}</button>
                                     <input type="hidden" name="services" value="{{ old('services') }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row col-sm-12">
-                    <p class="file_form_top_title">{{ trans('label.receiver') }}</p>
-                    <div class="row col-sm-12">
-                        <div class="col-sm-4">
-                            <div class="row">
-                                <div class="col-sm-5">{{ trans('label.provincial') }}</div>
-                                <div class="col-sm-7">
-                                    <select name="provincial" class="full_width" id="provincial">
-                                        <option>{{ trans('label.please_choose') }}</option>
-                                        @if(!empty($provincials))
-                                        @foreach ($provincials as $id => $name)
-                                            @php
-                                                $selected_type = '';
-                                                if (old('provincial', -999) == $id) {
-                                                    $selected_type = ' selected="selected"';
-                                                }
-                                            @endphp
-                                            <option value="{{ $id }}" {{$selected_type}}>{{ $name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('provincial'))
-                                    <p class="common_form_error">
-                                        {{ $errors->first('provincial') }}
-                                    </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="row">
-                                <div class="col-sm-5">{{ trans('label.district') }}</div>
-                                <div class="col-sm-7">
-                                    <select name="district" class="full_width" id="district">
-                                        <option>{{ trans('label.please_choose') }}</option>
-                                        @if(!empty($districts))
-                                        @foreach ($districts as $id => $name)
-                                            @php
-                                                $selected_type = '';
-                                                if (old('district', -999) == $id) {
-                                                    $selected_type = ' selected="selected"';
-                                                }
-                                            @endphp
-                                            <option value="{{ $id }}" {{$selected_type}}>{{ $name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('district'))
-                                    <p class="common_form_error">
-                                        {{ $errors->first('district') }}
-                                    </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="row">
-                                <div class="col-sm-5">{{ trans('label.ward') }}</div>
-                                <div class="col-sm-7">
-                                    <select name="ward" class="full_width" id="ward">
-                                        <option>{{ trans('label.please_choose') }}</option>
-                                        @if(!empty($wards))
-                                        @foreach ($wards as $id => $name)
-                                            @php
-                                                $selected_type = '';
-                                                if (old('ward', -999) == $id) {
-                                                    $selected_type = ' selected="selected"';
-                                                }
-                                            @endphp
-                                            <option value="{{ $id }}" {{$selected_type}}>{{ $name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('ward'))
-                                    <p class="common_form_error">
-                                        {{ $errors->first('ward') }}
-                                    </p>
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -451,6 +446,25 @@
             startDate: '-0d'
         });
     });
+    $(document).on('change', '#province', function(){
+        var obj = $(this);
+        var url = obj.find(":selected").data('districts');
+        if (typeof url == 'undefined') {
+            return false;
+        }
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {},
+            dataType: 'json',
+            success: function(data){
+                genDistricts(data);
+            },
+            error: function(){
+                alert('error');
+            }
+        });
+    });
     $(document).on('click', 'tr.service_id_choose', function(){
         var id = $(this).find('input[name="service_id[]"]');
         id.attr('checked', true);
@@ -476,6 +490,27 @@
     function addService()
     {
         //
+    }
+    function genDistricts(data)
+    {
+        if (typeof data != 'object' || Object.keys(data).length <= 0) {
+            return false;
+        }
+        var districts = '<select name="district" class="full_width" id="district">';
+        districts += optionDistrict("{{ trans('label.please_choose') }}", '', '');
+        $.each(data, function(key, value) {
+            var name = value.name;
+            var code = value.code;
+            var url = '/ajax/get_wards/' + code;
+            districts += optionDistrict(name, code, url);
+        });
+        districts += '</select>';
+        $('#district').remove();
+        $('#div_districts').append(districts);
+    }
+    function optionDistrict(name, code, url)
+    {
+        return '<option value="'+code+'" data-wards="'+url+'">'+name+'</option>';
     }
 </script>
 @endsection
