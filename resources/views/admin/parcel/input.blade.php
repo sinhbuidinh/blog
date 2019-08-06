@@ -8,11 +8,18 @@
     #price_info tr td.title {
         width: 100px;
     }
+    #price_info tr td input {
+        width: 261px;
+    }
     #price_info tr td.bold {
         font-weight: bold;
     }
     #price_info td.rate_value input:first-child {
         width: 80px;
+    }
+    #price_info td.rate_value input:last-child {
+        width: calc(100% - 80px);
+        max-width: 160px;
     }
     .left .row,
     .right .row {
@@ -71,52 +78,54 @@
                     <div class="col-sm-6 right">
                         <p class="file_form_top_title">{{ trans('label.receiver_info') }}</p>
                         <div class="row">
-                            <div class="col-sm-3">{{ trans('label.full_name') }}</div>
-                            <div class="col-sm-5">
-                                <input type="text" class="full_width" name="receiver" value="{{ old('receiver') }}">
-                            </div>
+                            <div class="col-sm-6">{{ trans('label.full_name') }}</div>
+                            <div class="col-sm-6">{{ trans('label.tel') }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">{{ trans('label.tel') }}</div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
+                                <input type="text" class="full_width" name="receiver" value="{{ old('receiver') }}">
+                            </div>
+                            <div class="col-sm-6">
                                 <input type="text" class="full_width" name="receiver_tel" value="{{ old('receiver_tel') }}">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">{{ trans('label.provincial') }}</div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">{{ trans('label.provincial') }}</div>
+                            <div class="col-sm-6">{{ trans('label.district') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
                                 <select id="province" class="full_width" name="province">
                                     <option value="">{{ trans('label.please_choose') }}</option>
                                     @if(!empty($provincials))
                                     @foreach ($provincials as $code => $info)
                                         @php
                                             $check = '';
-                                            if (old('province', -999) == data_get($info, 'code')) {
+                                            if (old('province', -999) == $code) {
                                                 $check = ' selected="selected"';
                                             }
                                         @endphp
-                                        <option value="{{ data_get($info, 'code') }}" 
-                                        data-districts="{{ route('district.by.province', data_get($info, 'code')) }}"
-                                        {{ $check }}>{{ data_get($info, 'name') }}</option>
+                                        <option value="{{ $code }}" 
+                                        data-districts="{{ route('district.by.province', $code) }}"
+                                        data-display="{{ data_get($info, 'name_with_type') }}"
+                                        {{ $check }}>{{ data_get($info, 'name_with_type') }}</option>
                                     @endforeach
                                     @endif
                                 </select>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-3">{{ trans('label.district') }}</div>
-                            <div class="col-sm-5" id="div_districts">
+                            <div class="col-sm-6" id="div_districts">
                                 <select name="district" class="full_width" id="district">
                                     <option>{{ trans('label.please_choose') }}</option>
                                     @if(!empty($districts))
-                                    @foreach ($districts as $id => $name)
+                                    @foreach ($districts as $code => $district)
                                         @php
                                             $districted = '';
-                                            if (old('district', -999) == $id) {
+                                            if (old('district', -999) == $code) {
                                                 $districted = ' selected="selected"';
                                             }
                                         @endphp
-                                        <option value="{{ $id }}" {{$districted}}>{{ $name }}</option>
+                                        <option value="{{ $code }}" 
+                                        data-display="{{ data_get($district, 'name_with_type') }}" {{$districted}}>{{ data_get($district, 'name_with_type') }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -128,19 +137,22 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3">{{ trans('label.ward') }}</div>
-                            <div class="col-sm-5" id="div_wards">
+                            <div class="col-sm-6">{{ trans('label.ward') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" id="div_wards">
                                 <select name="ward" class="full_width" id="ward">
                                     <option>{{ trans('label.please_choose') }}</option>
                                     @if(!empty($wards))
-                                    @foreach ($wards as $id => $name)
+                                    @foreach ($wards as $code => $ward)
                                         @php
                                             $ward_checked = '';
-                                            if (old('ward', -999) == $id) {
+                                            if (old('ward', -999) == $code) {
                                                 $ward_checked = ' selected="selected"';
                                             }
                                         @endphp
-                                        <option value="{{ $id }}" {{$ward_checked}}>{{ $name }}</option>
+                                        <option 
+                                        data-display="{{ data_get($name, 'name_with_type') }}" value="{{ $code }}" {{$ward_checked}}>{{ data_get($ward, 'name_with_type') }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -149,6 +161,14 @@
                                     {{ $errors->first('ward') }}
                                 </p>
                                 @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">{{ trans('label.address') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="text" class="full_width" name="address" id="address" value="{{ old('address') }}">
                             </div>
                         </div>
                     </div>
@@ -333,7 +353,7 @@
                         <tbody>
                             <tr>
                                 <td class="title">{{ trans('label.price') }}</td>
-                                <td><input type="number" name="price" value="{{ old('price') }}"></td>
+                                <td><input type="text" name="price" value="{{ old('price') }}"></td>
                                 <td class="title">{{ trans('label.cod') }}</td>
                                 <td><input type="text" name="cod" value="{{ old('cod') }}"></td>
                             </tr>
@@ -344,8 +364,7 @@
                                 </td>
                                 <td class="title">{{ trans('label.support_gas') }}</td>
                                 <td class="rate_value">
-                                    <input type="number" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % 
-                                    <input type="text" name="support_gas" value="{{ old('support_gas') }}">
+                                    <input type="text" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % <input type="text" name="support_gas" value="{{ old('support_gas') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -355,15 +374,13 @@
                                 </td>
                                 <td class="title">{{ trans('label.support_remote') }}</td>
                                 <td class="rate_value">
-                                    <input type="number" name="support_remote_rate" value="{{ data_get($default, 'support_remote') }}"> % 
-                                    <input type="text" name="support_remote" value="{{ old('support_remote') }}">
+                                    <input type="text" name="support_remote_rate" value="{{ data_get($default, 'support_remote') }}"> % <input type="text" name="support_remote" value="{{ old('support_remote') }}">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="title">{{ trans('label.vat') }}</td>
                                 <td class="rate_value">
-                                    <input type="number" name="vat" value="{{ data_get($default, 'vat') }}">
-                                    <input type="text" name="price_vat" value="{{ old('price_vat') }}">
+                                    <input type="text" name="vat" value="{{ data_get($default, 'vat') }}"> % <input type="text" name="price_vat" value="{{ old('price_vat') }}">
                                 </td>
                                 <td class="title bold">{{ trans('label.total') }}</td>
                                 <td>
@@ -446,25 +463,6 @@
             startDate: '-0d'
         });
     });
-    $(document).on('change', '#province', function(){
-        var obj = $(this);
-        var url = obj.find(":selected").data('districts');
-        if (typeof url == 'undefined') {
-            return false;
-        }
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: {},
-            dataType: 'json',
-            success: function(data){
-                genDistricts(data);
-            },
-            error: function(){
-                alert('error');
-            }
-        });
-    });
     $(document).on('click', 'tr.service_id_choose', function(){
         var id = $(this).find('input[name="service_id[]"]');
         id.attr('checked', true);
@@ -491,6 +489,54 @@
     {
         //
     }
+    $(document).on('change', '#province', function(){
+        var select_province = $(this).find(":selected");
+        var url = select_province.data('districts');
+        if (typeof url == 'undefined') {
+            return false;
+        }
+        province_name = select_province.data('display');
+        displayAddress(province_name);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {},
+            dataType: 'json',
+            success: function(data){
+                genDistricts(data);
+            },
+            error: function(){
+                alert('district error');
+            }
+        });
+    });
+    function displayAddress(province, district, ward)
+    {
+        province = typeof province !== 'undefined' ? province : '';
+        district = typeof district !== 'undefined' ? district : '';
+        ward     = typeof ward !== 'undefined' ? ward : '';
+        var result = '';
+        if (ward != '') {
+            if (result != '') {
+                result += ', ';
+            }
+            result += ward;
+        }
+        if (district != '') {
+            if (result != '') {
+                result += ', ';
+            }
+            result += district;
+        }
+        if (province != '') {
+            if (result != '') {
+                result += ', ';
+            }
+            result += province;
+        }
+        $('#address').val(result);
+        return result;
+    }
     function genDistricts(data)
     {
         if (typeof data != 'object' || Object.keys(data).length <= 0) {
@@ -499,18 +545,72 @@
         var districts = '<select name="district" class="full_width" id="district">';
         districts += optionDistrict("{{ trans('label.please_choose') }}", '', '');
         $.each(data, function(key, value) {
-            var name = value.name;
+            var name = value.name_with_type;
             var code = value.code;
+            var display = value.name_with_type;
             var url = '/ajax/get_wards/' + code;
-            districts += optionDistrict(name, code, url);
+            districts += optionDistrict(name, code, url, display);
         });
         districts += '</select>';
         $('#district').remove();
         $('#div_districts').append(districts);
     }
-    function optionDistrict(name, code, url)
+    function optionDistrict(name, code, url, display)
     {
-        return '<option value="'+code+'" data-wards="'+url+'">'+name+'</option>';
+        return '<option value="'+code+'" data-display="'+display+'" data-wards="'+url+'">'+name+'</option>';
     }
+    $(document).on('change', '#district', function(){
+        var select_district = $(this).find(":selected");
+        var url = select_district.data('wards');
+        if (typeof url == 'undefined') {
+            return false;
+        }
+        district_name = select_district.data('display');
+        select_province = $('#province').find(':selected');
+        province_name = select_province.data('display');
+        displayAddress(province_name, district_name);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {},
+            dataType: 'json',
+            success: function(data){
+                genWards(data);
+            },
+            error: function(){
+                alert('ward error');
+            }
+        });
+    });
+    function genWards(data)
+    {
+        if (typeof data != 'object' || Object.keys(data).length <= 0) {
+            return false;
+        }
+        var wards = '<select name="ward" class="full_width" id="ward">';
+        wards += optionWard("{{ trans('label.please_choose') }}", '', '');
+        $.each(data, function(key, value) {
+            var name = value.name_with_type;
+            var code = value.code;
+            var display = value.name_with_type;
+            wards += optionWard(name, code, display);
+        });
+        wards += '</select>';
+        $('#ward').remove();
+        $('#div_wards').append(wards);
+    }
+    function optionWard(name, code, display)
+    {
+        return '<option value="'+code+'" data-display="'+display+'">'+name+'</option>';
+    }
+    $(document).on('change', '#ward', function(){
+        var select_ward = $(this).find(":selected");
+        ward_name = select_ward.data('display');
+        select_province = $('#province').find(':selected');
+        province_name = select_province.data('display');
+        select_district = $('#district').find(':selected');
+        district_name = select_district.data('display');
+        displayAddress(province_name, district_name, ward_name);
+    });
 </script>
 @endsection

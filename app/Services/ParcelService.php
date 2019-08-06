@@ -68,4 +68,21 @@ class ParcelService
         });
         return $sorted;
     }
+
+    public function getWardsByDistrictId($id)
+    {
+        if (empty($id)) {
+            return [];
+        }
+        $fileName = sprintf('%03d', $id);
+        $path = config_path('address/ward/'.$fileName.'.json');
+        $wards = readJsonFile($path);
+        if (empty($wards)) {
+            return $wards;
+        }
+        $sorted = array_sort($wards, function($value) {
+            return $value['code'];
+        });
+        return $sorted;
+    }
 }

@@ -26,6 +26,7 @@ return [
     'provincial' => 'Tỉnh / TP',
     'district' => 'Quận / Huyện',
     'ward' => 'Xã / Phường',
+    'address' => 'Địa chỉ',
     'close' => 'Close',
     'create' => 'Tạo',
     'save' => 'Lưu',

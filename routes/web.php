@@ -33,6 +33,10 @@ Route::get('/register', '\App\Http\Controllers\Auth\RegisterController@showRegis
 Route::post('/register', '\App\Http\Controllers\Auth\RegisterController@register')->name('register');
 Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
+
+Route::post('/ajax/get_districts/{province}', '\App\Http\Controllers\Admin\ParcelController@ajaxGetDistricts')->name('district.by.province');
+Route::post('/ajax/get_wards/{district}', '\App\Http\Controllers\Admin\ParcelController@ajaxGetWards')->name('ward.by.district');
+
 Route::group([
     'middleware' => 'auth',
     'prefix' => 'admin',
@@ -46,7 +50,5 @@ Route::group([
         Route::get('/', 'ParcelController@index')->name('parcel');
         Route::get('/create', 'ParcelController@input')->name('parcel.input');
         Route::post('/create', 'ParcelController@create')->name('parcel.create');
-        Route::post('/ajax/get_districts/{province}', 'ParcelController@ajaxGetDistricts')->name('district.by.province');
-        Route::post('/ajax/get_wards/{district}', 'ParcelController@ajaxGetWards')->name('ward.by.district');
     });
 });
