@@ -33,9 +33,12 @@ class ParcelController extends Controller
             'services_display' => $services_display,
             'default'          => config('setting.default'),
             'provincials'      => $this->parcelService->getProvincials(),
+            'parcel_types'     => $this->parcelService->getParcelTypes(),
+            'transfer_types'   => $this->parcelService->getTransferTypes(),
         ];
         // dd($services, $services_display);
         // dd($data['provincials']);
+        // dd($data['transfer_types']);
         return view('admin.parcel.input', $data);
     }
 

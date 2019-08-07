@@ -1,16 +1,4 @@
-fee_type:
-    code:
-        percent: 1
-        bill: 2
-        kilo: 3
-        kilo: 4
-    name:
-        percent: "%"
-        bill: "đồng/bill"
-        kilo: "đồng/kg"
-        kilo: "đồng/thư"
-
-types:
+list:
     transfer_guarantee:
         value: 0.02
         math: '*'

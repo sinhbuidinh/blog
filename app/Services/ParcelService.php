@@ -25,7 +25,7 @@ class ParcelService
 
     public function getServiceList()
     {
-        $raw = config('division.services.types');
+        $raw = config('division.services.list');
         if (empty($raw)) {
             return [$raw, []];
         }
@@ -84,5 +84,15 @@ class ParcelService
             return $value['code'];
         });
         return $sorted;
+    }
+
+    public function getParcelTypes()
+    {
+        return code2Name('setting.parcel_type');
+    }
+
+    public function getTransferTypes()
+    {
+        return code2Name('setting.transfer_type');
     }
 }

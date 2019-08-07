@@ -188,7 +188,7 @@
                                         @foreach ($parcel_types as $type_id => $type_name)
                                             @php
                                                 $parcel_check = '';
-                                                if (old('type', -999) == $type_id) {
+                                                if (old('type', config('setting.transfer_type.code.package')) == $type_id) {
                                                     $parcel_check = ' selected="selected"';
                                                 }
                                             @endphp
@@ -209,7 +209,7 @@
                                 <div class="col-sm-4">{{ trans('label.weight') }}</div>
                                 <div class="col-sm-8">
                                     <input type="text" name="weight" 
-                                        value="{{ old('weight') }}" class="full_width" id="weight" />
+                                        value="{{ old('weight', '0.100') }}" class="full_width" id="weight" />
                                     @if ($errors->has('weight'))
                                     <p class="common_form_error">
                                         {{ $errors->first('weight') }}
@@ -223,7 +223,7 @@
                                 <div class="col-sm-4">{{ trans('label.real_weight') }}</div>
                                 <div class="col-sm-8">
                                     <input type="text" name="real_weight" 
-                                        value="{{ old('real_weight') }}"
+                                        value="{{ old('real_weight', '0.100') }}"
                                         id="real_weight" class="full_width" />
                                     @if ($errors->has('real_weight'))
                                     <p class="common_form_error">
@@ -240,7 +240,7 @@
                                 <div class="col-sm-5">{{ trans('label.long') }}</div>
                                 <div class="col-sm-7">
                                     <input type="text" name="long" class="full_width"
-                                        value="{{ old('long') }}" id="long" />
+                                        value="{{ old('long', 0.00) }}" id="long" />
                                     @if ($errors->has('long'))
                                     <p class="common_form_error">
                                         {{ $errors->first('long') }}
@@ -254,7 +254,7 @@
                                 <div class="col-sm-4">{{ trans('label.wide') }}</div>
                                 <div class="col-sm-8">
                                     <input type="text" name="wide" class="full_width"
-                                        value="{{ old('wide') }}" id="wide" />
+                                        value="{{ old('wide', '0.00') }}" id="wide" />
                                     @if ($errors->has('wide'))
                                     <p class="common_form_error">
                                         {{ $errors->first('wide') }}
@@ -267,7 +267,7 @@
                             <div class="row">
                                 <div class="col-sm-4">{{ trans('label.height') }}</div>
                                 <div class="col-sm-8">
-                                    <input type="text" name="height" value="{{ old('height') }}"
+                                    <input type="text" name="height" value="{{ old('height', '0.00') }}"
                                         id="height" class="full_width" />
                                     @if ($errors->has('height'))
                                     <p class="common_form_error">
@@ -283,7 +283,7 @@
                             <div class="row">
                                 <div class="col-sm-5">{{ trans('label.num_package') }}</div>
                                 <div class="col-sm-7">
-                                    <input type="number" name="num_package" value="{{ old('num_package') }}" class="full_width">
+                                    <input type="number" name="num_package" value="{{ old('num_package', 1) }}" class="full_width">
                                 </div>
                             </div>
                         </div>
@@ -299,11 +299,11 @@
                                 <div class="col-sm-7">
                                     <select name="type_transfer" class="full_width" id="service_type">
                                         <option>{{ trans('label.please_choose') }}</option>
-                                        @if(!empty($type_transfer))
-                                        @foreach ($type_transfer as $id => $name)
+                                        @if(!empty($transfer_types))
+                                        @foreach ($transfer_types as $id => $name)
                                             @php
                                                 $transfer_check = '';
-                                                if (old('type_transfer', -999) == $id) {
+                                                if (old('type_transfer', config('setting.transfer_type.code.quick')) == $id) {
                                                     $transfer_check = ' selected="selected"';
                                                 }
                                             @endphp
@@ -323,7 +323,7 @@
                             <div class="row">
                                 <div class="col-sm-5">{{ trans('label.time_input') }}</div>
                                 <div class="col-sm-7">
-                                    <input type="text" name="time_input" value="{{ old('time_input', now()->format('d-m-Y')) }}" class="full_width datepicker" data-date-format="dd-mm-yyyy">
+                                    <input type="text" name="time_input" value="{{ old('time_input', now()->format('d-m-Y h:m:s')) }}" class="full_width datepicker">
                                     @if ($errors->has('time_input'))
                                     <p class="common_form_error">
                                         {{ $errors->first('time_input') }}
@@ -459,14 +459,31 @@
 <script>
     $(function(){
         $('.datepicker').datepicker({
+            todayHighlight: true,
             dateFormat: 'dd-mm-yy',
-            startDate: '-0d'
+            startDate: '-0d',
+            onSelect: function(datetext) {
+                var d = new Date(); // for now
+                var h = d.getHours();
+                h = (h < 10) ? ("0" + h) : h;
+                var m = d.getMinutes();
+                m = (m < 10) ? ("0" + m) : m;
+                var s = d.getSeconds();
+                s = (s < 10) ? ("0" + s) : s;
+                datetext = datetext + " " + h + ":" + m + ":" + s;
+                $('.datepicker').val(datetext);
+            }
         });
     });
     $(document).on('click', 'tr.service_id_choose', function(){
         var id = $(this).find('input[name="service_id[]"]');
-        id.attr('checked', true);
-        // console.log(id.data('name') + ' ' + id.val());
+        if (id.attr('checked') == 'checked') {
+            id.attr('checked', false);
+            $(this).removeClass('table-success');
+        } else {
+            id.attr('checked', true);
+            $(this).addClass('table-success');
+        }
     });
     $(document).on('click', '#add_services', function(){
         var inputs = $('tr.service_id_choose input[name="service_id[]"]:checked');
