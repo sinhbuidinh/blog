@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\GuestService;
 use App\Services\ParcelService;
+use App\Request\Admin\CreateGuest;
 
 class GuestController extends Controller
 {
@@ -37,7 +38,7 @@ class GuestController extends Controller
         return view('admin.guest.input', $data);
     }
 
-    public function create(Request $request)
+    public function create(CreateGuest $request)
     {
         dd('guest create');
     }

@@ -46,7 +46,7 @@ return [
     'representative' => 'Tên người đại diện',
     'fax' => 'FAX',
     'tax_code' => 'Mã số thuế',
-    'tax_address' => 'Xuất hóa đơn tới',
+    'tax_address' => 'Đ/c Xuất hóa đơn',
     'represent_tel' => 'SDT',
     'email' => 'Email',
     'represent_email' => 'Email',

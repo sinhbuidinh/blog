@@ -53,8 +53,8 @@
                     <div class="col-sm-6 left">
                         <p class="file_form_top_title">{{ trans('label.guest_info') }}</p>
                         <div class="row">
-                            <div class="col-sm-4 align-self-center">{{ trans('label.guest_code') }}</div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-4 my-auto">{{ trans('label.guest_code') }}</div>
+                            <div class="col-sm-8 my-auto">
                                 <select id="guest_id" name="guest_id" class="form-control">
                                     <option value="">Chọn mã khách hàng</option>
                                     @if(!empty($guests))
@@ -81,23 +81,23 @@
                     <div class="col-sm-6 right">
                         <p class="file_form_top_title">{{ trans('label.receiver_info') }}</p>
                         <div class="row">
-                            <div class="col-sm-6">{{ trans('label.full_name') }}</div>
-                            <div class="col-sm-6">{{ trans('label.tel') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.full_name') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.tel') }}</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="text" class="full_width form-control" name="receiver" value="{{ old('receiver') }}">
+                                <input type="text" class="full_width form-control my-auto" name="receiver" value="{{ old('receiver') }}">
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" class="full_width form-control" name="receiver_tel" value="{{ old('receiver_tel') }}">
+                                <input type="text" class="full_width form-control my-auto" name="receiver_tel" value="{{ old('receiver_tel') }}">
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">{{ trans('label.provincial') }}</div>
-                            <div class="col-sm-6">{{ trans('label.district') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.provincial') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.district') }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 my-auto">
                                 <select id="province" class="full_width form-control" name="province">
                                     <option value="">{{ trans('label.please_choose') }}</option>
                                     @if(!empty($provincials))
@@ -116,7 +116,7 @@
                                     @endif
                                 </select>
                             </div>
-                            <div class="col-sm-6" id="div_districts">
+                            <div class="col-sm-6 my-auto" id="div_districts">
                                 <select name="district" class="full_width form-control" id="district">
                                     <option>{{ trans('label.please_choose') }}</option>
                                     @if(!empty($districts))
@@ -140,10 +140,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 ">{{ trans('label.ward') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.ward') }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6" id="div_wards">
+                            <div class="col-sm-6 my-auto" id="div_wards">
                                 <select name="ward" class="full_width form-control" id="ward">
                                     <option>{{ trans('label.please_choose') }}</option>
                                     @if(!empty($wards))
@@ -167,10 +167,10 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">{{ trans('label.address') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.address') }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12 my-auto">
                                 <input type="text" class="full_width form-control" name="address" id="address" value="{{ old('address') }}">
                             </div>
                         </div>
@@ -183,8 +183,8 @@
                     <div class="row col-sm-12">
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-5 align-self-center">{{ trans('label.parcel_type') }}</div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-5 my-auto">{{ trans('label.parcel_type') }}</div>
+                                <div class="col-sm-7 my-auto">
                                     <select name="type" class="full_width form-control" id="parcel_type">
                                         <option>{{ trans('label.please_choose') }}</option>
                                         @if(!empty($parcel_types))
@@ -209,8 +209,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-4 align-self-center">{{ trans('label.weight') }}</div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-4 my-auto">{{ trans('label.weight') }}</div>
+                                <div class="col-sm-8 my-auto">
                                     <input type="text" name="weight" 
                                         value="{{ old('weight', '0.100') }}" class="full_width form-control" id="weight" />
                                     @if ($errors->has('weight'))
@@ -223,8 +223,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-4 align-self-center">{{ trans('label.real_weight') }}</div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-4 my-auto">{{ trans('label.real_weight') }}</div>
+                                <div class="col-sm-8 my-auto">
                                     <input type="text" name="real_weight" 
                                         value="{{ old('real_weight', '0.100') }}"
                                         id="real_weight" class="full_width form-control" />
@@ -240,8 +240,8 @@
                     <div class="row col-sm-12">
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-5 align-self-center">{{ trans('label.long') }}</div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-5 my-auto">{{ trans('label.long') }}</div>
+                                <div class="col-sm-7 my-auto">
                                     <input type="text" name="long" class="full_width form-control"
                                         value="{{ old('long', 0.00) }}" id="long" />
                                     @if ($errors->has('long'))
@@ -254,8 +254,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-4 align-self-center">{{ trans('label.wide') }}</div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-4 my-auto">{{ trans('label.wide') }}</div>
+                                <div class="col-sm-8 my-auto">
                                     <input type="text" name="wide" class="full_width form-control"
                                         value="{{ old('wide', '0.00') }}" id="wide" />
                                     @if ($errors->has('wide'))
@@ -268,8 +268,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-4 align-self-center">{{ trans('label.height') }}</div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-4 my-auto">{{ trans('label.height') }}</div>
+                                <div class="col-sm-8 my-auto">
                                     <input type="text" name="height" value="{{ old('height', '0.00') }}"
                                         id="height" class="full_width form-control" />
                                     @if ($errors->has('height'))
@@ -284,8 +284,8 @@
                     <div class="row col-sm-12">
                         <div class="col-sm-4">
                             <div class="row">
-                                <div class="col-sm-5 align-self-center">{{ trans('label.num_package') }}</div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-5 my-auto">{{ trans('label.num_package') }}</div>
+                                <div class="col-sm-7 my-auto">
                                     <input type="number" name="num_package" value="{{ old('num_package', 1) }}" class="full_width form-control">
                                 </div>
                             </div>
@@ -298,8 +298,8 @@
                     <div class="row col-sm-12">
                         <div class="col-sm-5">
                             <div class="row">
-                                <div class="col-sm-5 align-self-center">{{ trans('label.type_transfer') }}</div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-5 my-auto">{{ trans('label.type_transfer') }}</div>
+                                <div class="col-sm-7 my-auto">
                                     <select name="type_transfer" class="full_width form-control" id="service_type">
                                         <option>{{ trans('label.please_choose') }}</option>
                                         @if(!empty($transfer_types))
@@ -324,8 +324,8 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
-                                <div class="col-sm-5 align-self-center">{{ trans('label.time_input') }}</div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-5 my-auto">{{ trans('label.time_input') }}</div>
+                                <div class="col-sm-7 my-auto">
                                     <input type="text" name="time_input" value="{{ old('time_input', now()->format('d-m-Y h:m:s')) }}" class="full_width datepicker form-control">
                                     @if ($errors->has('time_input'))
                                     <p class="common_form_error">
@@ -339,8 +339,8 @@
                     <div class="row col-sm-12">
                         <div class="col-sm-5">
                             <div class="row">
-                                <div class="col-sm-5 align-self-center">{{ trans('label.services') }}</div>
-                                <div class="col-sm-7">
+                                <div class="col-sm-5 my-auto">{{ trans('label.services') }}</div>
+                                <div class="col-sm-7 my-auto">
                                     <button type="button" name="service_list" id="service_list" class="full_width" data-toggle="modal" data-target="#services_list_model">{{ trans('label.services') }}</button>
                                     <input type="hidden" name="services" value="{{ old('services') }}">
                                 </div>
@@ -355,37 +355,37 @@
                         <table id="price_info" class="file_table">
                         <tbody>
                             <tr>
-                                <td class="title align-self-center">{{ trans('label.price') }}</td>
+                                <td class="title my-auto">{{ trans('label.price') }}</td>
                                 <td><input type="text" name="price" class="form-control" value="{{ old('price') }}"></td>
-                                <td class="title align-self-center">{{ trans('label.cod') }}</td>
+                                <td class="title my-auto">{{ trans('label.cod') }}</td>
                                 <td><input type="text" name="cod" class="form-control" value="{{ old('cod') }}"></td>
                             </tr>
                             <tr>
-                                <td class="title align-self-center">{{ trans('label.refund') }}</td>
+                                <td class="title my-auto">{{ trans('label.refund') }}</td>
                                 <td>
                                     <input type="text" name="cod" class="form-control" value="{{ old('refund') }}">
                                 </td>
-                                <td class="title align-self-center">{{ trans('label.support_gas') }}</td>
+                                <td class="title my-auto">{{ trans('label.support_gas') }}</td>
                                 <td class="rate_value">
                                     <input type="text" class="form-control" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % <input type="text" class="form-control" name="support_gas" value="{{ old('support_gas') }}">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="title align-self-center">{{ trans('label.forward') }}</td>
+                                <td class="title my-auto">{{ trans('label.forward') }}</td>
                                 <td>
                                     <input type="text" class="form-control" name="cod" value="{{ old('forward') }}">
                                 </td>
-                                <td class="title align-self-center">{{ trans('label.support_remote') }}</td>
+                                <td class="title my-auto">{{ trans('label.support_remote') }}</td>
                                 <td class="rate_value">
                                     <input type="text" class="form-control" name="support_remote_rate" value="{{ data_get($default, 'support_remote') }}"> % <input type="text" class="form-control" name="support_remote" value="{{ old('support_remote') }}">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="title align-self-center">{{ trans('label.vat') }}</td>
+                                <td class="title my-auto">{{ trans('label.vat') }}</td>
                                 <td class="rate_value">
                                     <input type="text" name="vat" class="form-control" value="{{ data_get($default, 'vat') }}"> % <input type="text" name="price_vat" class="form-control" value="{{ old('price_vat') }}">
                                 </td>
-                                <td class="title bold align-self-center">{{ trans('label.total') }}</td>
+                                <td class="title bold my-auto">{{ trans('label.total') }}</td>
                                 <td>
                                     <input type="text" class="form-control" name="total" value="{{ old('total') }}">
                                 </td>
