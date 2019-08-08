@@ -11,6 +11,11 @@
                 <img src="{{ asset('images/admin/sidebar/parcel.png?v=1.0.1') }}">Parcel
             </a>
         </li>
+        <li>
+            <a href="{{ route('guest') }}" class="{{ $controller == 'GuestController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">Guest
+            </a>
+        </li>
     </ul>
     </div>
 </div>
