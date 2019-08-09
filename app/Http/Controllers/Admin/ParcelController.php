@@ -50,7 +50,7 @@ class ParcelController extends Controller
         //invalid => view input with error
     }
 
-    public function ajaxGetDistricts(Request $request, $provinceId = null) 
+    public function ajaxGetDistricts($provinceId = null) 
     {
         $districts = $this->parcelService->getDistrictByProvinceId($provinceId);
         return response()->json($districts);

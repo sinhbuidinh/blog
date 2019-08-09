@@ -23,3 +23,18 @@ function code2Name(string $link)
     }
     return array_combine(array_values($codes), array_values($names));
 }
+function generateTraceMessage($exception) 
+{
+    $trace            = $exception->getTrace();
+    $last_action_file = data_get($trace, '0.file');
+    $last_action_line = data_get($trace, '0.line');
+    $message          = $exception->getMessage();
+    return $message.' at '.$last_action_file.':'.$last_action_line;
+}
+function genGuestCode($id)
+{
+    if (empty($id)) {
+        return false;
+    }
+    return config('setting.guest_code').'-'.sprintf('%03d', $id);
+}

@@ -3,10 +3,15 @@ var please_choose_ward = 'Chọn xã/phường';
 
 $(document).on('change', '#province', function(){
     var select_province = $(this).find(":selected");
-    var url = select_province.data('districts');
-    if (typeof url == 'undefined') {
+    actionProvince(select_province);
+});
+function actionProvince(select_province)
+{
+    select_province = typeof select_province !== 'undefined' ? select_province : $('#province').find(':selected');
+    if (typeof select_province.data('districts') == 'undefined') {
         return false;
     }
+    var url = select_province.data('districts');
     province_name = select_province.data('display');
     displayAddress(province_name);
     $.ajax({
@@ -17,16 +22,18 @@ $(document).on('change', '#province', function(){
         success: function(data){
             genDistricts(data);
         },
-        error: function(){
-            alert('district error');
+        error: function(xhr, status, error){
+            console.log(xhr);
+            console.log(status);
+            alert('district error: ' + error);
         }
     });
-});
+}
 function displayAddress(province, district, ward)
 {
     province = typeof province !== 'undefined' ? province : '';
     district = typeof district !== 'undefined' ? district : '';
-    ward     = typeof ward !== 'undefined' ? ward : '';
+    ward     = typeof ward     !== 'undefined' ? ward     : '';
     var result = '';
     if (ward != '') {
         if (result != '') {
@@ -65,6 +72,7 @@ function genDistricts(data)
     });
     districts += '</select>';
     $('#district').remove();
+    $('#div_districts').find('div.common_form_error').remove();
     $('#div_districts').append(districts);
 }
 function optionDistrict(name, code, url, display)
@@ -73,6 +81,10 @@ function optionDistrict(name, code, url, display)
 }
 $(document).on('change', '#district', function(){
     var select_district = $(this).find(":selected");
+    actionDistrict(select_district);
+});
+function actionDistrict(select_district)
+{
     var url = select_district.data('wards');
     if (typeof url == 'undefined') {
         return false;
@@ -89,11 +101,12 @@ $(document).on('change', '#district', function(){
         success: function(data){
             genWards(data);
         },
-        error: function(){
-            alert('ward error');
+        error: function(xhr, status, error){
+            var err = eval("(" + xhr.responseText + ")");
+            alert('ward error: ' + err);
         }
     });
-});
+}
 function genWards(data)
 {
     if (typeof data != 'object' || Object.keys(data).length <= 0) {

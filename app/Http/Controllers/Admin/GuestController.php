@@ -34,12 +34,27 @@ class GuestController extends Controller
     {
         $data = [
             'provincials' => $this->parcelService->getProvincials(),
+            'districts'   => $this->parcelService->getDistrictByProvinceId(old('province')),
+            'wards'       => $this->parcelService->getWardsByDistrictId(old('district')),
         ];
         return view('admin.guest.input', $data);
     }
 
     public function create(CreateGuest $request)
     {
-        dd('guest create');
+        $data = $request->only(['representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'province', 'district', 'ward', 'address']);
+        list($result, $message) = $this->guestService->newGuest($data);
+        if ($result !== false) {
+            session()->flash('success', trans('message.create_guest_success'));
+            return redirect()->route('create.guest.complete');
+        }
+        session()->flash('error', $message);
+        return redirect()->route('guest.input')->withInput();
+    }
+
+    public function complete()
+    {
+        $data['message'] = session()->has('success') ? session()->get('success') : 'Complete';
+        return view('admin.guest.complete', $data);
     }
 }

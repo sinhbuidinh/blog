@@ -15,9 +15,9 @@
         <div class="index_top_block">
             <h1 class="common_page_title">{{ trans('message.create_guest') }}</h1>
         </div>
-        @if(Session::has('flashError'))
+        @if(Session::has('error'))
         <div class="form_box">
-            <p class="alert">{{ Session::get('flashError') }}</p>
+            <p class="alert">{{ Session::get('error') }}</p>
         </div>
         @endif
         <div class="file_form_wrap">
@@ -195,6 +195,7 @@
                                         }
                                     @endphp
                                     <option value="{{ $code }}" 
+                                    data-wards="/ajax/get_wards/{{ $code }}"
                                     data-display="{{ data_get($district, 'name_with_type') }}" {{$districted}}>{{ data_get($district, 'name_with_type') }}</option>
                                 @endforeach
                                 @endif
@@ -225,7 +226,7 @@
                                         }
                                     @endphp
                                     <option 
-                                    data-display="{{ data_get($name, 'name_with_type') }}" value="{{ $code }}" {{$ward_checked}}>{{ data_get($ward, 'name_with_type') }}</option>
+                                    data-display="{{ data_get($ward, 'name_with_type') }}" value="{{ $code }}" {{$ward_checked}}>{{ data_get($ward, 'name_with_type') }}</option>
                                 @endforeach
                                 @endif
                             </select>

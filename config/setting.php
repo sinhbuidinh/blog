@@ -4,6 +4,7 @@ return [
     'pager' => [
         'common_limit' => 10
     ],
+    'guest_code' => 'KH',
     'default' => [
         'vat' => 10,
         'support_gas' => 20,
