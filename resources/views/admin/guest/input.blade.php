@@ -44,7 +44,7 @@
                         <div class="col-sm-2 my-auto">{{ trans('label.represent_tel') }}</div>
                         <div class="col-sm-4 my-auto">
                             @php
-                                $represent_tel_invalid = $errors->has('represent_email') ? ' is-invalid' : '';
+                                $represent_tel_invalid = $errors->has('represent_tel') ? ' is-invalid' : '';
                             @endphp
                             <input type="text" class="full_width form-control{{ $represent_tel_invalid }}" name="represent_tel" value="{{ old('represent_tel') }}">
                             @if ($errors->has('represent_tel'))

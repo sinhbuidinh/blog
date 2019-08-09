@@ -57,7 +57,7 @@ class CreateGuest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ":attribute bắt buộc nhập",
+            'required' => "Bắt buộc nhập",
         ];
     }
 }
