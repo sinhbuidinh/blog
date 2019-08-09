@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ParcelService;
+use App\Request\Admin\CreateParcel;
 
 class ParcelController extends Controller
 {
@@ -42,7 +43,7 @@ class ParcelController extends Controller
         return view('admin.parcel.input', $data);
     }
 
-    public function create(Request $request)
+    public function create(CreateParcel $request)
     {
         dd('parcel create');
         //valid => back index
