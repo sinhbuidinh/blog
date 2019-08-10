@@ -34,6 +34,7 @@ Route::post('/register', '\App\Http\Controllers\Auth\RegisterController@register
 Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 
+Route::post('/ajax/get_price', '\App\Http\Controllers\Admin\ParcelController@ajaxCalculatePrice')->name('ajax.calculate.price');
 Route::post('/ajax/get_districts/{province}', '\App\Http\Controllers\Admin\ParcelController@ajaxGetDistricts')->name('district.by.province');
 Route::post('/ajax/get_wards/{district}', '\App\Http\Controllers\Admin\ParcelController@ajaxGetWards')->name('ward.by.district');
 

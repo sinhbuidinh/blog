@@ -45,3 +45,25 @@ function stringify2array($string)
     }
     return json_decode(html_entity_decode(stripslashes($string)), true);
 }
+function array_key_last($array)
+{
+    if (!is_array($array) || empty($array)) {
+        return NULL;
+    }
+    return array_keys($array)[count($array)-1];
+}
+function formatPrice($price, $decimals = 2, $end = '')
+{
+    if ($price === '' || $price === null) {
+        return '';
+    }
+    
+    if (!is_numeric($price)) {
+        $price = 0;
+    }
+
+    if (strpos($price, '.') === false) {
+        return number_format($price).$end;
+    }
+    return number_format($price, $decimals).$end;
+}

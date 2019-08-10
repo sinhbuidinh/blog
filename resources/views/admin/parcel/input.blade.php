@@ -483,17 +483,17 @@
                                     @php
                                         $price_invalid = $errors->has('price') ? ' is-invalid' : '';
                                     @endphp
-                                    <input type="text" name="price" class="form-control{{ $price_invalid }}" value="{{ old('price') }}">
+                                    <input type="text" id="price" name="price" class="form-control{{ $price_invalid }}" value="{{ old('price') }}">
                                 </td>
                                 <td class="title my-auto">{{ trans('label.cod') }}</td>
                                 <td>
-                                    <input type="text" name="cod" class="form-control" value="{{ old('cod') }}">
+                                    <input type="text" id="cod" name="cod" class="form-control" value="{{ old('cod') }}">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="title my-auto">{{ trans('label.refund') }}</td>
                                 <td>
-                                    <input type="text" name="refund" class="form-control" value="{{ old('refund') }}">
+                                    <input type="text" id="refund" name="refund" class="form-control" value="{{ old('refund') }}">
                                 </td>
                                 <td class="title my-auto">{{ trans('label.support_gas') }}</td>
                                 <td class="rate_value">
@@ -501,13 +501,13 @@
                                         $gas_rate_invalid = $errors->has('support_gas_rate') ? ' is-invalid' : '';
                                         $gas_invalid = $errors->has('support_gas') ? ' is-invalid' : '';
                                     @endphp
-                                    <input type="text" class="form-control{{ $gas_rate_invalid }}" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % <input type="text" class="form-control{{ $gas_invalid }}" name="support_gas" value="{{ old('support_gas') }}">
+                                    <input type="text" class="form-control{{ $gas_rate_invalid }}" id="support_gas_rate" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % <input type="text" class="form-control{{ $gas_invalid }}" id="support_gas" name="support_gas" value="{{ old('support_gas') }}">
                                 </td>
                             </tr>
                             <tr>
                                 <td class="title my-auto">{{ trans('label.forward') }}</td>
                                 <td>
-                                    <input type="text" class="form-control" name="cod" value="{{ old('forward') }}">
+                                    <input type="text" id="forward" class="form-control" name="forward" value="{{ old('forward') }}">
                                 </td>
                                 <td class="title my-auto">{{ trans('label.support_remote') }}</td>
                                 <td class="rate_value">
@@ -515,7 +515,7 @@
                                         $remote_rate_invalid = $errors->has('support_remote_rate') ? ' is-invalid' : '';
                                         $remote_invalid = $errors->has('support_remote') ? ' is-invalid' : '';
                                     @endphp
-                                    <input type="text" class="form-control{{ $remote_rate_invalid }}" name="support_remote_rate" value="{{ data_get($default, 'support_remote') }}"> % <input type="text" class="form-control{{ $remote_invalid }}" name="support_remote" value="{{ old('support_remote') }}">
+                                    <input type="text" class="form-control{{ $remote_rate_invalid }}" id="support_remote_rate" name="support_remote_rate" value="{{ data_get($default, 'support_remote') }}"> % <input type="text" class="form-control{{ $remote_invalid }}" id="support_remote" name="support_remote" value="{{ old('support_remote') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -525,14 +525,14 @@
                                         $vat_rate_invalid = $errors->has('vat') ? ' is-invalid' : '';
                                         $vat_invalid = $errors->has('price_vat') ? ' is-invalid' : '';
                                     @endphp
-                                    <input type="text" name="vat" class="form-control{{ $vat_rate_invalid }}" value="{{ data_get($default, 'vat') }}"> % <input type="text" name="price_vat" class="form-control{{ $vat_invalid }}" value="{{ old('price_vat') }}">
+                                    <input type="text" id="vat" name="vat" class="form-control{{ $vat_rate_invalid }}" value="{{ data_get($default, 'vat') }}"> % <input type="text" name="price_vat" id="price_vat" class="form-control{{ $vat_invalid }}" value="{{ old('price_vat') }}">
                                 </td>
                                 <td class="title bold my-auto">{{ trans('label.total') }}</td>
                                 <td>
                                     @php
                                         $total_invalid = $errors->has('total') ? ' is-invalid' : '';
                                     @endphp
-                                    <input type="text" class="form-control{{ $total_invalid }}" name="total" value="{{ old('total') }}">
+                                    <input type="text" id="total" class="form-control{{ $total_invalid }}" name="total" value="{{ old('total') }}">
                                 </td>
                             </tr>
                         </tbody>
@@ -547,6 +547,10 @@
             </form>
         </div>
     </div>
+</div>
+
+<div style="display:none;">
+    <input type="hidden" id="url_get_price" value="{{ route('ajax.calculate.price') }}">
 </div>
 
 <div class="modal fade" id="services_list_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -640,16 +644,85 @@
         displayGuestInfo(guest);
         addService();
     });
-    $(document).on('change', '#services, #weight, #real_weight, #long, #wide, #height, #province, #district, #ward, #guest_id', function (){
+    $(document).on('change', '#services, #weight, #real_weight, #long, #wide, #height, #num_package, #province, #district, #ward, #guest_id', function (){
         console.log('re-calculate price');
-        //@TODO
+        var province     = $('#province').val();
+        var district     = $('#district').val();
+        var ward         = $('#ward').val();
+        var guest        = $('#guest_id').val();
+        var service_type = $('#service_type').val();
+        var weight       = $('#weight').val();
+        var real_weight  = $('#real_weight').val();
+        if (isNotSelected(province) 
+            || isNotSelected(district) 
+            || isNotSelected(ward) 
+            || isNotSelected(guest)
+            || isNotSelected(service_type)
+            || isNotSelected(weight)
+            || isNotSelected(real_weight)
+        ) {
+            console.log('not enough params');
+            return false;
+        }
+        var data = {
+            province: province,
+            district: district,
+            ward: ward,
+            guest: guest,
+            service_type: service_type,
+            weight: weight,
+            real_weight: real_weight,
+        };
+        var price = calPrice(data);
+        console.log('price:' +price);
+        var service = calService();
+        console.log('service:' +service);
+    });
+    function calPrice(input_obj)
+    {
+        //ajax cal
+        $.ajax({
+            type: "POST",
+            url: $('#url_get_price').val(),
+            data: input_obj,
+            dataType: 'json',
+            success: function(data){
+                $('#price').val(data.total);
+                return data.total;
+            },
+            error: function(xhr, status, error){
+                console.log('district error: ' + error);
+                return 0;
+            }
+        });
+    }
+    function isNotSelected(value)
+    {
+        if (typeof value == 'undefined' || value == '') {
+            return true;
+        }
+        return false;
+    }
+    function calService()
+    {
+        var total = 0;
         var services = $('tr.service_id_choose input[name="service_id[]"]:checked');
+        if (services.length == 0) {
+            return total;
+        }
+        var price = $('#price').val();
         services.each(function(index){
             var math = $(this).data('math');
             var value = $(this).val();
             console.log(index + ': ' + math + '/' + value);
+            if (math == '*') {
+                total += (price * value);
+            } else {
+                total += value;
+            }
         });
-    });
+        return total;
+    }
     $(document).on('click', '#back_index', function(){
         var location = $(this).data('location');
         window.location.href = location;
@@ -702,7 +775,7 @@
         });
         //re-calculate price @TODO
         $('#services_display').val(display.join(', '));
-        $('#services').val(JSON.stringify(services));
+        $('#services').val(JSON.stringify(services)).trigger('change');
         closePopup();
     }
     //function add service & price

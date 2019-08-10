@@ -23,8 +23,6 @@ function actionProvince(select_province)
             genDistricts(data);
         },
         error: function(xhr, status, error){
-            console.log(xhr);
-            console.log(status);
             alert('district error: ' + error);
         }
     });
@@ -102,8 +100,7 @@ function actionDistrict(select_district)
             genWards(data);
         },
         error: function(xhr, status, error){
-            var err = eval("(" + xhr.responseText + ")");
-            alert('ward error: ' + err);
+            alert('ward error: ' + error);
         }
     });
 }
