@@ -37,11 +37,7 @@
         <div class="index_top_block">
             <h1 class="common_page_title">Tạo bưu phẩm</h1>
         </div>
-        @if(Session::has('flashError'))
-        <div class="form_box">
-            <p class="alert">{{ Session::get('flashError') }}</p>
-        </div>
-        @endif
+        @include('admin.layouts.session-message')
         <div class="file_form_wrap">
             <form class="login_form skip_alert_changes" action="{{ route('parcel.create') }}" id="parcel_form" method="post">
                 <div class="hidden">

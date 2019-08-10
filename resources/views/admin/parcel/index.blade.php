@@ -19,6 +19,7 @@
             </div>
         </form>
     </div>
+    @include('admin.layouts.session-message')
 
     {!! $parcels->links('admin.layouts.pagination-total') !!}
     <div class="page_list_block">

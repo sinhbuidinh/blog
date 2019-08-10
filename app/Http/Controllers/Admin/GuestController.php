@@ -57,4 +57,36 @@ class GuestController extends Controller
         $data['message'] = session()->has('success') ? session()->get('success') : 'Complete';
         return view('admin.guest.complete', $data);
     }
+
+    public function edit(Request $request, $id = null)
+    {
+        $guest = $this->guestService->findById($id);
+        $data = [
+            'guest'       => $guest,
+            'provincials' => $this->parcelService->getProvincials(),
+            'districts'   => $this->parcelService->getDistrictByProvinceId(data_get($guest, 'provincial')),
+            'wards'       => $this->parcelService->getWardsByDistrictId(data_get($guest, 'district')),
+        ];
+        return view('admin.guest.edit', $data);
+    }
+
+    public function update(CreateGuest $request, $id = null)
+    {
+        $data = $request->only(['representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'province', 'district', 'ward', 'address']);
+        list($result, $message) = $this->guestService->updateGuest($data, $id);
+        if ($result !== false) {
+            session()->flash('success', trans('message.update_guest_success'));
+            return redirect()->route('create.guest.complete');
+        }
+        session()->flash('error', $message);
+        return redirect()->route('guest.edit', $id)->withInput();
+    }
+
+    public function delete(Request $request, $id = null)
+    {
+        $guest = $this->guestService->findById($id);
+        $guest->delete();
+        session()->flash('success', trans('message.delete_guest_success'));
+        return redirect()->route('guest');
+    }
 }

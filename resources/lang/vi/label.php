@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'edit' => 'Sửa',
+    'delete' => 'Xóa',
     'please_choose' => 'Please choose',
     'guest_info' => 'Thông tin khách hàng',
     'receiver_info' => 'Thông tin người nhận',
@@ -47,7 +49,7 @@ return [
     'fax' => 'FAX',
     'tax_code' => 'Mã số thuế',
     'tax_address' => 'Đ/c Xuất hóa đơn',
-    'represent_tel' => 'SDT',
+    'represent_tel' => 'SDT đại diện',
     'email' => 'Email',
     'represent_email' => 'Email',
     'address_info' => 'Thông tin địa chỉ',

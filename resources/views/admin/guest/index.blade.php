@@ -19,7 +19,7 @@
             </div>
         </form>
     </div>
-
+    @include('admin.layouts.session-message')
     {!! $guests->links('admin.layouts.pagination-total') !!}
     <div class="page_list_block">
         <div class="page_table">
@@ -27,35 +27,35 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="page_table">
                     <thead>
                         <tr>
-                            <th class="table_title">会社名</th>
-                            <th class="table_title">請求者名</th>
-                            <th class="table_title">ステータス</th>
-                            <th class="table_title small">詳細</th>
-                            <th class="table_title small">編集</th>
-                            <th class="table_title small">削除</th>
+                            <th class="table_title">{{ trans('label.guest_code') }}</th>
+                            <th class="table_title">{{ trans('label.company_name') }}</th>
+                            <th class="table_title">{{ trans('label.address') }}</th>
+                            <th class="table_title">{{ trans('label.tel') }}</th>
+                            <th class="table_title">{{ trans('label.tax_code') }}</th>
+                            <th class="table_title">{{ trans('label.representative') }}</th>
+                            <th class="table_title">{{ trans('label.represent_tel') }}</th>
+                            <th class="table_title small">{{ trans('label.edit') }}</th>
+                            <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
                     </thead>
                     @if($guests)
                     @foreach ($guests as $guest)
                     <tbody>
                     <tr>
-                        <td class="table_text">{{ $company->company_name }}</td>
-                        <td class="table_text">{{ $company->sender_name }}</td>
-                        <td class="table_text">
-                            <p class="status_label">{{ $company->statusName }}</p>
-                        </td>
+                        <td class="table_text">{{ $guest->guest_code }}</td>
+                        <td class="table_text">{{ $guest->company_name }}</td>
+                        <td class="table_text">{{ $guest->address }}</td>
+                        <td class="table_text">{{ $guest->tel }}</td>
+                        <td class="table_text">{{ $guest->tax_code }}</td>
+                        <td class="table_text">{{ $guest->representative }}</td>
+                        <td class="table_text">{{ $guest->represent_tel }}</td>
                         <td class="table_text small">
-                            <a href="{{ route('detail_company', $company->id) }}">
-                                <img src="{{ asset('images/detail.png?v=1.0.1') }}" />
-                            </a>
-                        </td>
-                        <td class="table_text small">
-                            <a href="{{ route('edit_company', $company->id) }}">
+                            <a href="{{ route('guest.edit', $guest->id) }}">
                                 <img src="{{ asset('images/edit.png?v=1.0.1') }}">
                             </a>
                         </td>
                         <td class="table_text small">
-                            <a href="{{ route('delete_company', $company->id) }}">
+                            <a href="{{ route('guest.delete', $guest->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
                         </td>

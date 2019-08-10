@@ -17,7 +17,7 @@
         </div>
         @include('admin.layouts.session-message')
         <div class="file_form_wrap">
-            <form class="login_form skip_alert_changes" action="{{ route('guest.create') }}" id="parcel_form" method="post">
+            <form class="login_form skip_alert_changes" action="{{ route('guest.update', data_get($guest, 'id')) }}" id="parcel_form" method="post">
                 <div class="hidden">
                     {{ csrf_field() }}
                     <input type="hidden" id="tax_value" value="10" />
@@ -25,12 +25,18 @@
                 <div class="row col-sm-12">
                     <p class="file_form_top_title">{{ trans('label.representative_info') }}</p>
                     <div class="row col-sm-12">
+                        <div class="col-sm-2">{{ trans('label.guest_code') }}</div>
+                        <div class="col-sm-4">
+                            <input type="text" disabled="disabled" class="full_width form-control" name="guest_code" value="{{ data_get($guest, 'guest_code') }}">
+                        </div>
+                    </div>
+                    <div class="row col-sm-12">
                         <div class="col-sm-2 my-auto">{{ trans('label.representative') }}</div>
                         <div class="col-sm-4 my-auto">
                             @php
                                 $representative_invalid = $errors->has('representative') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $representative_invalid }}" name="representative" value="{{ old('representative') }}">
+                            <input type="text" class="full_width form-control{{ $representative_invalid }}" name="representative" value="{{ old('representative', data_get($guest, 'representative')) }}">
                             @if ($errors->has('representative'))
                             <p class="common_form_error">
                                 {{ $errors->first('representative') }}
@@ -42,7 +48,7 @@
                             @php
                                 $represent_tel_invalid = $errors->has('represent_tel') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $represent_tel_invalid }}" name="represent_tel" value="{{ old('represent_tel') }}">
+                            <input type="text" class="full_width form-control{{ $represent_tel_invalid }}" name="represent_tel" value="{{ old('represent_tel', data_get($guest, 'represent_tel')) }}">
                             @if ($errors->has('represent_tel'))
                             <p class="common_form_error">
                                 {{ $errors->first('represent_tel') }}
@@ -56,7 +62,7 @@
                             @php
                                 $represent_email_invalid = $errors->has('represent_email') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $represent_email_invalid }}" name="represent_email" value="{{ old('represent_email') }}">
+                            <input type="text" class="full_width form-control{{ $represent_email_invalid }}" name="represent_email" value="{{ old('represent_email', data_get($guest, 'represent_email')) }}">
                             @if ($errors->has('represent_email'))
                             <p class="common_form_error">
                                 {{ $errors->first('represent_email') }}
@@ -71,7 +77,7 @@
                             @php
                                 $company_name_invalid = $errors->has('company_name') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $company_name_invalid }}" name="company_name" value="{{ old('company_name') }}">
+                            <input type="text" class="full_width form-control{{ $company_name_invalid }}" name="company_name" value="{{ old('company_name', data_get($guest, 'company_name')) }}">
                             @if ($errors->has('company_name'))
                             <p class="common_form_error">
                                 {{ $errors->first('company_name') }}
@@ -83,7 +89,7 @@
                             @php
                                 $email_invalid = $errors->has('email') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $email_invalid }}" name="email" value="{{ old('email') }}">
+                            <input type="text" class="full_width form-control{{ $email_invalid }}" name="email" value="{{ old('email', data_get($guest, 'email')) }}">
                             @if ($errors->has('email'))
                             <p class="common_form_error">
                                 {{ $errors->first('email') }}
@@ -97,7 +103,7 @@
                             @php
                                 $tel_invalid = $errors->has('tel') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $tel_invalid }}" name="tel" value="{{ old('tel') }}">
+                            <input type="text" class="full_width form-control{{ $tel_invalid }}" name="tel" value="{{ old('tel', data_get($guest, 'tel')) }}">
                             @if ($errors->has('tel'))
                             <p class="common_form_error">
                                 {{ $errors->first('tel') }}
@@ -109,7 +115,7 @@
                             @php
                                 $fax_invalid = $errors->has('fax') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $fax_invalid }}" name="fax" value="{{ old('fax') }}">
+                            <input type="text" class="full_width form-control{{ $fax_invalid }}" name="fax" value="{{ old('fax', data_get($guest, 'fax')) }}">
                             @if ($errors->has('fax'))
                             <p class="common_form_error">
                                 {{ $errors->first('fax') }}
@@ -123,7 +129,7 @@
                             @php
                                 $tax_code_invalid = $errors->has('tax_code') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $tax_code_invalid }}" name="tax_code" value="{{ old('tax_code') }}">
+                            <input type="text" class="full_width form-control{{ $tax_code_invalid }}" name="tax_code" value="{{ old('tax_code', data_get($guest, 'tax_code')) }}">
                             @if ($errors->has('tax_code'))
                             <p class="common_form_error">
                                 {{ $errors->first('tax_code') }}
@@ -135,7 +141,7 @@
                             @php
                                 $tax_address_invalid = $errors->has('tax_address') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $tax_address_invalid }}" name="tax_address" value="{{ old('tax_address') }}">
+                            <input type="text" class="full_width form-control{{ $tax_address_invalid }}" name="tax_address" value="{{ old('tax_address', data_get($guest, 'tax_address')) }}">
                             @if ($errors->has('tax_address'))
                             <p class="common_form_error">
                                 {{ $errors->first('tax_address') }}
@@ -159,7 +165,7 @@
                                 @foreach ($provincials as $code => $info)
                                     @php
                                         $check = '';
-                                        if (old('province', -999) == $code) {
+                                        if (old('province', data_get($guest, 'provincial')) == $code) {
                                             $check = ' selected="selected"';
                                         }
                                     @endphp
@@ -186,7 +192,7 @@
                                 @foreach ($districts as $code => $district)
                                     @php
                                         $districted = '';
-                                        if (old('district', -999) == $code) {
+                                        if (old('district', data_get($guest, 'district')) == $code) {
                                             $districted = ' selected="selected"';
                                         }
                                     @endphp
@@ -217,7 +223,7 @@
                                 @foreach ($wards as $code => $ward)
                                     @php
                                         $ward_checked = '';
-                                        if (old('ward', -999) == $code) {
+                                        if (old('ward', data_get($guest, 'ward')) == $code) {
                                             $ward_checked = ' selected="selected"';
                                         }
                                     @endphp
@@ -241,7 +247,7 @@
                             @php
                                 $address_invalid = $errors->has('address') ? ' is-invalid' : '';
                             @endphp
-                            <input type="text" class="full_width form-control{{ $address_invalid }}" name="address" id="address" value="{{ old('address') }}">
+                            <input type="text" class="full_width form-control{{ $address_invalid }}" name="address" id="address" value="{{ old('address', data_get($guest, 'address')) }}">
                             @if ($errors->has('address'))
                             <p class="common_form_error">
                                 {{ $errors->first('address') }}
@@ -251,7 +257,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button class="btn btn-primary" type="submit">{{ trans('label.create_guest') }}</button>
+                    <button class="btn btn-primary" type="submit">{{ trans('label.edit') }}</button>
                 </div>
             </form>
         </div>

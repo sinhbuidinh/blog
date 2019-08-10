@@ -55,6 +55,9 @@ Route::group([
         Route::get('/', 'GuestController@index')->name('guest');
         Route::get('/create', 'GuestController@input')->name('guest.input');
         Route::post('/create', 'GuestController@create')->name('guest.create');
+        Route::post('/update/{id}', 'GuestController@update')->name('guest.update');
         Route::get('/complete', 'GuestController@complete')->name('create.guest.complete');
+        Route::get('/edit/{id}', 'GuestController@edit')->name('guest.edit');
+        Route::get('/delete/{id}', 'GuestController@delete')->name('guest.delete');
     });
 });

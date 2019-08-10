@@ -36,5 +36,5 @@ function genGuestCode($id)
     if (empty($id)) {
         return false;
     }
-    return config('setting.guest_code').'-'.sprintf('%03d', $id);
+    return config('setting.guest_code').sprintf('%03d', $id);
 }

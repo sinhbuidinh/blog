@@ -45,6 +45,33 @@ class GuestService
         }
     }
 
+    public function updateGuest($input, $id)
+    {
+        $error = null;
+        $guest = [];
+        try {
+            DB::beginTransaction();
+            $info = self::formatGuestInfo($input);
+            $guest = $this->repo->find($id);
+            if (!data_get($guest, 'id')) {
+                throw new Exception('update guest fail');
+            }
+            $guest->update($info);
+            DB::commit();
+            return [$guest, $error];
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
+    public function findById($id)
+    {
+        return $this->repo->find($id);
+    }
+
     private function formatGuestInfo($input)
     {
         return [
