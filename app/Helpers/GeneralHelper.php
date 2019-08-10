@@ -38,3 +38,10 @@ function genGuestCode($id)
     }
     return config('setting.guest_code').sprintf('%03d', $id);
 }
+function stringify2array($string)
+{
+    if (empty($string)) {
+        return [];
+    }
+    return json_decode(html_entity_decode(stripslashes($string)), true);
+}

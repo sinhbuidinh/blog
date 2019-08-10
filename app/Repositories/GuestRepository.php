@@ -34,4 +34,9 @@ class GuestRepository extends BaseRepository
         $limit = config('setting.pager.common_limit');
         return $guests->paginate($limit);
     }
+
+    public function getListAvailable()
+    {
+        return self::search(['status' => Guest::STATUS_ENABLE], true);
+    }
 }

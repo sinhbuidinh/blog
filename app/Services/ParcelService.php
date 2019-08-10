@@ -3,14 +3,18 @@
 namespace App\Services;
 
 use App\Repositories\ParcelRepository;
+use App\Repositories\GuestRepository;
+use App\Models\Guest;
 
 class ParcelService
 {
     private $repo;
+    private $guestRepo;
 
-    public function __construct(ParcelRepository $repo)
+    public function __construct(ParcelRepository $repo, GuestRepository $guestRepo)
     {
-        $this->repo = $repo;
+        $this->repo      = $repo;
+        $this->guestRepo = $guestRepo;
     }
 
     public function getList($wheres = [])
@@ -20,7 +24,7 @@ class ParcelService
 
     public function guestList()
     {
-        return [];
+        return $this->guestRepo->getListAvailable();
     }
 
     public function getServiceList()
@@ -54,36 +58,12 @@ class ParcelService
 
     public function getDistrictByProvinceId($id)
     {
-        if (empty($id)) {
-            return [];
-        }
-        $fileName = sprintf('%02d', $id);
-        $path = config_path('address/district/'.$fileName.'.json');
-        $districts = readJsonFile($path);
-        if (empty($districts)) {
-            return $districts;
-        }
-        $sorted = array_sort($districts, function($value) {
-            return $value['code'];
-        });
-        return $sorted;
+        return Guest::getDistricts($id);
     }
 
     public function getWardsByDistrictId($id)
     {
-        if (empty($id)) {
-            return [];
-        }
-        $fileName = sprintf('%03d', $id);
-        $path = config_path('address/ward/'.$fileName.'.json');
-        $wards = readJsonFile($path);
-        if (empty($wards)) {
-            return $wards;
-        }
-        $sorted = array_sort($wards, function($value) {
-            return $value['code'];
-        });
-        return $sorted;
+        return Guest::getWards($id);
     }
 
     public function getParcelTypes()

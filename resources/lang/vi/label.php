@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'sidebar_dashboard' => 'Dashboard',
+    'sidebar_parcel' => 'Quản lý Hàng',
+    'sidebar_guest' => 'Quản lý KH',
     'edit' => 'Sửa',
     'delete' => 'Xóa',
     'please_choose' => 'Please choose',

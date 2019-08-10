@@ -37,9 +37,6 @@ class ParcelController extends Controller
             'parcel_types'     => $this->parcelService->getParcelTypes(),
             'transfer_types'   => $this->parcelService->getTransferTypes(),
         ];
-        // dd($services, $services_display);
-        // dd($data['provincials']);
-        // dd($data['transfer_types']);
         return view('admin.parcel.input', $data);
     }
 

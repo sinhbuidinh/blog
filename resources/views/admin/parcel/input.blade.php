@@ -28,6 +28,9 @@
     .right .row {
         margin: 5px;
     }
+    #services_display {
+        height: 120px;
+    }
 </style>
 @endsection
 
@@ -49,22 +52,31 @@
                     <div class="col-sm-6 left">
                         <p class="file_form_top_title">{{ trans('label.guest_info') }}</p>
                         <div class="row">
-                            <div class="col-sm-4 my-auto">{{ trans('label.guest_code') }}</div>
-                            <div class="col-sm-8 my-auto">
+                            <div class="col-sm-2 my-auto">{{ trans('label.guest_code') }}</div>
+                            <div class="col-sm-10 my-auto">
                                 @php
                                     $guest_invalid = $errors->has('guest_id') ? ' is-invalid' : '';
                                 @endphp
                                 <select id="guest_id" name="guest_id" class="form-control form-control{{ $guest_invalid }}">
                                     <option value="">Chọn mã khách hàng</option>
                                     @if(!empty($guests))
-                                    @foreach ($guests as $guest_id => $guest_name)
+                                    @foreach ($guests as $guest)
                                         @php
                                             $selected_guest = '';
-                                            if (old('guest_id', -999) == $guest_id) {
+                                            if (old('guest_id', -999) == data_get($guest, 'id')) {
                                                 $selected_guest = ' selected="selected"';
                                             }
                                         @endphp
-                                        <option value="{{ $client_id }}" {{$selected_guest}}>{{ $guest_name }}</option>
+                                        <option value="{{ data_get($guest, 'id') }}"
+                                            data-company_name="{{ data_get($guest, 'company_name') }}"
+                                            data-province="{{ data_get($guest, 'provincial') }}"
+                                            data-district="{{ data_get($guest, 'district') }}"
+                                            data-ward="{{ data_get($guest, 'ward') }}"
+                                            data-address="{{ data_get($guest, 'address') }}"
+                                            data-province_name="{{ data_get($guest, 'province_name') }}"
+                                            data-district_name="{{ data_get($guest, 'district_name') }}"
+                                            data-ward_name="{{ data_get($guest, 'ward_name') }}"
+                                        {{$selected_guest}}>{{ data_get($guest, 'guest_code').'-'.data_get($guest, 'company_name') }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -73,6 +85,42 @@
                                     {{ $errors->first('guest_id') }}
                                 </p>
                                 @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">{{ trans('label.company_name') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="company_name" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">{{ trans('label.provincial') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="company_province" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">{{ trans('label.district') }}</div>
+                            <div class="col-sm-6">{{ trans('label.ward') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="company_district" disabled>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="company_ward" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">{{ trans('label.address') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="company_address" disabled>
                             </div>
                         </div>
                     </div>
@@ -221,7 +269,7 @@
                                         @foreach ($parcel_types as $type_id => $type_name)
                                             @php
                                                 $parcel_check = '';
-                                                if (old('type', config('setting.transfer_type.code.package')) == $type_id) {
+                                                if (old('type', config('setting.parcel_type.code.document')) == $type_id) {
                                                     $parcel_check = ' selected="selected"';
                                                 }
                                             @endphp
@@ -397,9 +445,16 @@
                                 <div class="col-sm-7 my-auto">
                                     @php
                                         $services_invalid = $errors->has('services') ? ' is-invalid' : '';
+                                        $service_names = '';
+                                        if(!empty($services_display)) {
+                                            //services explode to element
+                                            $old_services = stringify2array(old('services'));
+                                            $checked_services = array_pluck($old_services, 'key') ?: [];
+                                            $service_names = array_pluck($old_services, 'name') ?: [];
+                                            $service_names = implode(', ', $service_names);
+                                        }
                                     @endphp
                                     <button type="button" name="service_list" id="service_list" class="full_width form-control{{ $services_invalid }}" data-toggle="modal" data-target="#services_list_model">{{ trans('label.services') }}</button>
-                                    <input type="text" name="services_display" id="services_display" class="form-control{{ $services_invalid }}">
                                     <input type="hidden" id="services" name="services" value="{{ old('services') }}">
                                     @if ($errors->has('services'))
                                     <p class="common_form_error">
@@ -407,6 +462,11 @@
                                     </p>
                                     @endif
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="col-sm-12">
+                                <input type="text" name="services_display" id="services_display" class="form-control" value="{{ $service_names }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -509,11 +569,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($services_display))
+                        @if(!empty($services_display))
+                        @php
+                            //services explode to element
+                            $old_services = stringify2array(old('services'));
+                            $checked_services = array_pluck($old_services, 'key') ?: [];
+                            $service_names = array_pluck($old_services, 'name') ?: [];
+                            $service_names = implode(', ', $service_names);
+                        @endphp
                         @foreach($services_display as $s)
-                        <tr class="service_id_choose">
+                        @php
+                            $tr_class = '';
+                            $checkbox = '';
+                            if(in_array($s['key'], $checked_services)) {
+                                $tr_class = ' table-success';
+                                $checkbox = 'checked="checked"';
+                            }
+                        @endphp
+                        <tr class="service_id_choose{{ $tr_class }}">
                             <td>
-                                <input type="checkbox" name="service_id[]" 
+                                <input type="checkbox" name="service_id[]"
+                                {{ $checkbox }}
                                 data-key="{{ $s['key'] }}"
                                 data-name="{{ $s['name'] }}"
                                 data-math="{{ data_get($s, 'math', '+') }}"
@@ -560,9 +636,13 @@
                 $('.datepicker').val(datetext);
             }
         });
+        var guest = $('#guest_id').find(':selected');
+        displayGuestInfo(guest);
+        addService();
     });
     $(document).on('change', '#services, #weight, #real_weight, #long, #wide, #height, #province, #district, #ward, #guest_id', function (){
         console.log('re-calculate price');
+        //@TODO
         var services = $('tr.service_id_choose input[name="service_id[]"]:checked');
         services.each(function(index){
             var math = $(this).data('math');
@@ -590,22 +670,29 @@
         }
     });
     $(document).on('click', '#add_services', function(){
+        addService();
+    });
+    function addService()
+    {
         var inputs = $('tr.service_id_choose input[name="service_id[]"]:checked');
         var display = [];
         var services = [];
         var total = 0;
         if (inputs.length <= 0) {
-            $('#services_display').val(display.join(','));
+            $('#services_display').val('');
             $('#services').val(JSON.stringify(services));
+            //re-calculate price @TODO
             closePopup();
             return false;
         }
         inputs.each(function(index){
             var math = $(this).data('math');
+            var key = $(this).data('key');
             var name = $(this).data('name');
             var value = $(this).val();
             //append price by math
             services.push({
+                "key": key,
                 "name": name,
                 "math": math,
                 "value": value,
@@ -613,21 +700,33 @@
             display.push(name);
             total += parseFloat(value);
         });
-        //re-calculate price
-        $('#services_display').val(display.join(','));
+        //re-calculate price @TODO
+        $('#services_display').val(display.join(', '));
         $('#services').val(JSON.stringify(services));
         closePopup();
-    });
+    }
     //function add service & price
     function closePopup(selector)
     {
         selector = typeof selector !== 'undefined' ? selector : '#services_list_model';
         $(selector).find('.modal-header button.close').click();
     }
-    function addService(name, math, value)
+    $(document).on('change', '#guest_id', function(){
+        var guest = $(this).find(':selected');
+        displayGuestInfo(guest);
+    });
+    function displayGuestInfo(guest)
     {
-        //add price
-        //add display & hidden value services
+        var company_name = typeof guest.data('company_name') !== 'undefined' ? guest.data('company_name') : '';
+        var company_province = typeof guest.data('province_name') !== 'undefined' ? guest.data('province_name') : '';
+        var company_district = typeof guest.data('district_name') !== 'undefined' ? guest.data('district_name') : '';
+        var company_ward = typeof guest.data('ward_name') !== 'undefined' ? guest.data('ward_name') : '';
+        var company_address = typeof guest.data('address') !== 'undefined' ? guest.data('address') : '';
+        $('#company_name').val(company_name);
+        $('#company_province').val(company_province);
+        $('#company_district').val(company_district);
+        $('#company_ward').val(company_ward);
+        $('#company_address').val(company_address);
     }
 </script>
 <script src="{{ asset('js/address.js') }}"></script>
