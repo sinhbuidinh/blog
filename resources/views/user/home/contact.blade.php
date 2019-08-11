@@ -1,4 +1,4 @@
-@extends('user.layouts.master') 
+@extends('user.layouts.kn247.master') 
 @section('title')
 Contact Page
 @endsection
@@ -42,7 +42,7 @@ Contact Page
                 </form>
             </div>
             <!-- END main-content -->
-            @include('user.layouts.sidebar')
+            @include('user.layouts.kn247.sidebar')
         </div>
     </div>
 </section>

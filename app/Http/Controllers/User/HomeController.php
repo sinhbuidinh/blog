@@ -43,10 +43,22 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $categories = $this->getCategories();
-        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        $popular_post = $this->getPopularPost();
-        return view('user.home.index', compact('categories', 'footer_latest', 'popular_post'));
+        $data = [
+            'categories'    => $this->getCategories(),
+            'footer_latest' => array_slice($this->getLatestPost(), 0, 3),
+            'popular_post'  => $this->getPopularPost(),
+        ];
+        return view('user.home.index', $data);
+    }
+
+    public function locate(Request $request, $package_code = null)
+    {
+        $data = [
+            'package_code' => $package_code,
+            'without_slider' => true,
+            'package' => [],
+        ];
+        return view('user.home.locate', $data);
     }
 
     public function about(Request $request)

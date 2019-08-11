@@ -1,4 +1,4 @@
-@extends('user.layouts.master')
+@extends('user.layouts.kn247.master')
 @section('title')
 About Page
 @endsection
@@ -17,7 +17,7 @@ About Page
                             <img src="{{ asset('images/my_photo.jpg') }}" 
                                 alt="sinh's cover" class="img-fluid">
                         </p>
-                        @include('user.layouts.selfinfo')
+                        @include('user.layouts.kn247.selfinfo')
                     </div>
                 </div>
                 <div class="row mb-5 mt-5">

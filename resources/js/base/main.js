@@ -14,6 +14,14 @@
     // Stellar
     $(window).stellar();
 
+    $('#search_keyword').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            window.location.href = $('#url_search').val() + '/' + $(this).val();
+        }
+        event.stopPropagation();
+    });
+
     // bootstrap dropdown hover
     $('nav .dropdown').hover(function() {
         var $this = $(this);

@@ -33,4 +33,5 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/fonts/fontawesome/css/font-awesome.min.scss', 'public/fonts/fontawesome')
    .sass('resources/fonts/flaticon/font/flaticon.scss', 'public/fonts/flaticon')
    .sass('resources/sass/app.scss', 'public/css')
+   .sass('resources/sass/kn247/style.scss', 'public/css/kn247')
    .version();

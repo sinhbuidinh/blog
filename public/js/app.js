@@ -37334,10 +37334,21 @@ try {
 
 /***/ }),
 
+/***/ "./resources/sass/kn247/style.scss":
+/*!*****************************************!*\
+  !*** ./resources/sass/kn247/style.scss ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/admin/index.scss ./resources/sass/fonts_api_josefin-sans-300-400-700.scss ./resources/sass/base/style.scss ./resources/sass/base/bootstrap.scss ./resources/sass/base/animate.scss ./resources/sass/base/owl.carousel.min.scss ./resources/fonts/ionicons/css/ionicons.min.scss ./resources/fonts/fontawesome/css/font-awesome.min.scss ./resources/fonts/flaticon/font/flaticon.scss ./resources/sass/app.scss ***!
-  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/admin/index.scss ./resources/sass/fonts_api_josefin-sans-300-400-700.scss ./resources/sass/base/style.scss ./resources/sass/base/bootstrap.scss ./resources/sass/base/animate.scss ./resources/sass/base/owl.carousel.min.scss ./resources/fonts/ionicons/css/ionicons.min.scss ./resources/fonts/fontawesome/css/font-awesome.min.scss ./resources/fonts/flaticon/font/flaticon.scss ./resources/sass/app.scss ./resources/sass/kn247/style.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37351,7 +37362,8 @@ __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\base\owl.c
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\fonts\ionicons\css\ionicons.min.scss */"./resources/fonts/ionicons/css/ionicons.min.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\fonts\fontawesome\css\font-awesome.min.scss */"./resources/fonts/fontawesome/css/font-awesome.min.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\fonts\flaticon\font\flaticon.scss */"./resources/fonts/flaticon/font/flaticon.scss");
-module.exports = __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\kn247\style.scss */"./resources/sass/kn247/style.scss");
 
 
 /***/ })

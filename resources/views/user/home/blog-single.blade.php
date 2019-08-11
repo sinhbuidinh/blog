@@ -1,4 +1,4 @@
-@extends('user.layouts.master')
+@extends('user.layouts.kn247.master')
 @section('title')
 Single blog Page
 @endsection

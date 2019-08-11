@@ -1,0 +1,180 @@
+.top-bar {
+    background: #274da1;
+    padding: 10px 0;
+}
+body {
+    margin: 0;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    background-color: #fff;
+    font-feature-settings: 'tnum';
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+    }
+}
+
+.collapse:not(.show) {
+    display: none;
+}
+.navbar-collapse {
+    flex-basis: 100%;
+    flex-grow: 1;
+    align-items: center;
+}
+
+header .navbar {
+    background: #eb7c26 !important;
+}
+
+.top-bar .search-top-form {
+    text-align: left;
+}
+
+.top-bar .search-top-form .fa-search {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+    margin-left: 10px;
+}
+
+.top-bar .search-top-form #search_keyword {
+    padding-left: 2.500rem;
+    padding-top: 3px;
+    width: 285px;
+    border-radius: 50px;
+}
+
+.title-locate {
+    text-align: center;
+    display: block;
+}
+.title-locate h1 {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: url(/images/icon_thanh_ngang.png) no-repeat center 41px;
+    padding-bottom: 40px;
+    margin-bottom: 0px;
+}
+
+.mailer-name {
+    color: #E61719;
+    font-size: 17px;
+    font-weight: bold;
+}
+.mailer-prop-container {
+    border-bottom: 1px solid #707070;
+    margin: 14px 0px;
+    padding: 0px;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 5px;
+}
+.title-list-tracking {
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    padding-bottom: 25px;
+}
+.list-mailers {
+    width: 270px !important;
+    margin: auto;
+}
+.list-mailers .left-m {
+    padding-left: 16px;
+    float: left;
+}
+.list-mailers .right-m {
+    padding-right: 18px;
+    text-align: right;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #007bff;
+}
+.flex-column {
+    flex-direction: column !important;
+}
+.list-mailers .nav-pills .nav-link.active, 
+.list-mailers .nav-pills .show > .nav-link, 
+.nav-pills .nav-link.active, 
+.nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #E61719;
+}
+.nav.flex-column .nav-link {
+    padding-left: 0;
+    padding-top: 0.30rem;
+    padding-bottom: 0.30rem;
+}
+.nav-pills .nav-link {
+    border-radius: 0px !important;
+    background: #BEBBBB;
+    color: #fff;
+    border-top: 1px solid #767676;
+    height: 45px;
+    line-height: 32px;
+    padding: 5px;
+}
+.mailer-prop {
+    font-weight: bold;
+    font-size: 15px;
+    float: left;
+}
+.mailer-prop-value {
+    float: right;
+}
+.list-mailers a:first-child {
+    border-top: none !important;
+}
+ul.checklist-tracking {
+    display: inline-flex;
+    list-style: none;
+}
+ul.checklist-tracking li {
+    text-align: center;
+    padding: 20px 10px;
+    width: 152px !important;
+}
+.liner-check::before {
+    top: 66px;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 1px;
+    background-color: #00BFFF;
+    width: 135px;
+    z-index: -1;
+    margin-left: 5px;
+}
+ul.checklist-tracking li p {
+    line-height: 18px;
+    padding: 0px;
+    margin: 8px;
+}
+.table-tracking-history thead th {
+    vertical-align: bottom;
+    border-bottom: 1px solid #dee2e6;
+    color: #D9262E;
+    text-align: center;
+    border-top: none !important;
+}
+.table-tracking-history td, .table-tracking-history th {
+    border-bottom: 1px dashed #dee2e6;
+    border-top: none;
+    text-align: center;
+}
