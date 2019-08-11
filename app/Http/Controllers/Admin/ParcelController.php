@@ -93,18 +93,30 @@ class ParcelController extends Controller
     {
         $base = data_get($prices, 'base');
         if (empty($base)) {
-            return 0;
+            return [
+                'error' => 'not have base price info',
+                'total' => 0,
+            ];
         }
         $price = 0;
         $calculated = 0;
-        $before = 0;
         foreach ($base as $weight_range => $base_price) {
             $price += data_get($base_price, $km_type);
             //range
             list($floor, $ceil) = explode('-', $weight_range);
             if ($weight <= $ceil && $weight >= $floor) {
                 $calculated += ($weight - $floor);
-                return $price;
+                return [
+                    'weight' => [
+                        'base' => $calculated,
+                        'over' => 0,
+                    ],
+                    'price' => [
+                        'base' => formatPrice($price),
+                        'over' => 0,
+                    ],
+                    'total' => formatPrice($price),
+                ];
             }
             $calculated += ($ceil - $floor);
         }

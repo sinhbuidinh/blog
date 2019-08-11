@@ -45,6 +45,7 @@ return [
     'vat' => 'VAT',
     'support_gas' => 'PP Xăng dầu',
     'support_remote' => 'PP Vùng sâu',
+    'total_service' => 'Tổng tiền dịch vụ',
     'total' => 'Thành tiền',
     'company_name' => 'Tên công ty',
     'representative_info' => 'Thông tin người đại diện',

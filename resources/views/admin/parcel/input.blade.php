@@ -463,6 +463,14 @@
                                     @endif
                                 </div>
                             </div>
+                            <div class="row" style="margin: 5px 0;">
+                                <div class="col-sm-5" style="padding: 0;">{{ trans('label.total_service') }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-9 my-auto">
+                                    <input type="text" name="total_service" id="total_service" class="form-control" value="{{ old('total_service') }}">
+                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-7">
                             <div class="col-sm-12">
@@ -677,6 +685,7 @@
         console.log('price:' +price);
         var service = calService();
         console.log('service:' +service);
+        $("#total_service").val(service);
     });
     function calPrice(input_obj)
     {
@@ -776,6 +785,10 @@
         //re-calculate price @TODO
         $('#services_display').val(display.join(', '));
         $('#services').val(JSON.stringify(services)).trigger('change');
+        var parcel_price = $('#price').val();
+        if (typeof parcel_price != 'undefined' && parcel_price != '') {
+            $("#total_service").val(total);
+        }
         closePopup();
     }
     //function add service & price
