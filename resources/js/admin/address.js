@@ -11,6 +11,12 @@ function actionProvince(select_province)
     if (typeof select_province.data('districts') == 'undefined') {
         return false;
     }
+    var error_before = $('#div_provinces').find('.common_form_error');
+    if (typeof error_before != 'undefined' && error_before.length > 0) {
+        error_before.remove();
+        $('#province').removeClass('is-invalid');
+        removeErrorAddrBefore();
+    }
     var url = select_province.data('districts');
     province_name = select_province.data('display');
     displayAddress(province_name);
@@ -26,6 +32,14 @@ function actionProvince(select_province)
             alert('district error: ' + error);
         }
     });
+}
+function removeErrorAddrBefore()
+{
+    var error_before = $('#div_address').find('.common_form_error');
+    if (typeof error_before != 'undefined' && error_before.length > 0) {
+        error_before.remove();
+        $('#address').removeClass('is-invalid');
+    }
 }
 function displayAddress(province, district, ward)
 {
@@ -58,6 +72,12 @@ function genDistricts(data)
 {
     if (typeof data != 'object' || Object.keys(data).length <= 0) {
         return false;
+    }
+    var error_before = $('#div_districts').find('.common_form_error');
+    if (typeof error_before != 'undefined' && error_before.length > 0) {
+        error_before.remove();
+        $('#district').removeClass('is-invalid');
+        removeErrorAddrBefore();
     }
     var districts = '<select name="district" class="full_width form-control" id="district">';
     districts += optionDistrict(please_choose_district, '', '');
@@ -108,6 +128,12 @@ function genWards(data)
 {
     if (typeof data != 'object' || Object.keys(data).length <= 0) {
         return false;
+    }
+    var error_before = $('#div_wards').find('.common_form_error');
+    if (typeof error_before != 'undefined' && error_before.length > 0) {
+        error_before.remove();
+        $('#ward').removeClass('is-invalid');
+        removeErrorAddrBefore();
     }
     var wards = '<select name="ward" class="full_width form-control" id="ward">';
     wards += optionWard(please_choose_ward, '', '');

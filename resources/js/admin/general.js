@@ -17,3 +17,15 @@ function genDatepicker(selector)
         }
     });
 }
+function formatNumber(string)
+{
+    // return string.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var parts = string.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+function removeFormat(number)
+{
+    var result = number.replace(/,/g, '');
+    return parseFloat(result);
+}

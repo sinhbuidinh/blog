@@ -5,6 +5,8 @@ return [
         'common_limit' => 10
     ],
     'guest_code' => 'KH',
+    'parcel_code' => 'BP',
+    'company_location' => 'Văn phòng Hồ Chí Minh',
     'default' => [
         'vat' => 10,
         'support_gas' => 20,

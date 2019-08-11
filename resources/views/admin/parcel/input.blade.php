@@ -47,6 +47,12 @@
                     {{ csrf_field() }}
                     <input type="hidden" id="tax_value" value="10" />
                 </div>
+                <div class="row col-sm-12">
+                    <div class="col-sm-1 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
+                    <div class="col-sm-3">
+                        <input type="text" class="full_width form-control" name="bill_code" id="bill_code" value="{{ old('bill_code') }}">
+                    </div>
+                </div>
                 <div class="row">
                     <!-- left -->
                     <div class="col-sm-6 left">
@@ -68,6 +74,7 @@
                                             }
                                         @endphp
                                         <option value="{{ data_get($guest, 'id') }}"
+                                            data-code="{{ data_get($guest, 'guest_code') }}"
                                             data-company_name="{{ data_get($guest, 'company_name') }}"
                                             data-province="{{ data_get($guest, 'provincial') }}"
                                             data-district="{{ data_get($guest, 'district') }}"
@@ -76,10 +83,11 @@
                                             data-province_name="{{ data_get($guest, 'province_name') }}"
                                             data-district_name="{{ data_get($guest, 'district_name') }}"
                                             data-ward_name="{{ data_get($guest, 'ward_name') }}"
-                                        {{$selected_guest}}>{{ data_get($guest, 'guest_code').'-'.data_get($guest, 'company_name') }}</option>
+                                        {{$selected_guest}}>{{ data_get($guest, 'company_name').'('.data_get($guest, 'guest_code').')' }}</option>
                                     @endforeach
                                     @endif
                                 </select>
+                                <input type="hidden" name="guest_code" id="guest_code">
                                 @if ($errors->has('guest_id'))
                                 <p class="common_form_error">
                                     {{ $errors->first('guest_id') }}
@@ -92,15 +100,15 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="company_name" disabled>
+                                <textarea disabled class="form-control" id="company_name"></textarea>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-5">{{ trans('label.provincial') }}</div>
+                            <div class="col-sm-6">{{ trans('label.provincial') }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="company_province" disabled>
+                            <div class="col-sm-6">
+                                <textarea disabled class="form-control" id="company_province"></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -109,10 +117,10 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="company_district" disabled>
+                                <textarea disabled class="form-control" id="company_district"></textarea>
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="company_ward" disabled>
+                                <textarea disabled class="form-control" id="company_ward"></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -120,7 +128,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="company_address" disabled>
+                                <textarea disabled class="form-control" id="company_address"></textarea>
                             </div>
                         </div>
                     </div>
@@ -150,7 +158,7 @@
                             <div class="col-sm-6 my-auto">{{ trans('label.district') }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6 my-auto">
+                            <div class="col-sm-6 my-auto" id="div_provinces">
                                 @php
                                     $province_invalid = $errors->has('province') ? ' is-invalid' : '';
                                 @endphp
@@ -192,6 +200,7 @@
                                             }
                                         @endphp
                                         <option value="{{ $code }}" 
+                                        data-wards="/ajax/get_wards/{{ $code }}"
                                         data-display="{{ data_get($district, 'name_with_type') }}" {{$districted}}>{{ data_get($district, 'name_with_type') }}</option>
                                     @endforeach
                                     @endif
@@ -222,7 +231,7 @@
                                             }
                                         @endphp
                                         <option 
-                                        data-display="{{ data_get($name, 'name_with_type') }}" value="{{ $code }}" {{$ward_checked}}>{{ data_get($ward, 'name_with_type') }}</option>
+                                        data-display="{{ data_get($ward, 'name_with_type') }}" value="{{ $code }}" {{$ward_checked}}>{{ data_get($ward, 'name_with_type') }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -237,7 +246,7 @@
                             <div class="col-sm-6 my-auto">{{ trans('label.address') }}</div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 my-auto">
+                            <div class="col-sm-12 my-auto" id="div_address">
                                 @php
                                     $add_invalid = $errors->has('address') ? ' is-invalid' : '';
                                 @endphp
@@ -423,15 +432,15 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
-                                <div class="col-sm-5 my-auto">{{ trans('label.time_input') }}</div>
+                                <div class="col-sm-5 my-auto">{{ trans('label.time_receive') }}</div>
                                 <div class="col-sm-7 my-auto">
                                     @php
-                                        $time_input_invalid = $errors->has('time_input') ? ' is-invalid' : '';
+                                        $time_receive_invalid = $errors->has('time_receive') ? ' is-invalid' : '';
                                     @endphp
-                                    <input type="text" name="time_input" value="{{ old('time_input', now()->format('d-m-Y h:m:s')) }}" class="full_width datepicker form-control{{ $time_input_invalid }}">
-                                    @if ($errors->has('time_input'))
+                                    <input type="text" name="time_receive" value="{{ old('time_receive', now()->format('d-m-Y h:m:s')) }}" class="full_width datepicker form-control{{ $time_receive_invalid }}">
+                                    @if ($errors->has('time_receive'))
                                     <p class="common_form_error">
-                                        {{ $errors->first('time_input') }}
+                                        {{ $errors->first('time_receive') }}
                                     </p>
                                     @endif
                                 </div>
@@ -547,6 +556,14 @@
                         </table>
                     </div>
                 </div>
+                <div class="row col-sm-12">
+                    <p class="file_form_top_title">{{ trans('label.note') }}</p>
+                    <div class="row col-sm-12">
+                        <div class="col-sm-5">
+                            <textarea class="form-control" id="note" name="note">{{ old('note') }}</textarea>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- button action -->
                 <div class="form_btn_area center">
@@ -631,6 +648,20 @@
 
 @section('script')
 <script>
+function formatNumber(string)
+{
+    // return string.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var parts = string.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+function removeFormat(number)
+{
+    var result = number.replace(/,/g, '');
+    return parseFloat(result);
+}
+</script>
+<script>
     $(function(){
         $('.datepicker').datepicker({
             todayHighlight: true,
@@ -672,6 +703,7 @@
             console.log('not enough params');
             return false;
         }
+        $('#price').removeClass('is-invalid');
         var data = {
             province: province,
             district: district,
@@ -682,10 +714,10 @@
             real_weight: real_weight,
         };
         var price = calPrice(data);
-        console.log('price:' +price);
+        // console.log('price:' +price);
         var service = calService();
-        console.log('service:' +service);
-        $("#total_service").val(service);
+        // console.log('service:' +service);
+        $("#total_service").val(formatNumber(service));
     });
     function calPrice(input_obj)
     {
@@ -719,11 +751,11 @@
         if (services.length == 0) {
             return total;
         }
-        var price = $('#price').val();
+        var price = $('#price').val() != '' ? $('#price').val() : 0;
         services.each(function(index){
             var math = $(this).data('math');
             var value = $(this).val();
-            console.log(index + ': ' + math + '/' + value);
+            // console.log(index + ': ' + math + '/' + value);
             if (math == '*') {
                 total += (price * value);
             } else {
@@ -762,11 +794,13 @@
         var total = 0;
         if (inputs.length <= 0) {
             $('#services_display').val('');
-            $('#services').val(JSON.stringify(services));
-            //re-calculate price @TODO
+            $('#services').val('');
+            $("#total_service").val(0);
             closePopup();
             return false;
         }
+
+        var price = $('#price').val() != '' ? removeFormat($('#price').val()) : 0;
         inputs.each(function(index){
             var math = $(this).data('math');
             var key = $(this).data('key');
@@ -780,15 +814,16 @@
                 "value": value,
             });
             display.push(name);
-            total += parseFloat(value);
+            if (math == '*') {
+                total += parseFloat(price * value);
+            } else {
+                total += parseFloat(value);
+            }
         });
         //re-calculate price @TODO
         $('#services_display').val(display.join(', '));
         $('#services').val(JSON.stringify(services)).trigger('change');
-        var parcel_price = $('#price').val();
-        if (typeof parcel_price != 'undefined' && parcel_price != '') {
-            $("#total_service").val(total);
-        }
+        $("#total_service").val(formatNumber(total));
         closePopup();
     }
     //function add service & price
@@ -799,20 +834,25 @@
     }
     $(document).on('change', '#guest_id', function(){
         var guest = $(this).find(':selected');
+        if (typeof guest != 'undefined' && typeof guest.data('code') != 'undefined') {
+            $('#guest_id').removeClass('is-invalid');
+        }
         displayGuestInfo(guest);
     });
     function displayGuestInfo(guest)
     {
-        var company_name = typeof guest.data('company_name') !== 'undefined' ? guest.data('company_name') : '';
-        var company_province = typeof guest.data('province_name') !== 'undefined' ? guest.data('province_name') : '';
-        var company_district = typeof guest.data('district_name') !== 'undefined' ? guest.data('district_name') : '';
-        var company_ward = typeof guest.data('ward_name') !== 'undefined' ? guest.data('ward_name') : '';
-        var company_address = typeof guest.data('address') !== 'undefined' ? guest.data('address') : '';
+        var company_name = typeof guest.data('company_name') != 'undefined' ? guest.data('company_name') : '';
+        var company_province = typeof guest.data('province_name') != 'undefined' ? guest.data('province_name') : '';
+        var company_district = typeof guest.data('district_name') != 'undefined' ? guest.data('district_name') : '';
+        var company_ward = typeof guest.data('ward_name') != 'undefined' ? guest.data('ward_name') : '';
+        var company_address = typeof guest.data('address') != 'undefined' ? guest.data('address') : '';
+        var guest_code = typeof guest.data('code') != 'undefined' ? guest.data('code') : '';
         $('#company_name').val(company_name);
         $('#company_province').val(company_province);
         $('#company_district').val(company_district);
         $('#company_ward').val(company_ward);
         $('#company_address').val(company_address);
+        $('#guest_code').val(guest_code);
     }
 </script>
 <script src="{{ asset('js/address.js') }}"></script>

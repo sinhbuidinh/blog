@@ -7,6 +7,7 @@ return [
     'edit' => 'Sửa',
     'delete' => 'Xóa',
     'please_choose' => 'Please choose',
+    'bill_code' => 'Số phiếu',
     'guest_info' => 'Thông tin khách hàng',
     'receiver_info' => 'Thông tin người nhận',
     'guest_name' => 'Tên khách',

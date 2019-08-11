@@ -10,4 +10,5 @@ return [
     'delete_guest_success' => 'Xóa khách hàng thành công',
     'guest_not_exist' => 'Không có khách hàng này',
     'update_guest_success' => 'Sửa khách hàng thành công',
+    'create_parcel_success' => 'Tạo đơn hàng thành công',
 ];

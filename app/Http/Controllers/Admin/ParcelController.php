@@ -28,23 +28,38 @@ class ParcelController extends Controller
     public function input(Request $request)
     {
         list($services, $services_display) = $this->parcelService->getServiceList();
+        // dd(old());
         $data = [
             'guests'           => $this->parcelService->guestList(),
             'services'         => $services,
             'services_display' => $services_display,
             'default'          => config('setting.default'),
             'provincials'      => $this->parcelService->getProvincials(),
+            'districts'        => $this->parcelService->getDistrictByProvinceId(old('province')),
+            'wards'            => $this->parcelService->getWardsByDistrictId(old('district')),
             'parcel_types'     => $this->parcelService->getParcelTypes(),
             'transfer_types'   => $this->parcelService->getTransferTypes(),
         ];
+        // dd(old(), $data['districts'], $data['wards']);
         return view('admin.parcel.input', $data);
     }
 
     public function create(CreateParcel $request)
     {
-        dd('parcel create');
-        //valid => back index
-        //invalid => view input with error
+        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_input', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note']);
+        list($result, $message) = $this->parcelService->newParcel($data);
+        if ($result !== false) {
+            session()->flash('success', trans('message.create_parcel_success'));
+            return redirect()->route('create.parcel.complete');
+        }
+        session()->flash('error', $message);
+        return redirect()->route('parcel.input')->withInput();
+    }
+
+    public function complete()
+    {
+        $data['message'] = session()->has('success') ? session()->get('success') : 'Complete';
+        return view('admin.parcel.complete', $data);
     }
 
     public function ajaxGetDistricts($provinceId = null) 

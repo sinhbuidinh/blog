@@ -52,6 +52,7 @@ Route::group([
         Route::get('/', 'ParcelController@index')->name('parcel');
         Route::get('/create', 'ParcelController@input')->name('parcel.input');
         Route::post('/create', 'ParcelController@create')->name('parcel.create');
+        Route::get('/complete', 'ParcelController@complete')->name('create.parcel.complete');
     });
     Route::prefix('guest')->group(function () {
         Route::get('/', 'GuestController@index')->name('guest');

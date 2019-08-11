@@ -5,6 +5,10 @@ namespace App\Services;
 use App\Repositories\ParcelRepository;
 use App\Repositories\GuestRepository;
 use App\Models\Guest;
+use App\Models\Parcel;
+use DB;
+use Log;
+use Exception;
 
 class ParcelService
 {
@@ -45,6 +49,75 @@ class ParcelService
             ];
         }
         return [$raw, $result];
+    }
+
+    public function newParcel($input)
+    {
+        $error = null;
+        $parcel = [];
+        try {
+            DB::beginTransaction();
+            $guest_code = data_get($input, 'guest_code');
+            $info = self::formatDataParcel($input);
+            $parcel = Parcel::create($info);
+            $parcel_id = data_get($parcel, 'id');
+            if (!$parcel_id) {
+                throw new Exception('create parcel fail');
+            }
+            $parcel->parcel_code = genParcelCode($parcel_id, $guest_code);
+            $parcel->save();
+            //insert history
+            $history = [
+                'date_time' => now()->format('d/m/Y H:m:s'),
+                'location'  => config('setting.company_location'),
+                'status'    => Parcel::STATUS_INIT,
+                'note'      => data_get($input, 'note'),
+            ];
+            DB::commit();
+            return [$parcel, $error];
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
+    private function formatDataParcel($input)
+    {
+        return [
+            'guest_id'       => data_get($input, 'guest_id'),
+            'guest_code'     => data_get($input, 'guest_code'),
+            'bill_code'      => data_get($input, 'bill_code'),
+            'type'           => data_get($input, 'type'),
+            'real_weight'    => data_get($input, 'real_weight'),
+            'weight'         => data_get($input, 'weight'),
+            'long'           => data_get($input, 'long'),
+            'wide'           => data_get($input, 'wide'),
+            'height'         => data_get($input, 'height'),
+            'num_package'    => data_get($input, 'num_package'),
+            'type_transfer'  => data_get($input, 'type_transfer'),
+            'services'       => data_get($input, 'services'),
+            'total_service'  => data_get($input, 'total_service'),
+            'time_input'     => now()->format('Y-m-d H:m:s'),
+            'time_receive'   => data_get($input, 'time_receive'),
+            'receiver'       => data_get($input, 'receiver'),
+            'receiver_tel'   => data_get($input, 'receiver_tel'),
+            'provincial'     => data_get($input, 'province'),
+            'district'       => data_get($input, 'district'),
+            'ward'           => data_get($input, 'ward'),
+            'address'        => data_get($input, 'address'),
+            'price'          => data_get($input, 'price'),
+            'cod'            => data_get($input, 'cod'),
+            'vat'            => data_get($input, 'vat'),
+            'price_vat'      => data_get($input, 'price_vat'),
+            'refund'         => data_get($input, 'refund'),
+            'forward'        => data_get($input, 'forward'),
+            'support_gas'    => data_get($input, 'support_gas'),
+            'support_remote' => data_get($input, 'support_remote'),
+            'total'          => data_get($input, 'total', 0),
+            'status'         => Parcel::STATUS_INIT,
+        ];
     }
 
     public function getProvincials()

@@ -36,7 +36,14 @@ function genGuestCode($id)
     if (empty($id)) {
         return false;
     }
-    return config('setting.guest_code').sprintf('%03d', $id);
+    return config('setting.guest_code').sprintf('%05d', $id);
+}
+function genParcelCode($id, $guest_code)
+{
+    if (empty($id)) {
+        return false;
+    }
+    return config('setting.parcel_code').$guest_code.sprintf('%09d', $id);
 }
 function stringify2array($string)
 {
