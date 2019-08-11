@@ -7,6 +7,7 @@ return [
     'guest_code' => 'KH',
     'parcel_code' => 'BP',
     'company_location' => 'Văn phòng Hồ Chí Minh',
+    'company_transfer_location' => 'Đơn vị vận chuyển',
     'default' => [
         'vat' => 10,
         'support_gas' => 20,

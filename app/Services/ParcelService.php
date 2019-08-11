@@ -6,6 +6,7 @@ use App\Repositories\ParcelRepository;
 use App\Repositories\GuestRepository;
 use App\Models\Guest;
 use App\Models\Parcel;
+use App\Models\ParcelHistory;
 use DB;
 use Log;
 use Exception;
@@ -68,11 +69,13 @@ class ParcelService
             $parcel->save();
             //insert history
             $history = [
+                'parcel_id' => $parcel_id,
                 'date_time' => now()->format('d/m/Y H:m:s'),
                 'location'  => config('setting.company_location'),
                 'status'    => Parcel::STATUS_INIT,
                 'note'      => data_get($input, 'note'),
             ];
+            ParcelHistory::create($history);
             DB::commit();
             return [$parcel, $error];
         } catch (Exception $e) {
@@ -81,6 +84,43 @@ class ParcelService
             DB::rollBack();
             return [false, $error];
         }
+    }//
+
+    public function updateParcel($input, $id)
+    {
+        $error = null;
+        $guest = [];
+        try {
+            DB::beginTransaction();
+            $parcel = $this->repo->find($id);
+            if (!data_get($parcel, 'id')) {
+                throw new Exception('Not found');
+            }
+            $guest_code = data_get($input, 'guest_code');
+            $info = self::formatDataParcel($input);
+            //insert history
+            $history = [
+                'parcel_id' => data_get($parcel, 'id'),
+                'date_time' => now()->format('d/m/Y H:m:s'),
+                //@TODO change to ? 
+                'location' => data_get($input, 'location', config('setting.company_transfer_location')),
+                'status' => data_get($input, 'status', Parcel::STATUS_UPDATE),
+                'note' => data_get($input, 'note'),
+            ];
+            ParcelHistory::create($history);
+            DB::commit();
+            return [$guest, $error];
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
+    public function findById($id)
+    {
+        return $this->repo->find($id);
     }
 
     private function formatDataParcel($input)

@@ -11,4 +11,7 @@ return [
     'guest_not_exist' => 'Không có khách hàng này',
     'update_guest_success' => 'Sửa khách hàng thành công',
     'create_parcel_success' => 'Tạo đơn hàng thành công',
+    'edit_parcel' => 'Sửa thông tin bưu phẩm',
+    'update_parcel_success' => 'Sửa bưu phẩm thành công',
+    'delete_parcel_success' => 'Xóa bưu phẩm thành công',
 ];

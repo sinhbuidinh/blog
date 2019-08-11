@@ -28,7 +28,6 @@ class ParcelController extends Controller
     public function input(Request $request)
     {
         list($services, $services_display) = $this->parcelService->getServiceList();
-        // dd(old());
         $data = [
             'guests'           => $this->parcelService->guestList(),
             'services'         => $services,
@@ -40,7 +39,6 @@ class ParcelController extends Controller
             'parcel_types'     => $this->parcelService->getParcelTypes(),
             'transfer_types'   => $this->parcelService->getTransferTypes(),
         ];
-        // dd(old(), $data['districts'], $data['wards']);
         return view('admin.parcel.input', $data);
     }
 
@@ -60,6 +58,45 @@ class ParcelController extends Controller
     {
         $data['message'] = session()->has('success') ? session()->get('success') : 'Complete';
         return view('admin.parcel.complete', $data);
+    }
+
+    public function edit(Request $request, $id = null)
+    {
+        list($services, $services_display) = $this->parcelService->getServiceList();
+        $parcel = $this->parcelService->findById($id);
+        $data = [
+            'parcel'           => $parcel,
+            'guests'           => $this->parcelService->guestList(),
+            'services'         => $services,
+            'services_display' => $services_display,
+            'default'          => config('setting.default'),
+            'provincials'      => $this->parcelService->getProvincials(),
+            'districts'        => $this->parcelService->getDistrictByProvinceId(old('province', data_get($parcel, 'provincial'))),
+            'wards'            => $this->parcelService->getWardsByDistrictId(old('district', data_get($parcel, 'district'))),
+            'parcel_types'     => $this->parcelService->getParcelTypes(),
+            'transfer_types'   => $this->parcelService->getTransferTypes(),
+        ];
+        return view('admin.parcel.edit', $data);
+    }
+
+    public function update(CreateParcel $request, $id = null)
+    {
+        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_input', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note']);
+        list($result, $message) = $this->parcelService->updateParcel($data, $id);
+        if ($result !== false) {
+            session()->flash('success', trans('message.update_parcel_success'));
+            return redirect()->route('create.parcel.complete');
+        }
+        session()->flash('error', $message);
+        return redirect()->route('parcel.edit', $id)->withInput();
+    }
+
+    public function delete(Request $request, $id = null)
+    {
+        $parcel = $this->parcelService->findById($id);
+        $parcel->delete();
+        session()->flash('success', trans('message.delete_parcel_success'));
+        return redirect()->route('parcel');
     }
 
     public function ajaxGetDistricts($provinceId = null) 

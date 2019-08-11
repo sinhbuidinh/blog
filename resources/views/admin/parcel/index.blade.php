@@ -28,35 +28,39 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="page_table">
                     <thead>
                         <tr>
-                            <th class="table_title">会社名</th>
-                            <th class="table_title">請求者名</th>
-                            <th class="table_title">ステータス</th>
-                            <th class="table_title small">詳細</th>
-                            <th class="table_title small">編集</th>
-                            <th class="table_title small">削除</th>
+                            <th class="table_title">parcel_code</th>
+                            <th class="table_title">guest_code</th>
+                            <th class="table_title">transferName</th>
+                            <th class="table_title">parcel_type</th>
+                            <th class="table_title">address</th>
+                            <th class="table_title">status</th>
+                            <th class="table_title">total</th>
+                            <th class="table_title">note</th>
+                            <th class="table_title small">{{ trans('label.edit') }}</th>
+                            <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
                     </thead>
                     @if($parcels)
                     @foreach ($parcels as $parcel)
                     <tbody>
                     <tr>
-                        <td class="table_text">{{ $company->company_name }}</td>
-                        <td class="table_text">{{ $company->sender_name }}</td>
+                        <td class="table_text">{{ $parcel->parcel_code }}</td>
+                        <td class="table_text">{{ $parcel->guest_code }}</td>
+                        <td class="table_text">{{ $parcel->transferName }}</td>
+                        <td class="table_text">{{ $parcel->typeName }}</td>
+                        <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">
-                            <p class="status_label">{{ $company->statusName }}</p>
+                            <p class="status_label">{{ $parcel->statusName }}</p>
                         </td>
+                        <td class="table_text">{{ $parcel->total }}</td>
+                        <td class="table_text">{{ $parcel->note }}</td>
                         <td class="table_text small">
-                            <a href="{{ route('detail_company', $company->id) }}">
-                                <img src="{{ asset('images/detail.png?v=1.0.1') }}" />
-                            </a>
-                        </td>
-                        <td class="table_text small">
-                            <a href="{{ route('edit_company', $company->id) }}">
+                            <a href="{{ route('parcel.edit', $parcel->id) }}">
                                 <img src="{{ asset('images/edit.png?v=1.0.1') }}">
                             </a>
                         </td>
                         <td class="table_text small">
-                            <a href="{{ route('delete_company', $company->id) }}">
+                            <a href="{{ route('parcel.delete', $parcel->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
                         </td>
