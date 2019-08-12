@@ -11,7 +11,7 @@ function removeFormat(number)
         return 0;
     }
     var result = number.toString().replace(/,/g, '');
-    return parseFloat(result);
+    return isNaN(parseFloat(result)) ? 0 : parseFloat(result);
 }
 $(function(){
     $('.datepicker').datepicker({
@@ -32,13 +32,7 @@ $(function(){
     });
     var guest = $('#guest_id').find(':selected');
     displayGuestInfo(guest);
-    calService();
-    if($('#price').val() != '') {
-        calRemote();
-        calGas();
-    }
-    calVat();
-    calTotal();
+    calculateTotal();
 });
 $(document).on('change', '#province, #district, #ward, #guest_id, #service_type, #parcel_type, #weight, #real_weight', function (){
     var province      = $('#province').val();
@@ -80,10 +74,12 @@ function calGas()
     var refund  = getPrice('#refund');
     var forward = getPrice('#forward');
     var remote  = getPrice('#support_remote');
-    var total = parseFloat(price) + parseFloat(refund) + parseFloat(forward)
-    + parseFloat(remote);
+    var total   = parseFloat(price) + parseFloat(refund) 
+    + parseFloat(forward) + parseFloat(remote);
     var rate = $('#support_gas_rate').val();
-    return parseFloat(total * rate) / 100;
+    var gas = parseFloat(total * rate) / 100;
+    $('#support_gas').val(formatNumber(gas));
+    return gas;
 }
 function calRemote()
 {
@@ -91,8 +87,10 @@ function calRemote()
     if (price == 0) {
         return 0;
     }
-    var rate = $('#support_remote_rate').val();
-    return parseFloat(price * rate) / 100;
+    var rate   = $('#support_remote_rate').val();
+    var remote = parseFloat(price * rate) / 100;
+    $('#support_remote').val(formatNumber(remote));
+    return remote;
 }
 function calVat()
 {
@@ -101,26 +99,26 @@ function calVat()
     var price   = getPrice('#price');
     var gas     = getPrice('#support_gas');
     var remote  = getPrice('#support_remote');
-    var total   = parseFloat(price) + parseFloat(service) + parseFloat(gas) + parseFloat(remote);
-    total = parseFloat(total * percent)/100;
-    $('#price_vat').val(formatNumber(total));
-    // console.log('VAT: ' + total);
-    return total;
+    var vat     = parseFloat(price) + parseFloat(service) + parseFloat(gas) + parseFloat(remote);
+    vat         = parseFloat(vat * percent)/100;
+    $('#price_vat').val(formatNumber(vat));
+    return vat;
 }
 function calTotal()
 {
-    var price = removeFormat($('#price').val());
-    var total_service = removeFormat($('#total_service').val());
-    var refund = removeFormat($('#refund').val());
-    var forward = removeFormat($('#forward').val());
-    var price_vat = removeFormat($('#price_vat').val());
-    var cod = removeFormat($('#cod').val());
-    var support_gas = removeFormat($('#support_gas').val());
-    var support_remote = removeFormat($('#support_remote').val());
-    var total = parseFloat(price) + parseFloat(total_service) + parseFloat(refund) 
-    + parseFloat(forward) + parseFloat(price_vat) + parseFloat(cod)
-    + parseFloat(support_gas) + parseFloat(support_remote);
+    var price   = removeFormat(getPrice('#price'));
+    var service = removeFormat(getPrice('#total_service'));
+    var refund  = removeFormat(getPrice('#refund'));
+    var forward = removeFormat(getPrice('#forward'));
+    var vat     = removeFormat(getPrice('#price_vat'));
+    var cod     = removeFormat(getPrice('#cod'));
+    var gas     = removeFormat(getPrice('#support_gas'));
+    var remote  = removeFormat(getPrice('#support_remote'));
+    var total   = parseFloat(price) + parseFloat(service) + parseFloat(refund) 
+    + parseFloat(forward) + parseFloat(vat) + parseFloat(cod)
+    + parseFloat(gas) + parseFloat(remote);
     $('#total').val(formatNumber(total));
+    return total;
 }
 function calPrice(input_obj)
 {
@@ -135,11 +133,7 @@ function calPrice(input_obj)
             if (typeof data.cal_remote != 'undefined') {
                 $('#cal_remote').val(1);
             }
-            calService();
-            calRemote();
-            calGas();
-            calVat();
-            calTotal();
+            calculateTotal();
         },
         error: function(xhr, status, error){
             console.log('url_get_price error: ' + error);
@@ -163,12 +157,16 @@ function getPrice(selector, format)
     return removeFormat(price);
 }
 $(document).on('click', '#add_services', function(){
+    calculateTotal();
+});
+function calculateTotal()
+{
     calService();
     calVat();
     calRemote();
     calGas();
     calTotal();
-});
+}
 function calService()
 {
     var inputs = $('tr.service_id_choose input[name="service_id[]"]:checked');

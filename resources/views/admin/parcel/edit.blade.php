@@ -601,7 +601,7 @@
                         @if(!empty($services_display))
                         @php
                             //services explode to element
-                            $old_services = stringify2array(old('services'));
+                            $old_services = stringify2array(old('services', data_get($parcel, 'services')));
                             $checked_services = array_pluck($old_services, 'key') ?: [];
                             $service_names = array_pluck($old_services, 'name') ?: [];
                             $service_names = implode(', ', $service_names);
