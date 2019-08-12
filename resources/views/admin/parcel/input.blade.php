@@ -483,7 +483,7 @@
                         </div>
                         <div class="col-sm-7">
                             <div class="col-sm-12">
-                                <input type="text" name="services_display" id="services_display" class="form-control" value="{{ $service_names }}" disabled>
+                                <textarea class="form-control" id="services_display" name="services_display" disabled>{{ $service_names }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -512,20 +512,6 @@
                                 <td>
                                     <input type="text" id="refund" name="refund" class="form-control" value="{{ old('refund') }}">
                                 </td>
-                                <td class="title my-auto">{{ trans('label.support_gas') }}</td>
-                                <td class="rate_value">
-                                    @php
-                                        $gas_rate_invalid = $errors->has('support_gas_rate') ? ' is-invalid' : '';
-                                        $gas_invalid = $errors->has('support_gas') ? ' is-invalid' : '';
-                                    @endphp
-                                    <input type="text" class="form-control{{ $gas_rate_invalid }}" id="support_gas_rate" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % <input type="text" class="form-control{{ $gas_invalid }}" id="support_gas" name="support_gas" value="{{ old('support_gas') }}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="title my-auto">{{ trans('label.forward') }}</td>
-                                <td>
-                                    <input type="text" id="forward" class="form-control" name="forward" value="{{ old('forward') }}">
-                                </td>
                                 <td class="title my-auto">{{ trans('label.support_remote') }}</td>
                                 <td class="rate_value">
                                     @php
@@ -533,6 +519,20 @@
                                         $remote_invalid = $errors->has('support_remote') ? ' is-invalid' : '';
                                     @endphp
                                     <input type="text" class="form-control{{ $remote_rate_invalid }}" id="support_remote_rate" name="support_remote_rate" value="{{ data_get($default, 'support_remote') }}"> % <input type="text" class="form-control{{ $remote_invalid }}" id="support_remote" name="support_remote" value="{{ old('support_remote') }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="title my-auto">{{ trans('label.forward') }}</td>
+                                <td>
+                                    <input type="text" id="forward" class="form-control" name="forward" value="{{ old('forward') }}">
+                                </td>
+                                <td class="title my-auto">{{ trans('label.support_gas') }}</td>
+                                <td class="rate_value">
+                                    @php
+                                        $gas_rate_invalid = $errors->has('support_gas_rate') ? ' is-invalid' : '';
+                                        $gas_invalid = $errors->has('support_gas') ? ' is-invalid' : '';
+                                    @endphp
+                                    <input type="text" class="form-control{{ $gas_rate_invalid }}" id="support_gas_rate" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % <input type="text" class="form-control{{ $gas_invalid }}" id="support_gas" name="support_gas" value="{{ old('support_gas') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -569,14 +569,15 @@
                 <div class="form_btn_area center">
                     <button class="btn btn-primary" id="create_parcel" type="button">{{ trans('label.create') }}</button>
                 </div>
+                <div style="display:none;">
+                    <input type="hidden" id="url_get_price" value="{{ route('ajax.calculate.price') }}">
+                    <input type="hidden" name="cal_remote" id="cal_remote" value="{{ old('cal_remote', 0) }}">
+                </div>
             </form>
         </div>
     </div>
 </div>
 
-<div style="display:none;">
-    <input type="hidden" id="url_get_price" value="{{ route('ajax.calculate.price') }}">
-</div>
 
 <div class="modal fade" id="services_list_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -620,6 +621,12 @@
                                 <input type="checkbox" name="service_id[]"
                                 {{ $checkbox }}
                                 data-key="{{ $s['key'] }}"
+                                @if(!empty($s['atleast']))
+                                data-atleast="{{ $s['atleast'] }}"
+                                @endif
+                                @if(!empty($s['limit']))
+                                data-limit="{{ $s['limit'] }}"
+                                @endif
                                 data-name="{{ $s['name'] }}"
                                 data-math="{{ data_get($s, 'math', '+') }}"
                                 value="{{ $s['value'] }}">
@@ -647,213 +654,6 @@
 @endsection
 
 @section('script')
-<script>
-function formatNumber(string)
-{
-    // return string.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    var parts = string.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return parts.join(".");
-}
-function removeFormat(number)
-{
-    var result = number.replace(/,/g, '');
-    return parseFloat(result);
-}
-</script>
-<script>
-    $(function(){
-        $('.datepicker').datepicker({
-            todayHighlight: true,
-            dateFormat: 'dd-mm-yy',
-            startDate: '-0d',
-            onSelect: function(datetext) {
-                var d = new Date(); // for now
-                var h = d.getHours();
-                h = (h < 10) ? ("0" + h) : h;
-                var m = d.getMinutes();
-                m = (m < 10) ? ("0" + m) : m;
-                var s = d.getSeconds();
-                s = (s < 10) ? ("0" + s) : s;
-                datetext = datetext + " " + h + ":" + m + ":" + s;
-                $('.datepicker').val(datetext);
-            }
-        });
-        var guest = $('#guest_id').find(':selected');
-        displayGuestInfo(guest);
-        addService();
-    });
-    $(document).on('change', '#services, #weight, #real_weight, #long, #wide, #height, #num_package, #province, #district, #ward, #guest_id', function (){
-        console.log('re-calculate price');
-        var province     = $('#province').val();
-        var district     = $('#district').val();
-        var ward         = $('#ward').val();
-        var guest        = $('#guest_id').val();
-        var service_type = $('#service_type').val();
-        var weight       = $('#weight').val();
-        var real_weight  = $('#real_weight').val();
-        if (isNotSelected(province) 
-            || isNotSelected(district) 
-            || isNotSelected(ward) 
-            || isNotSelected(guest)
-            || isNotSelected(service_type)
-            || isNotSelected(weight)
-            || isNotSelected(real_weight)
-        ) {
-            console.log('not enough params');
-            return false;
-        }
-        $('#price').removeClass('is-invalid');
-        var data = {
-            province: province,
-            district: district,
-            ward: ward,
-            guest: guest,
-            service_type: service_type,
-            weight: weight,
-            real_weight: real_weight,
-        };
-        var price = calPrice(data);
-        // console.log('price:' +price);
-        var service = calService();
-        // console.log('service:' +service);
-        $("#total_service").val(formatNumber(service));
-    });
-    function calPrice(input_obj)
-    {
-        //ajax cal
-        $.ajax({
-            type: "POST",
-            url: $('#url_get_price').val(),
-            data: input_obj,
-            dataType: 'json',
-            success: function(data){
-                $('#price').val(data.total);
-                return data.total;
-            },
-            error: function(xhr, status, error){
-                console.log('district error: ' + error);
-                return 0;
-            }
-        });
-    }
-    function isNotSelected(value)
-    {
-        if (typeof value == 'undefined' || value == '') {
-            return true;
-        }
-        return false;
-    }
-    function calService()
-    {
-        var total = 0;
-        var services = $('tr.service_id_choose input[name="service_id[]"]:checked');
-        if (services.length == 0) {
-            return total;
-        }
-        var price = $('#price').val() != '' ? $('#price').val() : 0;
-        services.each(function(index){
-            var math = $(this).data('math');
-            var value = $(this).val();
-            // console.log(index + ': ' + math + '/' + value);
-            if (math == '*') {
-                total += (price * value);
-            } else {
-                total += value;
-            }
-        });
-        return total;
-    }
-    $(document).on('click', '#back_index', function(){
-        var location = $(this).data('location');
-        window.location.href = location;
-    });
-    $(document).on('click', '#create_parcel', function(){
-        $(this).attr("disabled", true);
-        $(this).html('Sending, please wait...');
-        $('#parcel_form').submit();
-    });
-    $(document).on('click', 'tr.service_id_choose', function(){
-        var id = $(this).find('input[name="service_id[]"]');
-        if (id.attr('checked') == 'checked') {
-            id.attr('checked', false);
-            $(this).removeClass('table-success');
-        } else {
-            id.attr('checked', true);
-            $(this).addClass('table-success');
-        }
-    });
-    $(document).on('click', '#add_services', function(){
-        addService();
-    });
-    function addService()
-    {
-        var inputs = $('tr.service_id_choose input[name="service_id[]"]:checked');
-        var display = [];
-        var services = [];
-        var total = 0;
-        if (inputs.length <= 0) {
-            $('#services_display').val('');
-            $('#services').val('');
-            $("#total_service").val(0);
-            closePopup();
-            return false;
-        }
-
-        var price = $('#price').val() != '' ? removeFormat($('#price').val()) : 0;
-        inputs.each(function(index){
-            var math = $(this).data('math');
-            var key = $(this).data('key');
-            var name = $(this).data('name');
-            var value = $(this).val();
-            //append price by math
-            services.push({
-                "key": key,
-                "name": name,
-                "math": math,
-                "value": value,
-            });
-            display.push(name);
-            if (math == '*') {
-                total += parseFloat(price * value);
-            } else {
-                total += parseFloat(value);
-            }
-        });
-        //re-calculate price @TODO
-        $('#services_display').val(display.join(', '));
-        $('#services').val(JSON.stringify(services)).trigger('change');
-        $("#total_service").val(formatNumber(total));
-        closePopup();
-    }
-    //function add service & price
-    function closePopup(selector)
-    {
-        selector = typeof selector !== 'undefined' ? selector : '#services_list_model';
-        $(selector).find('.modal-header button.close').click();
-    }
-    $(document).on('change', '#guest_id', function(){
-        var guest = $(this).find(':selected');
-        if (typeof guest != 'undefined' && typeof guest.data('code') != 'undefined') {
-            $('#guest_id').removeClass('is-invalid');
-        }
-        displayGuestInfo(guest);
-    });
-    function displayGuestInfo(guest)
-    {
-        var company_name = typeof guest.data('company_name') != 'undefined' ? guest.data('company_name') : '';
-        var company_province = typeof guest.data('province_name') != 'undefined' ? guest.data('province_name') : '';
-        var company_district = typeof guest.data('district_name') != 'undefined' ? guest.data('district_name') : '';
-        var company_ward = typeof guest.data('ward_name') != 'undefined' ? guest.data('ward_name') : '';
-        var company_address = typeof guest.data('address') != 'undefined' ? guest.data('address') : '';
-        var guest_code = typeof guest.data('code') != 'undefined' ? guest.data('code') : '';
-        $('#company_name').val(company_name);
-        $('#company_province').val(company_province);
-        $('#company_district').val(company_district);
-        $('#company_ward').val(company_ward);
-        $('#company_address').val(company_address);
-        $('#guest_code').val(guest_code);
-    }
-</script>
+<script src="{{ asset('js/admin/parcel.js') }}"></script>
 <script src="{{ asset('js/address.js') }}"></script>
 @endsection

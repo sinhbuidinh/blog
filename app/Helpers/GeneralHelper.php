@@ -74,3 +74,18 @@ function formatPrice($price, $decimals = 2, $end = '')
     }
     return number_format($price, $decimals).$end;
 }
+function getProvinceById($id)
+{
+    $provinces = readJsonFile(config_path('address/provincial.json'));
+    return data_get($provinces, $id, []);
+}
+function getDistrictById($province, $id)
+{
+    $provinces = readJsonFile(config_path('address/district/'.$province.'.json'));
+    return data_get($provinces, $id, []);
+}
+function getWardById($district, $id)
+{
+    $wards = readJsonFile(config_path('address/ward/'.$district.'.json'));
+    return data_get($wards, $id, []);
+}

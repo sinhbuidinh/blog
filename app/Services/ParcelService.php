@@ -40,7 +40,7 @@ class ParcelService
         }
         $result = [];
         foreach ($raw as $key => $service) {
-            $result[] = [
+            $append = [
                 'name'    => $service['name'],
                 'value'   => $service['value'],
                 'display' => $service['display'],
@@ -48,6 +48,13 @@ class ParcelService
                 'note'    => data_get($service, 'note'),
                 'key'     => $key
             ];
+            if (!empty($service['atleast'])) {
+                $append['atleast'] = $service['atleast'];
+            }
+            if (!empty($service['limit'])) {
+                $append['limit'] = $service['limit'];
+            }
+            $result[] = $append;
         }
         return [$raw, $result];
     }

@@ -4,6 +4,14 @@ namespace App\Models;
 
 class Parcel extends BaseModel
 {
+    const TYPE_TINH     = 'tinh';
+    const TYPE_THANHPHO = 'thanh-pho';
+    const TYPE_THIXA    = 'thi-xa';
+    const TYPE_QUAN     = 'quan';
+    const TYPE_HUYEN    = 'huyen';
+    const TYPE_THITRAN  = 'thi-tran';
+    const TYPE_PHUONG   = 'phuong';
+    const TYPE_XA       = 'xa';
     // 0:deleted, 1:init, 2:package, 3:transfer, 4:refund, 5:forward, 6:complete
     const STATUS_DELETED        = 0;
     const STATUS_INIT           = 1;
@@ -61,5 +69,33 @@ class Parcel extends BaseModel
     public function history() 
     {
         return $this->hasMany('App\Models\ParcelHistory', 'parcel_id', 'id');
+    }
+
+    public static function isCalRemote($province, $district)
+    {
+        if (empty($province) || empty($district)) {
+            return false;
+        }
+        //is Noi chung thanh pho thuoc tinh la gia binh thuong
+        // Con ve huyen va xa thuoc tinh thanh la cong phu phi vung sau vung xa
+        $province_info = getProvinceById($province);
+        $district_info = getDistrictById($province, $district);
+        $province_type = data_get($province_info, 'type');
+        $district_type = data_get($district_info, 'type');
+        // dd($province_type, $district_type, self::TYPE_TINH, self::TYPE_HUYEN, self::TYPE_THIXA);
+        if ($province_type == self::TYPE_TINH
+            && $district_type == self::TYPE_THANHPHO
+        ) {
+            return false;
+        }
+        if ($province_type == self::TYPE_TINH
+            && (
+                $district_type == self::TYPE_HUYEN
+                || $district_type == self::TYPE_THIXA
+            )
+        ) {
+            return true;
+        }
+        return false;
     }
 }

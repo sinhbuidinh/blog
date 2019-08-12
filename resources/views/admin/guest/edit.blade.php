@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title'){{ trans('message.create_guest') }}@endsection
+@section('title'){{ trans('message.edit_guest') }}@endsection
 @section('head')
 <style type="text/css">
     input, select {
@@ -13,7 +13,7 @@
 <div class="common_main_wrap">
     <div class="list_wrapper">
         <div class="index_top_block">
-            <h1 class="common_page_title">{{ trans('message.create_guest') }}</h1>
+            <h1 class="common_page_title">{{ trans('message.edit_guest') }}</h1>
         </div>
         @include('admin.layouts.session-message')
         <div class="file_form_wrap">

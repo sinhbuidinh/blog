@@ -44,7 +44,7 @@ return [
     'refund' => 'Chuyển hoàn',
     'forward' => 'Chuyển tiếp',
     'vat' => 'VAT',
-    'support_gas' => 'PP Xăng dầu',
+    'support_gas' => 'PP Nhiên liệu',
     'support_remote' => 'PP Vùng sâu',
     'total_service' => 'Tổng tiền dịch vụ',
     'total' => 'Thành tiền',

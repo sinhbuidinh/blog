@@ -20,28 +20,19 @@ class Guest extends BaseModel
 
     public function getProvinceNameAttribute()
     {
-        $provinces = readJsonFile(config_path('address/provincial.json'));
-        if (empty($provincial = data_get($provinces, $this->provincial))) {
-            return '';
-        }
+        $provincial = getProvinceById($this->provincial);
         return data_get($provincial, 'name_with_type');
     }
 
     public function getDistrictNameAttribute()
     {
-        $districts = readJsonFile(config_path('address/district/'.$this->provincial.'.json'));
-        if (empty($districts) || (empty($district = data_get($districts, $this->district)))) {
-            return '';
-        }
+        $district = getDistrictById($this->provincial, $this->district);
         return data_get($district, 'name_with_type');
     }
 
     public function getWardNameAttribute()
     {
-        $wards = readJsonFile(config_path('address/ward/'.$this->district.'.json'));
-        if (empty($wards) || (empty($ward = data_get($wards, $this->ward)))) {
-            return '';
-        }
+        $ward = getDistrictById($this->district, $this->ward);
         return data_get($ward, 'name_with_type');
     }
 
