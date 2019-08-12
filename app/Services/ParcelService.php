@@ -96,18 +96,21 @@ class ParcelService
             if (!data_get($parcel, 'id')) {
                 throw new Exception('Not found');
             }
-            $guest_code = data_get($input, 'guest_code');
+            $new_status = data_get($input, 'status');
+            if ($new_status != $parcel->status) {
+                //insert history
+                $history = [
+                    'parcel_id' => data_get($parcel, 'id'),
+                    'date_time' => now()->format('Y/m/d H:m:s'),
+                    'location' => data_get($input, 'location', config('setting.company_transfer_location')),
+                    'status' => data_get($input, 'status'),
+                    'note' => data_get($input, 'note'),
+                ];
+                ParcelHistory::create($history);
+            }
+            //format data before update
             $info = self::formatDataParcel($input);
-            //insert history
-            $history = [
-                'parcel_id' => data_get($parcel, 'id'),
-                'date_time' => now()->format('d/m/Y H:m:s'),
-                //@TODO change to ? 
-                'location' => data_get($input, 'location', config('setting.company_transfer_location')),
-                'status' => data_get($input, 'status', Parcel::STATUS_UPDATE),
-                'note' => data_get($input, 'note'),
-            ];
-            ParcelHistory::create($history);
+            $parcel->update($info);
             DB::commit();
             return [$guest, $error];
         } catch (Exception $e) {
@@ -156,6 +159,7 @@ class ParcelService
             'support_gas'    => data_get($input, 'support_gas'),
             'support_remote' => data_get($input, 'support_remote'),
             'total'          => data_get($input, 'total', 0),
+            'note'           => data_get($input, 'note', 0),
             'status'         => Parcel::STATUS_INIT,
         ];
     }

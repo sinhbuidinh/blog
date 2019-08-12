@@ -10,4 +10,5 @@ class ParcelHistory extends BaseModel
      * @var string
      */
     protected $table = 'parcel_histories';
+    protected $fillable = ['parcel_id', 'date_time', 'location', 'status', 'note'];
 }
