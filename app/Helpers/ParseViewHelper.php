@@ -51,16 +51,16 @@ function parseClassByMsgType($msg_type)
 {
     $class = 'alert';
     switch ($msg_type) {
-        case MESSAGE_TYPE_SUCCESS:
+        case config('constant.MESSAGE_TYPE_SUCCESS'):
             $class .= ' alert-success';
             break;
-        case MESSAGE_TYPE_ERROR:
+        case config('constant.MESSAGE_TYPE_ERROR'):
             $class .= ' alert-danger';
             break;
-        case MESSAGE_TYPE_WARNING:
+        case config('constant.MESSAGE_TYPE_WARNING'):
             $class .= ' alert-warning';
             break;
-        case MESSAGE_TYPE_INFO:
+        case config('constant.MESSAGE_TYPE_INFO'):
             $class .= ' alert-info';
             break;
         default:
