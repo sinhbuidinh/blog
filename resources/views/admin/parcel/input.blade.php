@@ -437,7 +437,7 @@
                                     @php
                                         $time_receive_invalid = $errors->has('time_receive') ? ' is-invalid' : '';
                                     @endphp
-                                    <input type="text" name="time_receive" value="{{ old('time_receive', now()->format('d-m-Y h:m:s')) }}" class="full_width datepicker form-control{{ $time_receive_invalid }}">
+                                    <input type="text" name="time_receive" value="{{ old('time_receive', now()->format('Y-m-d h:m:s')) }}" class="full_width datepicker form-control{{ $time_receive_invalid }}">
                                     @if ($errors->has('time_receive'))
                                     <p class="common_form_error">
                                         {{ $errors->first('time_receive') }}

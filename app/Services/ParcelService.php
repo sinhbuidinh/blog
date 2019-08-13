@@ -77,7 +77,7 @@ class ParcelService
             //insert history
             $history = [
                 'parcel_id' => $parcel_id,
-                'date_time' => now()->format('d/m/Y H:m:s'),
+                'date_time' => now()->format('Y/m/d H:m:s'),
                 'location'  => config('setting.company_location'),
                 'status'    => Parcel::STATUS_INIT,
                 'note'      => data_get($input, 'note'),
