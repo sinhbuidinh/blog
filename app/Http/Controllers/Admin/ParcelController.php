@@ -97,7 +97,7 @@ class ParcelController extends Controller
         list($result, $message) = $this->parcelService->updateParcel($data, $id);
         if ($result !== false) {
             session()->flash('success', trans('message.update_parcel_success'));
-            return redirect()->route('create.parcel.complete');
+            return redirect()->route('parcel');
         }
         session()->flash('error', $message);
         return redirect()->route('parcel.edit', $id)->withInput();

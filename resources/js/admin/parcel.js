@@ -1,5 +1,6 @@
 function formatNumber(string)
 {
+    string = removeFormat(string);
     // return string.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var parts = string.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -12,6 +13,11 @@ function removeFormat(number)
     }
     var result = number.toString().replace(/,/g, '');
     return isNaN(parseFloat(result)) ? 0 : parseFloat(result);
+}
+function formatNumberObject(obj)
+{
+    var old_val = obj.val();
+    obj.val(formatNumber(old_val));
 }
 $(function(){
     $('.datepicker').datepicker({
@@ -32,6 +38,12 @@ $(function(){
     });
     var guest = $('#guest_id').find(':selected');
     displayGuestInfo(guest);
+    calculateTotal();
+});
+$(document).on('paste cut keyup change', '#total_service, #price, #refund, #forward, #price_vat, #cod, #support_remote, #support_gas', function(e){
+    formatNumberObject($(this));
+});
+$(document).on('paste cut keyup change', '#total_service, #price, #refund, #forward, #vat, #price_vat, #cod, #support_remote_rate, #support_remote, #support_gas_rate, #support_gas, #total', function(e){
     calculateTotal();
 });
 $(document).on('change', '#province, #district, #ward, #guest_id, #service_type, #parcel_type, #weight, #real_weight', function (){
@@ -83,8 +95,10 @@ function calGas()
 }
 function calRemote()
 {
-    price = getPrice('#price');
-    if (price == 0) {
+    var price = getPrice('#price');
+    var is_cal_remote = $('#cal_remote').val();
+    if (price == 0 || is_cal_remote == 0) {
+        $('#support_remote').val('');
         return 0;
     }
     var rate   = $('#support_remote_rate').val();
@@ -130,6 +144,7 @@ function calPrice(input_obj)
         dataType: 'json',
         success: function(data){
             $('#price').val(data.total_format);
+            $('#cal_remote').val(0);
             if (typeof data.cal_remote != 'undefined') {
                 $('#cal_remote').val(1);
             }
