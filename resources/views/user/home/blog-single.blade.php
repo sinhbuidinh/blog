@@ -51,7 +51,7 @@ Single blog Page
             </div>
             <!-- END main-content -->
 
-            @include('user.layouts.sidebar')
+            @include('user.layouts.kn247.sidebar')
             <!-- END sidebar -->
         </div>
     </div>

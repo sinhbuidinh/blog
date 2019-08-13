@@ -11,12 +11,36 @@ body {
     background-color: #fff;
     font-feature-settings: 'tnum';
 }
+@media (max-width: 786px) {
+    .navbar-nav li {
+        border-bottom: 0.02px solid;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (min-width: 600px) {
+    .container.logo-wrap {
+        display: none;
+    }
+}
 
 @media (min-width: 992px) {
     .navbar-expand-lg .navbar-collapse {
         display: flex !important;
         flex-basis: auto;
     }
+}
+@media (max-width: 767.98px) {
+  header .navbar {
+    background: transparent !important;
+  }
+}
+header #navbarMenu {
+    background: #eb7c26 !important;
+}
+header .navbar {
+    margin: 10px 0;
 }
 
 .collapse:not(.show) {
@@ -28,9 +52,6 @@ body {
     align-items: center;
 }
 
-header .navbar {
-    background: #eb7c26 !important;
-}
 
 .top-bar .search-top-form {
     text-align: left;
@@ -177,4 +198,18 @@ ul.checklist-tracking li p {
     border-bottom: 1px dashed #dee2e6;
     border-top: none;
     text-align: center;
+}
+.navbar-nav li:hover {
+    background-color: #acc4f9;
+    color: black;
+}
+.navbar-light .navbar-nav .nav-link {
+    font-weight: 600;
+    font-size: 18px;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: white;
+}
+.site-logo img {
+    width: 160px;
 }

@@ -9,13 +9,6 @@
     $class_category  = $is_footer ? '' : $active_category;
 @endphp
 
-@if(!$is_footer)
-<li class="{{ $class_li }}">
-    <a class="navbar-brand" href="/">
-        <img src="{{ asset('images/logo.png') }}" style="width:80px; height: 80px">
-    </a>
-</li>
-@endif
 <li class="{{ $class_li }}">
     <a class="{{ $class_home }}" href="{{ route('user.index') }}">Trang chủ</a>
 </li>

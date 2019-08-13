@@ -1,4 +1,4 @@
-<section class="site-section pt-5">
+<section class="site-section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
