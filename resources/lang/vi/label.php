@@ -60,4 +60,5 @@ return [
     'address_info' => 'Thông tin địa chỉ',
     'create_guest' => 'Tạo mới',
     'guest_code' => 'Mã KH',
+    'sidebar_package' => 'Quản lý vận đơn',
 ];

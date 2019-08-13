@@ -66,4 +66,9 @@ Route::group([
         Route::get('/edit/{id}', 'GuestController@edit')->name('guest.edit');
         Route::get('/delete/{id}', 'GuestController@delete')->name('guest.delete');
     });
+    Route::prefix('package')->group(function () {
+        Route::get('/', 'PackageController@index')->name('package');
+        Route::get('/create', 'PackageController@input')->name('package.input');
+        Route::post('/create', 'PackageController@create')->name('package.create');
+    });
 });

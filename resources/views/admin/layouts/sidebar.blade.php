@@ -12,6 +12,11 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('package') }}" class="{{ $controller == 'PackageController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/package.png?v=1.0.1') }}">{{ trans('label.sidebar_package') }}
+            </a>
+        </li>
+        <li>
             <a href="{{ route('guest') }}" class="{{ $controller == 'GuestController' ? 'active' : ''}}">
                 <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">{{ trans('label.sidebar_guest') }}
             </a>
