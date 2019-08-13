@@ -15,9 +15,9 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('package_code');
-            $table->longText('parcel_list')->nullable();
-            $table->string('note');
+            $table->string('package_code')->nullable();
+            $table->longText('parcel_list');
+            $table->string('note')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
