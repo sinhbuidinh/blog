@@ -32,7 +32,7 @@ class Guest extends BaseModel
 
     public function getWardNameAttribute()
     {
-        $ward = getDistrictById($this->district, $this->ward);
+        $ward = getWardById($this->district, $this->ward);
         return data_get($ward, 'name_with_type');
     }
 

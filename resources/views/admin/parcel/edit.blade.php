@@ -48,7 +48,7 @@
                     <input type="hidden" id="tax_value" value="10" />
                 </div>
                 <div class="row col-sm-12">
-                    <div class="col-sm-1 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
+                    <div class="col-sm-2 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
                     <div class="col-sm-3">
                         <input type="text" class="full_width form-control" name="bill_code" id="bill_code" value="{{ old('bill_code', $parcel->bill_code) }}">
                     </div>
