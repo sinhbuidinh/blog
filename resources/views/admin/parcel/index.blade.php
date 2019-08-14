@@ -4,6 +4,9 @@
     #parcels_tbl thead th:not(.small) {
         width: 150px;
     }
+    th.parcel_code, td.parcel_code {
+        width: 160px !important;
+    }
     .page_list_block .table_text:not(.small) a {
         display: unset;
     }
@@ -37,7 +40,7 @@
                 <table class="page_table table table-bordered full_width" id="parcels_tbl">
                     <thead>
                         <tr>
-                            <th class="table_title">{{ trans('label.parcel_code') }}</th>
+                            <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
                             <th class="table_title">{{ trans('label.confirm') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>

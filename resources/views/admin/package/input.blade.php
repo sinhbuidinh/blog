@@ -22,14 +22,20 @@
                 <div class="row col-sm-12">
                     <div class="col-sm-2 bold-text no-padding my-auto">{{ trans('label.input_parcel_code') }}</div>
                     <div class="col-sm-6 no-padding">
-                        <select class="form-control full_width" name="parcel_code" id="parcel_code">
-                            <option value="">{{ trans('label.please_choose') }}</option>
-                            <option value="xx">xxx</option>
-                            <option value="xx">bbb</option>
-                            <option value="xx">ccc</option>
-                            <option value="xx">ddd</option>
-                            <option value="xx">ee</option>
-                            <option value="xx">ff</option>
+                        <select class="form-control full_width" name="parcel_code" id="parcel_code" multiple="multiple">
+                            @if(!empty($parcels))
+                            <optgroup label="{{ trans('label.please_choose') }}">
+                            @foreach($parcels as $parcel)
+                            <option data-code="{{ data_get($parcel, 'parcel_code') }}" 
+                            data-bill_code="{{ data_get($parcel, 'bill_code') }}"
+                            data-type_transfer="{{ data_get($parcel, 'transferName') }}"
+                            data-type="{{ data_get($parcel, 'typeName') }}"
+                            data-address="{{ data_get($parcel, 'address') }}"
+                            data-note="{{ data_get($parcel, 'note') }}"
+                            value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'parcel_code') }}</option>
+                            @endforeach
+                            </optgroup>
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -41,32 +47,43 @@
                             <tr>
                                 <th scope="col">{{ trans('label.parcel_code') }}</th>
                                 <th scope="col">{{ trans('label.bill_code') }}</th>
-                                <th scope="col">{{ trans('label.transfer_name') }}</th>
+                                <th scope="col">{{ trans('label.type_transfer') }}</th>
                                 <th scope="col">{{ trans('label.parcel_type') }}</th>
                                 <th scope="col">{{ trans('label.address') }}</th>
+                                <th scope="col">{{ trans('label.note') }}</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">{{ trans('label.parcel_code') }}</th>
-                                <td>{{ trans('label.bill_code') }}</td>
-                                <td>{{ trans('label.transfer_name') }}</td>
-                                <td>{{ trans('label.parcel_type') }}</td>
-                                <td>{{ trans('label.address') }}</td>
-                            </tr>
+                            <tbody id="parcels_body">
                             </tbody>
                         </table>
                     </div>
+                </div>
+                <div class="form_btn_area center">
+                    <button class="btn btn-primary" id="close_package" type="button">{{ trans('label.close_package') }}</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<button type="button" id="button_none_parcel" data-toggle="modal" style="display: none;" data-target="#none-parcel-select">{{ trans('label.not_have_parcel') }}</button>
+<div class="modal fade" id="none-parcel-select" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title-parcel-nonselect">{{ trans('label.alert') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">{{ trans('label.not_have_parcel') . trans('label.please_choose_parcel') }}</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('label.close') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
-<script type="text/javascript">
-$(function(){
-    $("#parcel_code").select2();
-});
-</script>
+<script src="{{ asset('js/admin/package.js') }}"></script>
 @endsection

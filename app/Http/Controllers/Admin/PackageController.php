@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\PackageService;
+use App\Services\ParcelService;
 
 class PackageController extends Controller
 {
-    public function __construct(PackageService $packageService)
+    private $packageService;
+    private $parcelService;
+
+    public function __construct(PackageService $packageService, ParcelService $parcelService)
     {
         $this->packageService = $packageService;
+        $this->parcelService = $parcelService;
     }
 
     public function index(Request $request)
@@ -26,7 +31,9 @@ class PackageController extends Controller
 
     public function input(Request $request)
     {
-        $data = [];
+        $data = [
+            'parcels' => $this->parcelService->getListForPackage(),
+        ];
         return view('admin.package.input', $data);
     }
 }

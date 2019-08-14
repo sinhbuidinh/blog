@@ -229,4 +229,12 @@ class ParcelService
     {
         return code2Name('setting.transfer_type');
     }
+
+    public function getListForPackage()
+    {
+        //find list with status = INIT
+        return $this->repo->search([
+            'status' => Parcel::STATUS_INIT
+        ], true);
+    }
 }

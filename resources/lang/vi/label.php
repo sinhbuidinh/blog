@@ -67,4 +67,8 @@ return [
     'input_parcel_code' => 'Nhập mã Đơn Hàng',
     'status' => 'Tình trạng',
     'parcel_keyword_holder' => 'Nhập mã hóa đơn hoặc mã vận đơn',
+    'close_package' => 'Đóng bảng kê',
+    'not_have_parcel' => 'Không có vận đơn',
+    'alert' => 'Thông báo',
+    'please_choose_parcel' => 'Vui lòng chọn vận đơn',
 ];
