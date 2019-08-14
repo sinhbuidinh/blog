@@ -47,10 +47,18 @@
                     {{ csrf_field() }}
                     <input type="hidden" id="tax_value" value="10" />
                 </div>
-                <div class="row col-sm-12">
-                    <div class="col-sm-2 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
-                    <div class="col-sm-3">
-                        <input type="text" class="full_width form-control" name="bill_code" id="bill_code" value="{{ old('bill_code', $parcel->bill_code) }}">
+                <div class="row col-sm-12 full_width">
+                    <div class="row col-sm-6 full_width">
+                        <div class="col-sm-3 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
+                        <div class="col-sm-9">
+                            <input type="text" class="full_width form-control" name="bill_code" id="bill_code" value="{{ old('bill_code', $parcel->bill_code) }}">
+                        </div>
+                    </div>
+                    <div class="row col-sm-6 full_width">
+                        <div class="col-sm-4 my-auto" style="font-weight: bold;">{{ trans('label.parcel_code') }}</div>
+                        <div class="col-sm-8">
+                            <input type="text" class="full_width form-control" name="parcel_code" id="parcel_code" value="{{ $parcel->parcel_code }}" disabled>
+                        </div>
                     </div>
                 </div>
                 <div class="row">

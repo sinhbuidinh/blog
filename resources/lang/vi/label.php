@@ -2,7 +2,7 @@
 
 return [
     'sidebar_dashboard' => 'Dashboard',
-    'sidebar_parcel' => 'Quản lý Hàng',
+    'sidebar_parcel' => 'Quản lý Đơn Hàng',
     'sidebar_guest' => 'Quản lý KH',
     'edit' => 'Sửa',
     'delete' => 'Xóa',
@@ -59,6 +59,7 @@ return [
     'represent_email' => 'Email',
     'address_info' => 'Thông tin địa chỉ',
     'create_guest' => 'Tạo mới',
+    'parcel_code' => 'Mã đơn hàng',
     'guest_code' => 'Mã KH',
-    'sidebar_package' => 'Quản lý vận đơn',
+    'sidebar_package' => 'Quản lý Vận Đơn',
 ];
