@@ -4,7 +4,7 @@
     #parcels_tbl thead th:not(.small) {
         width: 150px;
     }
-    .page_list_block .table_text a {
+    .page_list_block .table_text:not(.small) a {
         display: unset;
     }
 </style>

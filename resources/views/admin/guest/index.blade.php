@@ -1,5 +1,11 @@
 @extends('admin.layouts.master')
-
+@section('head')
+<style type="text/css">
+    #guests thead th:not(.small) {
+        width: 150px;
+    }
+</style>
+@endsection
 @section('content')
 <div class="list_wrapper">
     <div class="index_top_block">
@@ -23,8 +29,8 @@
     {!! $guests->links('admin.layouts.pagination-total') !!}
     <div class="page_list_block">
         <div class="page_table">
-            <div class="tbl-content">
-                <table cellpadding="0" cellspacing="0" border="0" class="page_table">
+            <div class="tbl-content table-responsive col-sm-12">
+                <table cellpadding="0" cellspacing="0" border="0" class="table page_table" id="guests">
                     <thead>
                         <tr>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
