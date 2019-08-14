@@ -62,4 +62,5 @@ return [
     'parcel_code' => 'Mã đơn hàng',
     'guest_code' => 'Mã KH',
     'sidebar_package' => 'Quản lý Vận Đơn',
+    'input_parcel_code' => 'Nhập mã Đơn Hàng',
 ];

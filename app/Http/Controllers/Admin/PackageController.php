@@ -23,4 +23,10 @@ class PackageController extends Controller
         ];
         return view('admin.package.index', $data);
     }
+
+    public function input(Request $request)
+    {
+        $data = [];
+        return view('admin.package.input', $data);
+    }
 }

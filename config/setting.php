@@ -6,6 +6,7 @@ return [
     ],
     'guest_code' => 'KH',
     'parcel_code' => 'BP',
+    'package_code' => 'PACK',
     'company_location' => 'Văn phòng Hồ Chí Minh',
     'company_transfer_location' => 'Đơn vị vận chuyển',
     'default' => [
