@@ -96,15 +96,15 @@ class ParcelService
     public function updateParcel($input, $id)
     {
         $error = null;
-        $guest = [];
+        $parcel = [];
         try {
             DB::beginTransaction();
-            $parcel = $this->repo->find($id);
+            $parcel = self::findById($id);
             if (!data_get($parcel, 'id')) {
                 throw new Exception('Not found');
             }
             $new_status = data_get($input, 'status');
-            if ($new_status != $parcel->status) {
+            if (!is_null($new_status) && $new_status != $parcel->status) {
                 //insert history
                 $history = [
                     'parcel_id' => data_get($parcel, 'id'),
@@ -119,7 +119,37 @@ class ParcelService
             $info = self::formatDataParcel($input);
             $parcel->update($info);
             DB::commit();
-            return [$guest, $error];
+            return [$parcel, $error];
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
+    public function updateTransfer($id)
+    {
+        $error = null;
+        $parcel = [];
+        try {
+            DB::beginTransaction();
+            $parcel = self::findById($id);
+            if (!data_get($parcel, 'id')) {
+                throw new Exception('Not found');
+            }
+            $status_transfer = Parcel::STATUS_TRANSFER;
+            //insert history
+            ParcelHistory::create([
+                'parcel_id' => data_get($parcel, 'id'),
+                'date_time' => now()->format('Y/m/d H:m:s'),
+                'location'  => 'Trên đường vận chuyển',
+                'status'    => $status_transfer,
+            ]);
+            //format data before update
+            $parcel->update(['status' => $status_transfer]);
+            DB::commit();
+            return [$parcel, $error];
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error(generateTraceMessage($e));

@@ -15,23 +15,23 @@ class Parcel extends BaseModel
     // 0:deleted, 1:init, 2:package, 3:transfer, 4:refund, 5:forward, 6:complete
     const STATUS_DELETED        = 0;
     const STATUS_INIT           = 1;
-    const STATUS_APPLYBILL      = 2;
-    const STATUS_INPACKAGE      = 3;
+    const STATUS_INPACKAGE      = 2;
+    const STATUS_TRANSFER       = 3;
     const STATUS_REFUND         = 4;
     const STATUS_FORWARD        = 5;
     const STATUS_COMPLETE       = 6;
     const STATUS_DELETED_NAME   = 'Đã xóa';
     const STATUS_INIT_NAME      = 'Nhập hệ thống';
-    const STATUS_APPLYBILL_NAME = 'Nhập bill';
-    const STATUS_INPACKAGE_NAME = 'Đang phát';
+    const STATUS_INPACKAGE_NAME = 'Đã đóng bảng kê';
+    const STATUS_TRANSFER_NAME  = 'Đang chuyển';
     const STATUS_REFUND_NAME    = 'Chuyển hoàn';
     const STATUS_FORWARD_NAME   = 'Chuyển tiếp';
     const STATUS_COMPLETE_NAME  = 'Đã phát';
     static $statusNames = [
         self::STATUS_DELETED   => self::STATUS_DELETED_NAME,
         self::STATUS_INIT      => self::STATUS_INIT_NAME,
-        self::STATUS_APPLYBILL => self::STATUS_APPLYBILL_NAME,
         self::STATUS_INPACKAGE => self::STATUS_INPACKAGE_NAME,
+        self::STATUS_TRANSFER  => self::STATUS_TRANSFER_NAME,
         self::STATUS_REFUND    => self::STATUS_REFUND_NAME,
         self::STATUS_FORWARD   => self::STATUS_FORWARD_NAME,
         self::STATUS_COMPLETE  => self::STATUS_COMPLETE_NAME,
@@ -64,6 +64,14 @@ class Parcel extends BaseModel
             return '';
         }
         return data_get($list['name'], $code);
+    }
+
+    public function getIsReadyTransferAttribute()
+    {
+        if ($this->status == self::STATUS_INPACKAGE) {
+            return true;
+        }
+        return false;
     }
 
     public function history() 

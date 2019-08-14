@@ -6,6 +6,8 @@ return [
     'sidebar_guest' => 'QL Khách Hàng',
     'edit' => 'Sửa',
     'delete' => 'Xóa',
+    'confirm' => 'Xác nhận',
+    'transfer' => 'Đang phát',
     'please_choose' => 'Please choose',
     'bill_code' => 'Số phiếu',
     'guest_info' => 'Thông tin khách hàng',
