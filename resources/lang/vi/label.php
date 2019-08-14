@@ -2,8 +2,8 @@
 
 return [
     'sidebar_dashboard' => 'Dashboard',
-    'sidebar_parcel' => 'Quản lý Đơn Hàng',
-    'sidebar_guest' => 'Quản lý KH',
+    'sidebar_parcel' => 'QL Vận Đơn',
+    'sidebar_guest' => 'QL Khách Hàng',
     'edit' => 'Sửa',
     'delete' => 'Xóa',
     'please_choose' => 'Please choose',
@@ -14,7 +14,7 @@ return [
     'receiver' => 'Người nhận',
     'tel' => 'SDT',
     'full_name' => 'Họ tên',
-    'parcel' => 'Bưu phẩm',
+    'parcel' => 'Vận đơn',
     'parcel_info' => 'Thông tin bưu phẩm',
     'parcel_type' => 'Loại bưu phẩm',
     'real_weight' => 'TL thực(kg)',
@@ -59,8 +59,10 @@ return [
     'represent_email' => 'Email',
     'address_info' => 'Thông tin địa chỉ',
     'create_guest' => 'Tạo mới',
-    'parcel_code' => 'Mã đơn hàng',
+    'parcel_code' => 'Mã vận đơn',
     'guest_code' => 'Mã KH',
-    'sidebar_package' => 'Quản lý Vận Đơn',
+    'sidebar_package' => 'QL Bảng Kê',
     'input_parcel_code' => 'Nhập mã Đơn Hàng',
+    'status' => 'Tình trạng',
+    'parcel_keyword_holder' => 'Nhập mã hóa đơn hoặc mã vận đơn',
 ];

@@ -38,7 +38,7 @@
 <div class="common_main_wrap">
     <div class="list_wrapper">
         <div class="index_top_block">
-            <h1 class="common_page_title">Sửa bưu phẩm</h1>
+            <h1 class="common_page_title">Sửa {{ trans('label.parcel') }}</h1>
         </div>
         @include('admin.layouts.session-message')
         <div class="file_form_wrap">

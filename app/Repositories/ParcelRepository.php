@@ -14,6 +14,12 @@ class ParcelRepository extends BaseRepository
     public function search(array $wheres = [], $getAll = false)
     {
         $parcels = $this->model;
+        if (!empty($keyword = $wheres['keyword'])) {
+            $parcels = $parcels->where(function($query) use ($keyword) {
+                $query->where('bill_code', 'like', '%' . $keyword . '%')
+                      ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
+            });
+        }
         $parcels = $parcels->orderBy('created_at', 'desc');
         if ($getAll === true) {
             return $parcels->get();
