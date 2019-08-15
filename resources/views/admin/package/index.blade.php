@@ -3,7 +3,7 @@
 @section('content')
 <div class="list_wrapper">
     <div class="index_top_block">
-        <h1 class="common_page_title">Danh sách vận đơn</h1>
+        <h1 class="common_page_title">Danh sách bảng kê</h1>
         <div id="group_create">
             <a href="{{ route('package.input') }}"
                 class="create_new_btn">Tạo mới</a>
@@ -12,7 +12,7 @@
     <div class="search_form">
         <form action="{{ route('package')}}" method="get">
             <div class="list_search list_search_with_button">
-                <input type="text" id="keyword" name="keyword" placeholder="Nhập mã vận đơn" value="{{ old('keyword', data_get($search, 'keyword')) }}" />
+                <input type="text" id="keyword" name="keyword" placeholder="Nhập mã bảng kê" value="{{ old('keyword', data_get($search, 'keyword')) }}" />
                 <button type="submit" class="list_search_submit">
                     <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
                 </button>
@@ -28,38 +28,43 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="page_table">
                     <thead>
                         <tr>
-                            <th class="table_title">package_code</th>
-                            <th class="table_title">parcel_code</th>
-                            <th class="table_title">note</th>
-                            <th class="table_title small">{{ trans('label.edit') }}</th>
+                            <th class="table_title">{{ trans('label.package_code') }}</th>
+                            <th class="table_title">{{ trans('label.confirm') }}</th>
+                            <th class="table_title">{{ trans('label.parcel_list') }}</th>
+                            <th class="table_title">{{ trans('label.note') }}</th>
                             <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
                     </thead>
+                    <tbody>
                     @if($packages)
                     @foreach ($packages as $package)
-                    <tbody>
                     <tr>
                         <td class="table_text">{{ $package->package_code }}</td>
-                        <td class="table_text">{{ $package->parcel_code }}</td>
-                        <td class="table_text">{{ $package->note }}</td>
-                        <td class="table_text small">
-                            <a href="{{ route('package.edit', $package->id) }}">
-                                <img src="{{ asset('images/edit.png?v=1.0.1') }}">
-                            </a>
+                        <td class="table_text">
+                            <button type="button" data-url="{{ route('package.transfer', $package->id) }}" class="btn btn-primary confirm_transfer">{{ trans('label.transfer') }}</button>
                         </td>
-                        <td class="table_text small">
+                        <td class="table_text">{{ $package->parcelDisplay }}</td>
+                        <td class="table_text">{{ $package->note }}</td>
+                        <td class="table_text small" style="text-align:center;">
                             <a href="{{ route('package.delete', $package->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
                         </td>
                     </tr>
-                    </tbody>
                     @endforeach
                     @endif
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
     <div class="common_pager">{!! $packages->links('admin.layouts.pagination') !!}</div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+    $(document).on('click', '.confirm_transfer', function(){
+        window.location.href = $(this).data('url');
+    });
+</script>
 @endsection

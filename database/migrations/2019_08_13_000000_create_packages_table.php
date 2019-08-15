@@ -17,6 +17,7 @@ class CreatePackagesTable extends Migration
             $table->increments('id');
             $table->string('package_code')->nullable();
             $table->longText('parcel_list');
+            $table->tinyInteger('status')->comment('0:deleted, 1:init, 2:transfer, 3:refund, 4:forward, 5:complete')->default(1);
             $table->string('note')->nullable();
             $table->softDeletes();
             $table->timestamps();

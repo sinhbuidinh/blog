@@ -27,6 +27,7 @@
                             <optgroup label="{{ trans('label.please_choose') }}">
                             @foreach($parcels as $parcel)
                             <option data-code="{{ data_get($parcel, 'parcel_code') }}" 
+                            data-id="{{ data_get($parcel, 'id') }}"
                             data-bill_code="{{ data_get($parcel, 'bill_code') }}"
                             data-type_transfer="{{ data_get($parcel, 'transferName') }}"
                             data-type="{{ data_get($parcel, 'typeName') }}"
@@ -58,6 +59,12 @@
                         </table>
                     </div>
                 </div>
+                <div class="row col-sm-12">
+                    <div class="col-sm-2">{{ trans('label.note') }}</div>
+                    <div class="col-sm-8">
+                        <textarea class="form-control full_width" name="note" id="note">{{ old('note') }}</textarea>
+                    </div>
+                </div>
                 <div class="form_btn_area center">
                     <button class="btn btn-primary" id="close_package" type="button">{{ trans('label.close_package') }}</button>
                 </div>
@@ -70,13 +77,13 @@
 <div class="modal fade" id="none-parcel-select" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header alert alert-primary">
                 <h5 class="modal-title" id="title-parcel-nonselect">{{ trans('label.alert') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">{{ trans('label.not_have_parcel') . trans('label.please_choose_parcel') }}</div>
+            <div class="modal-body alert alert-danger" role="alert">{{ trans('label.not_have_parcel') .'. '. trans('label.please_choose_parcel') }}</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('label.close') }}</button>
             </div>

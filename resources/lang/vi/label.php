@@ -71,4 +71,6 @@ return [
     'not_have_parcel' => 'Không có vận đơn',
     'alert' => 'Thông báo',
     'please_choose_parcel' => 'Vui lòng chọn vận đơn',
+    'package_code' => 'Mã bảng kê',
+    'parcel_list' => 'Danh sách vận đơn',
 ];

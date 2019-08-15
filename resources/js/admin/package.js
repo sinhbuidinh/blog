@@ -71,15 +71,17 @@ $(function(){
     }
     function genRow(code, info)
     {
+        var id = typeof info.id != 'undefined' ? info.id : '';
         var bill_code = typeof info.bill_code != 'undefined' ? info.bill_code : '';
         var type_transfer = typeof info.type_transfer != 'undefined' ? info.type_transfer : '';
         var type = typeof info.type != 'undefined' ? info.type : '';
         var address = typeof info.address != 'undefined' ? info.address : '';
         var note = typeof info.note != 'undefined' ? info.note : '';
         var result = '<tr id="parcel_code_'+code+'">';
-        result += '<td>'+code;
-        result += '<input type="hidden" name="parcel[]" value="'+code+'">';
-        result += '</td>';
+        result += '<th scope="row">'+code;
+        result += '<input type="hidden" name="parcel[id][]" value="'+id+'">';
+        result += '<input type="hidden" name="parcel[code][]" value="'+code+'">';
+        result += '</th>';
         result += '<td>'+bill_code+'</td>';
         result += '<td>'+type_transfer+'</td>';
         result += '<td>'+type+'</td>';

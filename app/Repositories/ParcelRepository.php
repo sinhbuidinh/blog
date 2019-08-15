@@ -20,6 +20,9 @@ class ParcelRepository extends BaseRepository
                       ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
             });
         }
+        if (!empty($wheres['status'])) {
+            $parcels = $parcels->where('status', $wheres['status']);
+        }
         $parcels = $parcels->orderBy('created_at', 'desc');
         if ($getAll === true) {
             return $parcels->get();

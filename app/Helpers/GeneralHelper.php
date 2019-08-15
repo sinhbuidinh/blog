@@ -45,6 +45,13 @@ function genParcelCode($id, $guest_code)
     }
     return config('setting.parcel_code').$guest_code.sprintf('%09d', $id);
 }
+function genPackageCode($id)
+{
+    if (empty($id)) {
+        return false;
+    }
+    return config('setting.package_code').sprintf('%011d', $id);
+}
 function stringify2array($string)
 {
     if (empty($string)) {

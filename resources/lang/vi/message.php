@@ -15,5 +15,8 @@ return [
     'create_parcel_success' => 'Tạo đơn hàng thành công',
     'update_parcel_success' => 'Sửa vận đơn thành công',
     'delete_parcel_success' => 'Xóa vận đơn thành công',
-    'update_transfer_error' => 'Cập nhật đang phát thành công',
+    'update_transfer_success' => 'Cập nhật đang phát thành công',
+    'update_transfer_error' => 'Cập nhật đang phát lỗi',
+    'create_package_success' => 'Đóng bảng kê thành công',
+    'delete_package_success' => 'Xóa bảng kê thành công',
 ];

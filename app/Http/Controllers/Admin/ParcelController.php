@@ -111,17 +111,6 @@ class ParcelController extends Controller
         return redirect()->route('parcel');
     }
 
-    public function transfer(Request $request, $id = null)
-    {
-        list($result, $message) = $this->parcelService->updateTransfer($id);
-        if ($result === false) {
-            session()->flash('error', $message ?: trans('message.update_transfer_error'));
-        } else {
-            session()->flash('success', trans('message.update_transfer_success'));
-        }
-        return redirect()->route('parcel');
-    }
-
     public function ajaxGetDistricts($provinceId = null) 
     {
         $districts = $this->parcelService->getDistrictByProvinceId($provinceId);

@@ -41,7 +41,7 @@
                     <thead>
                         <tr>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
-                            <th class="table_title">{{ trans('label.confirm') }}</th>
+                            <th class="table_title">{{ trans('label.bill_code') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
@@ -60,11 +60,7 @@
                         <td class="table_text">
                             <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
                         </td>
-                        <td class="table_text">
-                            @if($parcel->isReadyTransfer)
-                            <button type="button" data-url="{{ route('parcel.transfer', $parcel->id) }}" class="btn btn-primary confirm_transfer">{{ trans('label.transfer') }}</button>
-                            @endif
-                        </td>
+                        <td class="table_text">{{ $parcel->bill_code }}</td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>
@@ -94,11 +90,4 @@
     </div>
     <div class="common_pager">{!! $parcels->links('admin.layouts.pagination') !!}</div>
 </div>
-@endsection
-@section('script')
-<script type="text/javascript">
-    $(document).on('click', '.confirm_transfer', function(){
-        window.location.href = $(this).data('url');
-    });
-</script>
 @endsection
