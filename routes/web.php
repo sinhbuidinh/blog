@@ -10,13 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::prefix('artisan')->group(function () {
+    Route::get('/key-generate', function() {
+        \Artisan::call('key:generate');
+        \Artisan::call('config:cache');
+        return "key-generate done";
+    });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+    Route::get('/clear-cache', function() {
+        \Artisan::call('config:cache');
+        return 'clear done';
+    });
 
-// Route::get('/home', 'CustomersController@index')->name('home');
-// Route::get('/customers', 'CustomersController@index')->name('customers');
+    Route::get('/migrate', function() {
+        \Artisan::call('migrate');
+        return 'migrate done';
+    });
+});
 
 Route::namespace('User')->group(function(){
     Route::get('/', 'HomeController@index')->name('user.index');
