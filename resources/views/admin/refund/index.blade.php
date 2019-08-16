@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 @section('head')
 <style type="text/css">
-    #parcels_tbl thead th:not(.small) {
+    #refunds_tbl thead th:not(.small) {
         width: 150px;
     }
     th.parcel_code, td.parcel_code {
-        width: 180px !important;
+        width: 160px !important;
     }
     .page_list_block .table_text:not(.small) a {
         display: unset;
@@ -15,16 +15,16 @@
 @section('content')
 <div class="list_wrapper">
     <div class="index_top_block">
-        <h1 class="common_page_title">Danh sách {{ trans('label.parcel') }}</h1>
+        <h1 class="common_page_title">Danh sách {{ trans('label.refund') }}</h1>
         <div id="group_create">
-            <a href="{{ route('parcel.input') }}"
+            <a href="{{ route('refund.input') }}"
                 class="create_new_btn">Tạo mới</a>
         </div>
     </div>
     <div class="search_form">
-        <form action="{{ route('parcel')}}" method="get">
+        <form action="{{ route('refund')}}" method="get">
             <div class="list_search list_search_with_button">
-                <input type="text" id="keyword" name="keyword" placeholder="{{ trans('label.parcel_keyword_holder') }}" value="{{ old('keyword', data_get($search, 'keyword')) }}" />
+                <input type="text" id="keyword" name="keyword" placeholder="{{ trans('label.refund_keyword_holder') }}" value="{{ old('keyword', data_get($search, 'keyword')) }}" />
                 <button type="submit" class="list_search_submit">
                     <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
                 </button>
@@ -33,15 +33,15 @@
     </div>
     @include('admin.layouts.session-message')
 
-    {!! $parcels->links('admin.layouts.pagination-total') !!}
+    {!! $refunds->links('admin.layouts.pagination-total') !!}
     <div class="page_list_block">
         <div class="page_table">
             <div class="tbl-content table-responsive col-sm-12">
-                <table class="page_table table table-bordered full_width" id="parcels_tbl">
+                <table class="page_table table table-bordered full_width" id="refunds_tbl">
                     <thead>
                         <tr>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
-                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
+                            <th class="table_title">{{ trans('label.bill_code') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
@@ -50,17 +50,16 @@
                             <th class="table_title">{{ trans('label.total') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
                             <th class="table_title small">{{ trans('label.edit') }}</th>
-                            <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
                     </thead>
-                    @if($parcels)
-                    @foreach ($parcels as $parcel)
+                    @if($refunds)
+                    @foreach ($refunds as $parcel)
                     <tbody>
                     <tr>
-                        <td class="table_text parcel_code">
+                        <td class="table_text">
                             <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
                         </td>
-                        <td class="table_text parcel_code">{{ $parcel->bill_code }}</td>
+                        <td class="table_text">{{ $parcel->bill_code }}</td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>
@@ -75,11 +74,6 @@
                                 <img src="{{ asset('images/edit.png?v=1.0.1') }}">
                             </a>
                         </td>
-                        <td class="table_text small">
-                            <a href="{{ route('parcel.delete', $parcel->id) }}">
-                                <img src="{{ asset('images/delete.png?v=1.0.1') }}">
-                            </a>
-                        </td>
                     </tr>
                     </tbody>
                     @endforeach
@@ -88,6 +82,6 @@
             </div>
         </div>
     </div>
-    <div class="common_pager">{!! $parcels->links('admin.layouts.pagination') !!}</div>
+    <div class="common_pager">{!! $refunds->links('admin.layouts.pagination') !!}</div>
 </div>
 @endsection

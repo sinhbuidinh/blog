@@ -73,4 +73,9 @@ return [
     'please_choose_parcel' => 'Vui lòng chọn vận đơn',
     'package_code' => 'Mã bảng kê',
     'parcel_list' => 'Danh sách vận đơn',
+    'sidebar_refund' => 'QL Chuyển hoàn',
+    'sidebar_forward' => 'QL Chuyển tiếp',
+    'refund' => 'Chuyển Hoàn',
+    'refund_keyword_holder' => 'Nhập mã hóa đơn hoặc mã vận đơn',
+    'refund_parcel' => 'Chuyển hoàn vận đơn',
 ];

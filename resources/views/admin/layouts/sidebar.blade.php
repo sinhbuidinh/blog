@@ -17,6 +17,16 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('refund') }}" class="{{ $controller == 'RefundController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/refund.png?v=1.0.1') }}">{{ trans('label.sidebar_refund') }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('forward') }}" class="{{ $controller == 'ForwardController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/forward.png?v=1.0.1') }}">{{ trans('label.sidebar_forward') }}
+            </a>
+        </li>
+        <li>
             <a href="{{ route('guest') }}" class="{{ $controller == 'GuestController' ? 'active' : ''}}">
                 <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">{{ trans('label.sidebar_guest') }}
             </a>

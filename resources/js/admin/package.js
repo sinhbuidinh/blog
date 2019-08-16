@@ -1,5 +1,5 @@
 $(function(){
-    $(document).on('click', '#close_package', function(){
+    $(document).on('click', '#refund_parcel, #close_package', function(){
         //if not have data parcel => alert
         var parcels = $('tr[id^="parcel_code_"]');
         if (typeof parcels == 'undefined' || parcels.length == 0) {

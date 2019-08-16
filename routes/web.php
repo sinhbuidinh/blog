@@ -84,4 +84,15 @@ Route::group([
         Route::get('/delete/{id}', 'PackageController@delete')->name('package.delete');
         Route::get('/transfer/{id}', 'PackageController@transfer')->name('package.transfer');
     });
+
+    Route::prefix('refund')->group(function () {
+        Route::get('/', 'RefundController@index')->name('refund');
+        Route::get('/create', 'RefundController@input')->name('refund.input');
+        Route::post('/create', 'RefundController@create')->name('refund.create');
+    });
+
+    Route::prefix('forward')->group(function () {
+        Route::get('/', 'ForwardController@index')->name('forward');
+        Route::get('/create', 'ForwardController@input')->name('forward.input');
+    });
 });
