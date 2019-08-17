@@ -89,6 +89,7 @@ Route::group([
         Route::get('/', 'RefundController@index')->name('refund');
         Route::get('/create', 'RefundController@input')->name('refund.input');
         Route::post('/create', 'RefundController@create')->name('refund.create');
+        Route::get('/complete', 'RefundController@complete')->name('create.refund.complete');
     });
 
     Route::prefix('forward')->group(function () {

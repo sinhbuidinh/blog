@@ -35,4 +35,22 @@ class RefundController extends Controller
         ];
         return view('admin.refund.input', $data);
     }
+
+    public function create(Request $request)
+    {
+        $data = $request->only(['parcel', 'note']);
+        list($result, $message) = $this->refundService->refund($data);
+        if ($result !== false) {
+            session()->flash('success', trans('message.refund_success'));
+            return redirect()->route('create.refund.complete');
+        }
+        session()->flash('error', $message);
+        return redirect()->route('refund.input')->withInput();
+    }
+
+    public function complete()
+    {
+        $data['message'] = session()->has('success') ? session()->get('success') : 'Complete';
+        return view('admin.refund.complete', $data);
+    }
 }

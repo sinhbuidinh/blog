@@ -11,18 +11,18 @@ class ParcelRepository extends BaseRepository
         return Parcel::class;
     }
 
-    public function search(array $wheres = [], $getAll = false)
+    public function search(array $wheres = [], $getAll = false, $getPackage = false)
     {
-        $parcels = $this->model;
-        if (!empty($keyword = data_get($wheres, 'keyword'))) {
-            $parcels = $parcels->where(function($query) use ($keyword) {
-                $query->where('bill_code', 'like', '%' . $keyword . '%')
-                      ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
-            });
-        }
-        if (!empty($wheres['status'])) {
-            $parcels = $parcels->where('status', $wheres['status']);
-        }
+        $parcels = $this->model->select('parcels.*')->when(data_get($wheres, 'keyword'), function ($query, $keyword) {
+            $query->where('bill_code', 'like', '%' . $keyword . '%')
+                ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
+        })->when(data_get($wheres, 'status'), function ($query, $status) {
+            $query->where('parcels.status', $status);
+        })->when($getPackage, function($query) {
+            $query->join('package_items', 'package_items.parcel_id', '=', 'parcels.id')
+            ->join('packages', 'packages.id', '=', 'package_items.package_id')
+            ->addSelect('packages.package_code');
+        });
         $parcels = $parcels->orderBy('created_at', 'desc');
         if ($getAll === true) {
             return $parcels->get();

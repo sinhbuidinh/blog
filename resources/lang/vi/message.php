@@ -23,4 +23,6 @@ return [
     'note_history_company' => 'Văn phòng Hồ Chí Minh',
     'note_history_inpackage' => 'Đã đóng gói chuyển đi',
     'note_history_company_transfer' => 'Đơn vị vận chuyển',
+    'refund_success' => 'Chuyển hoàn thành công',
+    'note_history_refund' => 'Đang chuyển hoàn',
 ];
