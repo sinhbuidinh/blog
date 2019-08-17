@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title'){{ trans('message.create_parcel') }}@endsection
+@section('title'){{ trans('message.create_package') }}@endsection
 @section('head')
 <style type="text/css">
     #parcels_tbl th, td {
@@ -11,7 +11,7 @@
 <div class="common_main_wrap">
     <div class="list_wrapper">
         <div class="index_top_block">
-            <h1 class="common_page_title">Tạo vận đơn</h1>
+            <h1 class="common_page_title">{{ trans('message.create_package') }}</h1>
         </div>
         @include('admin.layouts.session-message')
         <div class="file_form_wrap">

@@ -40,7 +40,7 @@ class PackageController extends Controller
 
     public function create(CreatePackage $request)
     {
-        $data = $request->only(['parcel']);
+        $data = $request->only(['parcel', 'note']);
         list($result, $message) = $this->packageService->newPackage($data);
         if ($result !== false) {
             session()->flash('success', trans('message.create_package_success'));
@@ -60,6 +60,8 @@ class PackageController extends Controller
     {
         $package = $this->packageService->findById($id);
         $package->delete();
+        $package->status = PACKAGE::STATUS_DELETED;
+        $package->save();
         session()->flash('success', trans('message.delete_package_success'));
         return redirect()->route('package');
     }

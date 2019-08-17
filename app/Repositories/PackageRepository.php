@@ -13,14 +13,11 @@ class PackageRepository extends BaseRepository
 
     public function search(array $wheres = [], $getAll = false)
     {
-        $packages = $this->model;
-        if (!empty($keyword = data_get($wheres, 'keyword'))) {
-            $packages = $packages->where(function($query) use ($keyword) {
-                $query->where('package_code', 'like', '%' . $keyword . '%')
-                      ->orWhere('parcel_list', 'like', '%' . $keyword . '%');
-            });
-        }
-        $packages = $packages->orderBy('created_at', 'desc');
+        $packages = $this->model->when(data_get($wheres, 'keyword'), function ($query, $keyword) {
+            $query->where('package_code', 'like', '%' . $keyword . '%');
+        })->when(data_get($wheres, 'status'), function ($query, $status) {
+            $query->where('status', $status);
+        })->orderBy('created_at', 'desc');
         if ($getAll === true) {
             return $packages->get();
         }

@@ -107,6 +107,8 @@ class ParcelController extends Controller
     {
         $parcel = $this->parcelService->findById($id);
         $parcel->delete();
+        $parcel->status = Parcel::STATUS_DELETED;
+        $parcel->save();
         session()->flash('success', trans('message.delete_parcel_success'));
         return redirect()->route('parcel');
     }

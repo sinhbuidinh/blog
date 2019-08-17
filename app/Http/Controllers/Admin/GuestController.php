@@ -86,6 +86,8 @@ class GuestController extends Controller
     {
         $guest = $this->guestService->findById($id);
         $guest->delete();
+        $guest->status = Guest::STATUS_DISABLE;
+        $guest->save();
         session()->flash('success', trans('message.delete_guest_success'));
         return redirect()->route('guest');
     }

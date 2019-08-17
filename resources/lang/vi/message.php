@@ -18,5 +18,9 @@ return [
     'update_transfer_success' => 'Cập nhật đang phát thành công',
     'update_transfer_error' => 'Cập nhật đang phát lỗi',
     'create_package_success' => 'Đóng bảng kê thành công',
+    'create_package' => 'Tạo bảng kê',
     'delete_package_success' => 'Xóa bảng kê thành công',
+    'note_history_company' => 'Văn phòng Hồ Chí Minh',
+    'note_history_inpackage' => 'Đã đóng gói chuyển đi',
+    'note_history_company_transfer' => 'Đơn vị vận chuyển',
 ];

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\PackageRepository;
 use App\Repositories\ParcelRepository;
 use App\Models\Package;
+use App\Models\PackageItem;
 use App\Models\Parcel;
 use App\Models\ParcelHistory;
 use DB;
@@ -31,6 +32,7 @@ class PackageService
     {
         $error = null;
         $package = [];
+        $now = now()->format('Y/m/d H:m:s');
         try {
             DB::beginTransaction();
             $parcels = array_filter(data_get($input, 'parcel', []));
@@ -49,9 +51,29 @@ class PackageService
             }
             $package->package_code = $package_code;
             $package->save();
+
             //update status of parcel list
-            $parcel_ids = data_get($parcels, 'id');
+            $parcel_ids = $parcels['id'];
             $updates = Parcel::whereIn('id', $parcel_ids)->update(['status' => Parcel::STATUS_INPACKAGE]);
+            // insert log parcel
+            $histories = [];
+            $package_items = [];
+            foreach ($parcel_ids as $parcel_id) {
+                $package_items[] = [
+                    'package_id' => $package_id,
+                    'parcel_id'  => $parcel_id,
+                    'created_at' => $now,
+                ];
+                $histories[] = [
+                    'parcel_id' => $parcel_id,
+                    'date_time' => $now,
+                    'location'  => trans('message.note_history_inpackage'),
+                    'status'    => Parcel::STATUS_INPACKAGE,
+                    'note'      => trans('message.note_history_inpackage'),
+                ];
+            }
+            ParcelHistory::insert($histories);
+            PackageItem::insert($package_items);
             DB::commit();
             return [$package, $error];
         } catch (Exception $e) {
@@ -70,34 +92,44 @@ class PackageService
     public function updateTransfer($packageId)
     {
         $error = null;
-        $parcel = [];
+        $package = [];
+        $now = now()->format('Y/m/d H:m:s');
         try {
             DB::beginTransaction();
             $package = self::findById($packageId);
-            $parcels = data_get($package, 'parcelIds');
+
+            //find parcel list in package
+            $parcels = $package->parcelIds();
+            $ids = $histories = [];
             foreach($parcels as $id) {
                 $parcel = $this->parcelRepo->find($id);
-                if (!data_get($parcel, 'id')) {
+                $parcel_id = data_get($parcel, 'id');
+                if (!$parcel_id) {
                     throw new Exception('Not found');
                 }
                 if (data_get($parcel, 'status') != Parcel::STATUS_INPACKAGE) {
-                    throw new Exception('Not allow update parcel: '.$parcel->parcel_code);
+                    throw new Exception('Not allow update !STATUS_INPACKAGE parcel: '.$parcel->parcel_code);
                 }
-                $status_transfer = Parcel::STATUS_TRANSFER;
-                //insert history
-                ParcelHistory::create([
-                    'parcel_id' => data_get($parcel, 'id'),
-                    'date_time' => now()->format('Y/m/d H:m:s'),
-                    'location'  => 'Trên đường vận chuyển',
-                    'status'    => $status_transfer,
-                ]);
-                //format data before update
-                $parcel->update(['status' => $status_transfer]);
+                $ids[] = $parcel_id;
+                $histories[] = [
+                    'parcel_id'  => $parcel_id,
+                    'date_time'  => $now,
+                    'location'   => trans('message.note_history_company_transfer'),
+                    'status'     => Parcel::STATUS_TRANSFER,
+                    'note'       => trans('message.note_history_company_transfer'),
+                ];
             }
-            $package->status = Parcel::STATUS_TRANSFER;
+
+            //insert history
+            ParcelHistory::insert($histories);
+            //format data before update
+            Parcel::whereIn('id', $ids)->update(['status' => Parcel::STATUS_TRANSFER]);
+
+            //update package status
+            $package->status = Package::STATUS_TRANSFER;
             $package->save();
             DB::commit();
-            return [$parcel, $error];
+            return [$package, $error];
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error(generateTraceMessage($e));

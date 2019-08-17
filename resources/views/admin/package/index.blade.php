@@ -31,6 +31,7 @@
                             <th class="table_title">{{ trans('label.package_code') }}</th>
                             <th class="table_title">{{ trans('label.confirm') }}</th>
                             <th class="table_title">{{ trans('label.parcel_list') }}</th>
+                            <th class="table_title">{{ trans('label.status') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
                             <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
@@ -41,9 +42,14 @@
                     <tr>
                         <td class="table_text">{{ $package->package_code }}</td>
                         <td class="table_text">
+                            @if($package->readyTransfer)
                             <button type="button" data-url="{{ route('package.transfer', $package->id) }}" class="btn btn-primary confirm_transfer">{{ trans('label.transfer') }}</button>
+                            @endif
                         </td>
                         <td class="table_text">{{ $package->parcelDisplay }}</td>
+                        <td class="table_text">
+                            <p class="status_label">{{ $package->statusName }}</p>
+                        </td>
                         <td class="table_text">{{ $package->note }}</td>
                         <td class="table_text small" style="text-align:center;">
                             <a href="{{ route('package.delete', $package->id) }}">
