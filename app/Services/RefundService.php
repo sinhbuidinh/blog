@@ -39,8 +39,18 @@ class RefundService
             }
             //update status of parcel list
             $parcel_ids = $parcels['id'];
+            list($refund, $gas, $vat, $total) = $this->repo->priceAfterRefund();
             $updates = Parcel::whereIn('id', $parcel_ids)->update([
-                'status' => Parcel::STATUS_REFUND
+                'status'      => Parcel::STATUS_REFUND,
+                // 'refund'      => DB::raw($refund),
+                // 'support_gas' => DB::raw($gas),
+                // 'price_vat'   => DB::raw($vat),
+                // 'total'       => DB::raw($total)
+                // have format number
+                'refund'      => DB::raw(sqlNumberFormat($refund)),
+                'support_gas' => DB::raw(sqlNumberFormat($gas)),
+                'price_vat'   => DB::raw(sqlNumberFormat($vat)),
+                'total'       => DB::raw(sqlNumberFormat($total))
             ]);
             // insert log parcel
             $histories = [];
@@ -58,19 +68,26 @@ class RefundService
             }
             ParcelHistory::insert($histories);
             //find package of parcel for update status
-            $packages_updates = $pack_updates = [];
+            $need_updates = [];
             foreach ($packages as $package_id => $parcels) {
                 $parcel_refund = count($parcels);
                 $pack_items = PackageItem::where('package_id', $package_id)->get()->count();
                 if ($parcel_refund == $pack_items) {
-                    $packages_updates[] = $package_id;
+                    $need_updates[] = $package_id;
+                    continue;
+                }
+                //if refund status before + parcel_refund == pack_items => update too
+                $refund_before = $this->repo->countRefundParcel($package_id);
+                if (($refund_before + $parcel_refund) == $pack_items) {
+                    $need_updates[] = $package_id;
                 }
             }
-            if (!empty($packages_updates)) {
-                $pack_updates = Package::whereIn('id', $packages_updates)->update(['status' => Package::STATUS_REFUND]);
+            $pack_updated = 0;
+            if (!empty($need_updates)) {
+                $pack_updated = Package::whereIn('id', $need_updates)->update(['status' => Package::STATUS_REFUND]);
             }
             DB::commit();
-            return [$updates, $error];
+            return [$pack_updated, $error];
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error(generateTraceMessage($e));

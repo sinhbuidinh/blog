@@ -96,3 +96,11 @@ function getWardById($district, $id)
     $wards = readJsonFile(config_path('address/ward/'.$district.'.json'));
     return data_get($wards, $id, []);
 }
+function sqlPriceReal(string $field)
+{
+    return "REPLACE(IFNULL($field, 0), ',', '')";
+}
+function sqlNumberFormat(string $obj)
+{
+    return "FORMAT($obj, 2)";
+}
