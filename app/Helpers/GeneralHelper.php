@@ -102,5 +102,5 @@ function sqlPriceReal(string $field)
 }
 function sqlNumberFormat(string $obj)
 {
-    return "FORMAT($obj, 2)";
+    return "FORMAT($obj, 0)";
 }

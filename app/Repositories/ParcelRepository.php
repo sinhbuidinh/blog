@@ -33,7 +33,7 @@ class ParcelRepository extends BaseRepository
 
     public function countRefundParcel(int $package_id)
     {
-        return $this->model->join('package_items', 'package_items.parcel_id', '=', 'parcels.id')->where('status', Parcel::STATUS_REFUND)->count();
+        return $this->model->select('parcels.id')->join('package_items', 'package_items.parcel_id', '=', 'parcels.id')->where('parcels.status', Parcel::STATUS_REFUND)->where('package_items.package_id', $package_id)->count();
     }
 
     public function priceAfterRefund()

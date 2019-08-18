@@ -39,19 +39,6 @@ class RefundService
             }
             //update status of parcel list
             $parcel_ids = $parcels['id'];
-            list($refund, $gas, $vat, $total) = $this->repo->priceAfterRefund();
-            $updates = Parcel::whereIn('id', $parcel_ids)->update([
-                'status'      => Parcel::STATUS_REFUND,
-                // 'refund'      => DB::raw($refund),
-                // 'support_gas' => DB::raw($gas),
-                // 'price_vat'   => DB::raw($vat),
-                // 'total'       => DB::raw($total)
-                // have format number
-                'refund'      => DB::raw(sqlNumberFormat($refund)),
-                'support_gas' => DB::raw(sqlNumberFormat($gas)),
-                'price_vat'   => DB::raw(sqlNumberFormat($vat)),
-                'total'       => DB::raw(sqlNumberFormat($total))
-            ]);
             // insert log parcel
             $histories = [];
             $packages = [];
@@ -86,8 +73,16 @@ class RefundService
             if (!empty($need_updates)) {
                 $pack_updated = Package::whereIn('id', $need_updates)->update(['status' => Package::STATUS_REFUND]);
             }
+            list($refund, $gas, $vat, $total) = $this->repo->priceAfterRefund();
+            $updates = Parcel::whereIn('id', $parcel_ids)->update([
+                'status'      => Parcel::STATUS_REFUND,
+                'refund'      => DB::raw(sqlNumberFormat($refund)),
+                'support_gas' => DB::raw(sqlNumberFormat($gas)),
+                'price_vat'   => DB::raw(sqlNumberFormat($vat)),
+                'total'       => DB::raw(sqlNumberFormat($total))
+            ]);
             DB::commit();
-            return [$pack_updated, $error];
+            return [$updates, $error];
         } catch (Exception $e) {
             $error = $e->getMessage();
             Log::error(generateTraceMessage($e));
