@@ -79,4 +79,9 @@ return [
     'refund' => 'Chuyển Hoàn',
     'refund_keyword_holder' => 'Nhập mã hóa đơn hoặc mã vận đơn',
     'refund_parcel' => 'Chuyển hoàn vận đơn',
+    'forward_keyword_holder' => 'Nhập mã hóa đơn hoặc mã vận đơn',
+    'forward_parcel' => 'Chuyển tiếp vận đơn',
+    'choose_parcel' => 'Chọn vận đơn',
+    'forward_name' => 'Tên người nhận chuyển tiếp',
+    'forward_tel' => 'SDT người nhận chuyển tiếp',
 ];

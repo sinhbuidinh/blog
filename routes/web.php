@@ -95,5 +95,7 @@ Route::group([
     Route::prefix('forward')->group(function () {
         Route::get('/', 'ForwardController@index')->name('forward');
         Route::get('/create', 'ForwardController@input')->name('forward.input');
+        Route::post('/create', 'ForwardController@create')->name('forward.create');
+        Route::get('/complete', 'ForwardController@complete')->name('create.forward.complete');
     });
 });

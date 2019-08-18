@@ -216,4 +216,12 @@ class ParcelService
         ], true);
         return $list;
     }
+
+    public function getListForForward()
+    {
+        $list = $this->repo->search($search = [
+            'status' => Parcel::STATUS_TRANSFER
+        ], true);
+        return $list;
+    }
 }
