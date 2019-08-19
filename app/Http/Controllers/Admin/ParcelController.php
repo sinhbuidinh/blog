@@ -127,10 +127,11 @@ class ParcelController extends Controller
 
     public function ajaxCalculatePrice(Request $request)
     {
-        $info = $request->only(['province', 'district', 'ward', 'guest', 'service_type', 'weight', 'real_weight']);
+        $info = $request->only(['province', 'district', 'ward', 'guest', 'service_type', 'weight', 'real_weight', 'parcel']);
         if (empty($info['service_type']) || empty($info['province']) || empty($info['weight'])) {
             return response()->json(['price' => 0, 'error' => 'invalid params']);
         }
+        $parcel_id = $info['parcel'] ?: null;
         //identify calculate remote
         $province = $info['province'];
         $district = $info['district'];
@@ -146,7 +147,7 @@ class ParcelController extends Controller
             $weight = $weight * 1000;//base front-end is kg
         }
         $define  = data_get($setting, 'define');
-        $km_type = self::getPriceKmDefine($province, $define);
+        $km_type = self::getPriceKmDefine($province, $define, $parcel_id);
 
         $prices = data_get($setting, 'price');
         $cal_info = self::calculatePrice($km_type, $weight, $prices);
@@ -244,8 +245,14 @@ class ParcelController extends Controller
         ];
     }
 
-    private function getPriceKmDefine($province, array $define)
+    private function getPriceKmDefine($province, array $define, $parcel_id)
     {
+        if (!empty($parcel_id)) {
+            //@TODO
+            //case forward
+            //find info parcel destination
+            //cal destination from last destination to new
+        }
         $last_key = array_key_last($define);
         array_pop($define);
         foreach ($define as $key => $list) {

@@ -64,6 +64,8 @@
                             data-support_gas="{{ data_get($parcel, 'support_gas') }}"
                             data-support_remote="{{ data_get($parcel, 'support_remote') }}"
                             data-total="{{ data_get($parcel, 'total') }}"
+                            data-total_service="{{ data_get($parcel, 'total_service') }}"
+                            data-services="{{ data_get($parcel, 'services') }}"
                             value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'parcel_code') }}</option>
                             @endforeach
                             @endif
@@ -264,6 +266,14 @@
                                     @endphp
                                     <input type="text" id="vat" name="vat" class="form-control{{ $vat_rate_invalid }}" value="{{ data_get($default, 'vat') }}"> % <input type="text" name="price_vat" id="price_vat" class="form-control{{ $vat_invalid }}" value="{{ old('price_vat') }}">
                                 </td>
+                                <td class="title my-auto">{{ trans('label.total_service') }}</td>
+                                <td>
+                                    <input type="text" name="total_service" id="total_service" class="form-control" value="{{ old('total_service') }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
                                 <td class="title bold my-auto">{{ trans('label.total') }}</td>
                                 <td>
                                     @php
@@ -288,6 +298,10 @@
                     <button class="btn btn-primary" id="forward_parcel" type="button">{{ trans('label.forward') }}</button>
                 </div>
             </form>
+            <div style="display: none;">
+                <input type="hidden" id="cal_remote" value="0">
+                <input type="hidden" id="url_get_price" value="{{ route('ajax.calculate.price') }}">
+            </div>
         </div>
     </div>
 </div>

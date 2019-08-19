@@ -226,7 +226,6 @@ function calService()
         }
         total += service_price;
     });
-    //re-calculate price @TODO
     $('#services_display').val(display.join(', '));
     $('#services').val(JSON.stringify(services));
     $("#total_service").val(formatNumber(total));
