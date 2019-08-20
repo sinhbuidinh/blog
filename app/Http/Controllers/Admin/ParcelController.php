@@ -127,22 +127,22 @@ class ParcelController extends Controller
 
     public function ajaxCalculatePrice(Request $request)
     {
-        $info = $request->only(['province', 'district', 'ward', 'guest', 'service_type', 'weight', 'real_weight', 'parcel']);
-        if (empty($info['service_type']) || empty($info['province']) || empty($info['weight'])) {
+        $info = $request->only(['province', 'district', 'ward', 'guest', 'service_type', 'weight', 'real_weight', 'parcel', 'forward']);
+        if (empty($info['service_type']) || empty($info['weight']) || empty($info['province']) || empty($info['district'])) {
             return response()->json(['price' => 0, 'error' => 'invalid params']);
         }
-        $parcel_id = $info['parcel'] ?: null;
+        $parcel_id = data_get($info, 'parcel');
         //identify calculate remote
         $province = $info['province'];
         $district = $info['district'];
 
-        $filePrice = $info['service_type'] == config('setting.transfer_type.code.transport') ? 'delivery_price' : 'quick_price';
+        $filePrice = data_get($info, 'service_type') == config('setting.transfer_type.code.transport') ? 'delivery_price' : 'quick_price';
         //get setting price
         $setting = config('price.'.$filePrice);
         $weight_by = data_get($setting, 'weight_by');
 
         //transform weight
-        $weight = $info['weight'];
+        $weight = data_get($info, 'weight');
         if ($weight_by == 'gram') {
             $weight = $weight * 1000;//base front-end is kg
         }
@@ -245,13 +245,14 @@ class ParcelController extends Controller
         ];
     }
 
-    private function getPriceKmDefine($province, array $define, $parcel_id)
+    private function getPriceKmDefine($province, array $define, $parcel_id = null)
     {
         if (!empty($parcel_id)) {
             //@TODO
             //case forward
             //find info parcel destination
             //cal destination from last destination to new
+            //@confirmed - use cal like first time
         }
         $last_key = array_key_last($define);
         array_pop($define);

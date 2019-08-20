@@ -43,7 +43,7 @@ class ForwardController extends Controller
 
     public function create(CreateForward $request)
     {
-        $data = $request->only(['parcel', 'province', 'district', 'ward', 'note']);
+        $data = $request->only(['parcel', 'province', 'district', 'ward', 'price', 'cod', 'refund', 'forward', 'support_remote', 'support_gas', 'vat', 'price_vat', 'total_service', 'total', 'note']);
         list($result, $message) = $this->forwardService->forward($data);
         if ($result !== false) {
             session()->flash('success', trans('message.forward_success'));

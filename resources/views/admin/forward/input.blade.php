@@ -55,6 +55,9 @@
                             <option data-code="{{ data_get($parcel, 'parcel_code') }}" 
                             data-id="{{ data_get($parcel, 'id') }}"
                             data-bill_code="{{ data_get($parcel, 'bill_code') }}"
+                            data-type="{{ data_get($parcel, 'type') }}"
+                            data-type_transfer="{{ data_get($parcel, 'type_transfer') }}"
+                            data-weight="{{ data_get($parcel, 'weight') }}"
                             data-price="{{ data_get($parcel, 'price') }}"
                             data-refund="{{ data_get($parcel, 'refund') }}"
                             data-forward="{{ data_get($parcel, 'forward') }}"
@@ -297,11 +300,17 @@
                 <div class="form_btn_area center">
                     <button class="btn btn-primary" id="forward_parcel" type="button">{{ trans('label.forward') }}</button>
                 </div>
+                <div style="display: none;">
+                    <input type="hidden" id="cal_remote" value="0">
+                    <input type="hidden" id="url_get_price" value="{{ route('ajax.calculate.price') }}">
+                    <input type="hidden" id="type" name="type" value="{{ old('type') }}">
+                    <input type="hidden" id="type_transfer" name="type_transfer" value="{{ old('type_transfer') }}">
+                    <input type="hidden" id="weight" name="weight" value="{{ old('weight') }}">
+                    <input type="hidden" id="price_vat_old" name="price_vat_old" value="{{ old('price_vat_old') }}">
+                    <input type="hidden" id="support_remote_old" name="support_remote_old" value="{{ old('support_remote_old') }}">
+                    <input type="hidden" id="support_gas_old" name="support_gas_old" value="{{ old('support_gas_old') }}">
+                </div>
             </form>
-            <div style="display: none;">
-                <input type="hidden" id="cal_remote" value="0">
-                <input type="hidden" id="url_get_price" value="{{ route('ajax.calculate.price') }}">
-            </div>
         </div>
     </div>
 </div>
