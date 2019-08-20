@@ -5,7 +5,7 @@
                 <div class="owl-carousel owl-theme home-slider">
                     @foreach($footer_latest as $post)
                     <div>
-                        <a href="{{ route('user.blog', ['blog_id' => data_get($post, 'id')]) }}" 
+                        <a href="{{ '#'.data_get($post, 'id') }}" 
                             class="a-block d-flex align-items-center height-lg" 
                             style="background-image: url({{ asset('images/'.data_get($post, 'image_name')) }}); ">
                         <div class="text half-to-full">

@@ -4,16 +4,19 @@
             <div class="col-md-4 footer-left">
                 <h3>Giới thiệu</h3>
                 <p>
-                    <img src="{{ asset('images/img_1.jpg') }}"
+                    <img src="{{ asset('images/logo.png') }}"
                         alt="Image placeholder" class="img-fluid">
                 </p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, accusantium optio unde perferendis eum illum voluptatibus dolore tempora, consequatur minus asperiores temporibus reprehenderit.</p>
+                <p>KN247 có mạng lưới chuyển phát nhanh rộng khắp 63 tỉnh thành trên cả nước, hơn 200 quốc gia trên thế giới.</p>
             </div>
             <div class="col-md-7 footer-right">
                 <div class="row">
                     <div class="col-md-7">
+                        <h3>TÊN ĐẦY ĐỦ</h3>
+                        <p>Công Ty TNHH MTV Kết Nối 247</p> 
                         <h3>TRỤ SỞ CHÍNH</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, accusantium optio unde perferendis eum illum voluptatibus dolore tempora, consequatur minus asperiores temporibus reprehenderit.</p>
+                        <p>217 Lãnh Bình Thăng, Phường 12, Quận 11, TP HCM</p>
+                        <p>SDT: 0909.317.297</p>
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-4">
