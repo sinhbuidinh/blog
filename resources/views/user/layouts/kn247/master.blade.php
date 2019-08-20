@@ -4,6 +4,8 @@
     <title>@yield('title')</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="/static/favicon.png" class="next-head">
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}" class="next-head">
 
     <link rel="stylesheet" type="text/css" href="{{ mix('css/fonts_api_josefin-sans-300-400-700.css') }}">
 
