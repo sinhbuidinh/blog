@@ -2,6 +2,17 @@
 @section('title')
 Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
 @endsection
+@section('style')
+<style>
+    .mb-6, .my-6 {
+        margin-bottom: 4.5rem !important;
+    }
+    .text-center {
+        text-align: center; 
+        display: block;
+    }
+</style>
+@endsection
 @section('content')
 <section class="site-section py-lg" style="padding-top: 2.5rem;">
     <div class="container">
@@ -13,60 +24,57 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                     </div>
                 </div>
                 <!-- package info -->
+                @if(empty($parcel))
+                <div class="row col-md-12 title-block mb-6 text-center">
+                    <span>Không tìm thấy dữ liệu vận đơn</span>
+                </div>
+                @else
                 <div class="row">
                     <div class="col-md-8 col-sm-12">
                         <div class="tracking-mailer-title">
-                            <span class="mailer-name">Vận đơn: 30000455272</span>
+                            <span class="mailer-name">{{ trans('label.parcel_code') }}: {{ $code }}</span>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mailer-prop-container">
-                                    <span class="mailer-prop">Loại dịch vụ</span>
-                                    <span class="mailer-prop-value">Chuyển phát nhanh</span>
+                                    <span class="mailer-prop">{{ trans('label.type_transfer') }}</span>
+                                    <span class="mailer-prop-value">{{ data_get($parcel, 'transferName') }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mailer-prop-container">
-                                    <span class="mailer-prop">Số kiện</span>
-                                    <span class="mailer-prop-value">1</span>
+                                    <span class="mailer-prop">{{ trans('label.num_package') }}</span>
+                                    <span class="mailer-prop-value">{{ data_get($parcel, 'num_package') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mailer-prop-container">
-                                    <span class="mailer-prop">Dịch vụ cộng thêm</span>
-                                    <span class="mailer-prop-value">Phát hẹn giờ</span>
+                                    <span class="mailer-prop">{{ trans('label.user_services_disp') }}</span>
+                                    <span class="mailer-prop-value">{{ data_get($parcel, 'servicesDisplay') }}</span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mailer-prop-container">
-                                    <span class="mailer-prop">Người ký nhận</span>
-                                    <span class="mailer-prop-value">_ANH</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="mailer-prop-container">
-                                    <span class="mailer-prop">Nơi đi</span>
-                                    <span class="mailer-prop-value address-mobile">Quận Tân Bình, HỒ CHÍ MINH</span>
+                                    <span class="mailer-prop">{{ trans('label.receiver_signature') }}</span>
+                                    <span class="mailer-prop-value">{{ data_get($parcel, 'receiver_signature') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mailer-prop-container mb-6">
-                                    <span class="mailer-prop">Nơi đến</span>
-                                    <span class="mailer-prop-value address-mobile">ĐẠT-Thị xã Bến Cát, BÌNH DƯƠNG</span>
+                                    <span class="mailer-prop">{{ trans('label.destination') }}</span>
+                                    <span class="mailer-prop-value address-mobile">{{ data_get($parcel, 'address') }}</span>
                                 </div>
                             </div>
                         </div>
                         <!-- img receiver -->
-                        @if(!empty(data_get($package, 'img_receiver')))
+                        @if(!empty(data_get($parcel, 'img_receiver')))
                         <div class="row">
                             <div class="col-2">
-                                <img src="http://c1.247post.vn/2019-08/2019-08-02/BCT-19-004/30000455272-1-ad78bc83-a646-48bc-a4a5-b650c1c62fbe.jpg" style="width: 100%;">
+                                <img src="{{ data_get($parcel, 'img_receiver') }}" style="width: 100%;">
                             </div>
                         </div>
                         @endif
@@ -77,9 +85,9 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                             <a class="nav-link active" id="30000455272" data-toggle="pill" href="javascript:void(0)" role="tab" aria-controls="30000455272" aria-selected="true">
                                 <div class="row1">
                                     <!-- parcel code -->
-                                    <div class="left-m">30000455272</div>
+                                    <div class="left-m">{{ $code }}</div>
                                     <!-- status -->
-                                    <div class="right-m">Phát thành công</div>
+                                    <div class="right-m">{{ data_get($parcel, 'statusName') }}</div>
                                 </div>
                             </a>
                         </div>
@@ -89,27 +97,28 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                 <div class="row  hidden-xs hidden-sm visible-lg visible-md visible-xl d-none d-lg-block d-md-block">
                     <div class="col-md-12">
                         <ul class="checklist-tracking">
-                            @if(!empty($trackings))
-                            @foreach($trackings as $track)
-                                <li class="{{ data_get($track, 'class') }}">
+                            @if(!empty($tracks))
+                            @php
+                                $i = 1;
+                                $nums = count($tracks);
+                            @endphp
+                            @foreach($tracks as $track)
+                                @php
+                                    $class = 'liner-check';
+                                    if ($i == $nums) {
+                                        $class = 'liner-checker-last';
+                                    }
+                                    $i++;
+                                @endphp
+                                <li class="{{ $class }}">
                                     <p>{{ data_get($track, 'date_time') }}</p>
                                     <a href="javascript:void(0)">
-                                        <img src="{{ asset(data_get($track, 'status_image')) }}">
+                                        <img src="{{ asset(data_get($track, 'imgTrack')) }}">
                                     </a>
-                                    <p>{{ data_get($track, 'action') }}</p>
+                                    <p>{{ data_get($track, 'historyStatusName') }}</p>
                                 </li>
                             @endforeach
                             @endif
-                            <li class="liner-check">
-                                <p>01-08-2019</p>
-                                <a href="javascript:void(0)"><img src="{{ asset('images/checked.png') }}"></a>
-                                <p>Nhập hệ thống</p>
-                            </li>
-                            <li class="liner-checker-last">
-                                <p>02-08-2019</p>
-                                <a href="javascript:void(0)"><img src="{{ asset('images/checked_25.png') }}"></a>
-                                <p>Đã phát</p>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -126,30 +135,19 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                         </thead>
                         <tbody>
                             @if(!empty($histories))
-                            @foreach($histories as $history))
+                            @foreach($histories as $history)
                                 <tr>
-                                    <td>{{ data_get($history, 'action_time') }}</td>
+                                    <td>{{ data_get($history, 'date_time') }}</td>
                                     <td>{{ data_get($history, 'location') }}</td>
-                                    <td>{{ data_get($history, 'status') }}</td>
-                                    <td>{{ data_get($history, 'note') }}</td>
+                                    <td>{{ data_get($history, 'historyStatusName') }}</td>
+                                    <td>{{ data_get($history, 'history_note') }}</td>
                                 </tr>
                             @endforeach
                             @endif
-                            <tr>
-                                <td> 02/08/2019 10:43</td>
-                                <td>Bưu cục Bến Cát - BÌNH DƯƠNG</td>
-                                <td>Phát thành công</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td> 01/08/2019 18:53</td>
-                                <td>Đại lý 3.1 - HỒ CHÍ MINH</td>
-                                <td>Nhập hệ thống</td>
-                                <td></td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
+                @endif
             </div>
         </div>
     </div>

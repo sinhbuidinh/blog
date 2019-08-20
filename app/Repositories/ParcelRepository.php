@@ -35,6 +35,15 @@ class ParcelRepository extends BaseRepository
         return $parcels->paginate($limit);
     }
 
+    public function parcelIncludedHistory($code, $selects = '*')
+    {
+        return $this->model->join('parcel_histories', 'parcel_histories.parcel_id', '=', 'parcels.id')
+        ->where(function($query) use ($code) {
+            $query->where('parcel_code', $code)
+                ->orWhere('bill_code', $code);
+        })->orderBy('parcel_histories.id', 'DESC')->get($selects);
+    }
+
     public function countRefundParcel(int $package_id)
     {
         return $this->model->select('parcels.id')->join('package_items', 'package_items.parcel_id', '=', 'parcels.id')->where('parcels.status', Parcel::STATUS_REFUND)->where('package_items.package_id', $package_id)->count();

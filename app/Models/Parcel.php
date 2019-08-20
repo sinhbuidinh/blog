@@ -74,6 +74,23 @@ class Parcel extends BaseModel
         return false;
     }
 
+    public function getServicesDisplayAttribute()
+    {
+        $services = stringify2array($this->services);
+        $names = array_pluck($services, 'name') ?: [];
+        return implode(', ', $names);
+    }
+
+    public function getHistoryStatusNameAttribute()
+    {
+        return data_get(self::$statusNames, $this->history_status);
+    }
+
+    public function getImgTrackAttribute()
+    {
+        return ($this->history_status == self::STATUS_COMPLETE) ? 'images/checked_25.png' : 'images/checked.png';
+    }
+
     public function history() 
     {
         return $this->hasMany('App\Models\ParcelHistory', 'parcel_id', 'id');

@@ -133,6 +133,27 @@ class ParcelService
         return $this->repo->find($id);
     }
 
+    public function locateInfo($code)
+    {
+        if (empty($code)) {
+            return [false, false, false];
+        }
+        //search parcel by parcel_code || bill_code code
+        $selects = [
+            'parcels.*',
+            'parcel_histories.id AS history_id',
+            'parcel_histories.parcel_id',
+            'parcel_histories.date_time',
+            'parcel_histories.location',
+            'parcel_histories.status AS history_status',
+            'parcel_histories.note AS history_note',
+        ];
+        $histories = $this->repo->parcelIncludedHistory($code, $selects);
+        $parcel = $histories->first();
+        $tracks = $histories->reverse();
+        return [$parcel, $histories, $tracks];
+    }
+
     private function formatDataParcel($input)
     {
         return [

@@ -29,6 +29,7 @@ return [
     'price_info' => 'Giá cước',
     'type_transfer' => 'Loại vận chuyển',
     'services' => 'Dịch vụ GTGT',
+    'user_services_disp' => 'Dịch vụ cộng thêm',
     'time_input' => 'Thời gian nhập',
     'time_receive' => 'Thời gian nhận',
     'provincial' => 'Tỉnh / TP',
@@ -84,4 +85,6 @@ return [
     'choose_parcel' => 'Chọn vận đơn',
     'forward_name' => 'Tên người nhận chuyển tiếp',
     'forward_tel' => 'SDT người nhận chuyển tiếp',
+    'receiver_signature' => 'Người ký nhận',
+    'destination' => 'Nơi đến',
 ];

@@ -4,9 +4,16 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\ParcelService;
 
 class HomeController extends Controller
 {
+    private $parcelService;
+    public function __construct(ParcelService $parcelService)
+    {
+        $this->parcelService = $parcelService;
+    }
+
     public function getCategories()
     {
         return [
@@ -51,12 +58,18 @@ class HomeController extends Controller
         return view('user.home.index', $data);
     }
 
-    public function locate(Request $request, $package_code = null)
+    public function locate(Request $request, $code = null)
     {
+        $parcel = $histories = [];
+        if (!empty($code)) {
+            list($parcel, $histories, $tracks) = $this->parcelService->locateInfo($code);
+        }
         $data = [
-            'package_code' => $package_code,
             'without_slider' => true,
-            'package' => [],
+            'code'   => $code,
+            'parcel' => $parcel,
+            'histories' => $histories,
+            'tracks' => $tracks,
         ];
         return view('user.home.locate', $data);
     }
