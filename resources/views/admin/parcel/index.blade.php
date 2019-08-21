@@ -45,6 +45,7 @@
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
+                            <th class="table_title">{{ trans('label.agency') }}</th>
                             <th class="table_title">{{ trans('label.address') }}</th>
                             <th class="table_title">{{ trans('label.status') }}</th>
                             <th class="table_title">{{ trans('label.total') }}</th>
@@ -64,6 +65,7 @@
                         <td class="table_text">{{ $parcel->guest_code }}</td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>
+                        <td class="table_text">{{ $parcel->agencyName }}</td>
                         <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">
                             <p class="status_label">{{ $parcel->statusName }}</p>

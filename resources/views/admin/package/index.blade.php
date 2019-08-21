@@ -32,6 +32,7 @@
                             <th class="table_title">{{ trans('label.confirm') }}</th>
                             <th class="table_title">{{ trans('label.parcel_list') }}</th>
                             <th class="table_title">{{ trans('label.status') }}</th>
+                            <th class="table_title">{{ trans('label.agency') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
                             <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
@@ -50,6 +51,7 @@
                         <td class="table_text">
                             <p class="status_label">{{ $package->statusName }}</p>
                         </td>
+                        <td class="table_text">{{ $package->agencyName }}</td>
                         <td class="table_text">{{ $package->note }}</td>
                         <td class="table_text small" style="text-align:center;">
                             <a href="{{ route('package.delete', $package->id) }}">
@@ -66,11 +68,52 @@
     </div>
     <div class="common_pager">{!! $packages->links('admin.layouts.pagination') !!}</div>
 </div>
+<input type="hidden" name="transfer_url" id="transfer_url">
+<button type="button" name="agency_list" id="agency_list" class="full_width form-control" data-toggle="modal" data-target="#agency_list_model" style="display: none;">{{ trans('label.agency') }}</button>
+<div class="modal fade" id="agency_list_model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ trans('label.agency_list_model') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="form-control full_width select2" name="agency" id="agency" style="width: 180px;">
+                    <option value="">{{ trans('label.please_choose') }}</option>
+                    @if(!empty($agency))
+                    @foreach($agency as $id => $name)
+                        <option value="{{ $id }}">{{ $name }}</option>
+                    @endforeach
+                    @endif
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('label.close') }}</button>
+                <button class="btn btn-primary" id="pick_agency" type="submit">{{ trans('label.save') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
 <script type="text/javascript">
+    $(function(){
+        $('select.select2').select2();
+    });
     $(document).on('click', '.confirm_transfer', function(){
-        window.location.href = $(this).data('url');
+        $('#agency_list').click();
+        $('#transfer_url').val($(this).data('url'));
+    });
+    $(document).on('click', '#pick_agency', function(){
+        var agency = $('#agency').find('option:selected').val();
+        if (typeof agency == 'undefined' || agency == '') {
+            alert('Vui lòng chọn đơn vị vận chuyển');
+            return false;
+        }
+        var page_destination = $('#transfer_url').val() + '?agency=' + agency;
+        window.location.href = page_destination;
     });
 </script>
 @endsection

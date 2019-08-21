@@ -25,6 +25,7 @@ class PackageController extends Controller
         $data = [
             'user'     => $request->user(),
             'search'   => $search,
+            'agency'   => code2Name('setting.transport_agent'),
             'packages' => $this->packageService->getList($search),
         ];
         return view('admin.package.index', $data);
@@ -68,7 +69,10 @@ class PackageController extends Controller
 
     public function transfer(Request $request, $id = null)
     {
-        list($result, $message) = $this->packageService->updateTransfer($id);
+        $result = $message = false;
+        if (!empty($agency = $request->get('agency'))) {
+            list($result, $message) = $this->packageService->updateTransfer($id, $agency);
+        }
         if ($result === false) {
             session()->flash('error', $message ?: trans('message.update_transfer_error'));
         } else {

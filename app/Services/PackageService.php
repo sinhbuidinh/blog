@@ -89,7 +89,7 @@ class PackageService
         return $this->repo->find($id);
     }
 
-    public function updateTransfer($packageId)
+    public function updateTransfer($packageId, $agency)
     {
         $error = null;
         $package = [];
@@ -123,10 +123,11 @@ class PackageService
             //insert history
             ParcelHistory::insert($histories);
             //format data before update
-            Parcel::whereIn('id', $ids)->update(['status' => Parcel::STATUS_TRANSFER]);
+            Parcel::whereIn('id', $ids)->update(['status' => Parcel::STATUS_TRANSFER, 'agency' => $agency]);
 
             //update package status
             $package->status = Package::STATUS_TRANSFER;
+            $package->agency = $agency;
             $package->save();
             DB::commit();
             return [$package, $error];

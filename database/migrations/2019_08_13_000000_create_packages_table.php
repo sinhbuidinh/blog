@@ -20,6 +20,7 @@ class CreatePackagesTable extends Migration
             $table->tinyInteger('status')->comment('0:deleted, 1:init, 2:transfer, 3:refund, 4:forward, 5:complete')->default(1);
             $table->string('note')->nullable();
             $table->integer('user_id')->nullable()->('last_action_user');
+            $table->integer('agency')->nullable()->('agency_transfer')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -87,4 +87,6 @@ return [
     'forward_tel' => 'SDT người nhận chuyển tiếp',
     'receiver_signature' => 'Người ký nhận',
     'destination' => 'Nơi đến',
+    'agency' => 'Đơn vị vận chuyển',
+    'agency_list_model' => 'Chọn Đơn vị vận chuyển',
 ];

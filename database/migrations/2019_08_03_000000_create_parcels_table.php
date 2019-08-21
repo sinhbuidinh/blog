@@ -49,6 +49,7 @@ class CreateParcelsTable extends Migration
             $table->longText('note')->nullable()->comment('note');
             $table->tinyInteger('status')->comment('0:deleted, 1:init, 2:package, 3:transfer, 4:refund, 5:forward, 6:complete')->default(1);
             $table->integer('user_id')->nullable()->('last_action_user');
+            $table->integer('agency')->nullable()->('agency_transfer')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

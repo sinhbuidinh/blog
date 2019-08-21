@@ -29,7 +29,7 @@ class Package extends BaseModel
         'parcel_list' => 'array'
     ];
     protected $fillable = [
-        'package_code', 'parcel_list', 'note', 'status',
+        'package_code', 'parcel_list', 'note', 'status', 'agency'
     ];
 
     public function items()
@@ -45,7 +45,7 @@ class Package extends BaseModel
 
     public function getReadyTransferAttribute()
     {
-        return $this->status === self::STATUS_INIT;
+        return $this->status == self::STATUS_INIT;
     }
 
     public function getParcelDisplayAttribute()
@@ -61,5 +61,15 @@ class Package extends BaseModel
     public function getStatusNameAttribute()
     {
         return data_get(self::$statusNames, $this->status);
+    }
+
+    public function getAgencyNameAttribute()
+    {
+        $agency = config('setting.transport_agent');
+        $pos = array_search($this->agency, data_get($agency, 'code'));
+        if ($pos === false || empty($agency['name'])) {
+            return '';
+        }
+        return data_get($agency['name'], $pos);
     }
 }

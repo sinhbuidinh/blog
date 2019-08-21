@@ -38,7 +38,7 @@ class Parcel extends BaseModel
     ];
 
     protected $fillable = [
-        'guest_id', 'guest_code', 'bill_code', 'parcel_code', 'type', 'real_weight', 'weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'services', 'total_service', 'time_input', 'time_receive', 'receiver', 'receiver_tel', 'provincial', 'district', 'ward', 'address', 'price', 'cod', 'vat', 'price_vat', 'refund', 'forward', 'support_gas', 'support_remote', 'total', 'status', 'note'
+        'guest_id', 'guest_code', 'bill_code', 'parcel_code', 'type', 'real_weight', 'weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'services', 'total_service', 'time_input', 'time_receive', 'receiver', 'receiver_tel', 'provincial', 'district', 'ward', 'address', 'price', 'cod', 'vat', 'price_vat', 'refund', 'forward', 'support_gas', 'support_remote', 'total', 'status', 'note', 'agency'
     ];
 
     public function getStatusNameAttribute()
@@ -89,6 +89,16 @@ class Parcel extends BaseModel
     public function getImgTrackAttribute()
     {
         return ($this->history_status == self::STATUS_COMPLETE) ? 'images/checked_25.png' : 'images/checked.png';
+    }
+
+    public function getAgencyNameAttribute()
+    {
+        $agency = config('setting.transport_agent');
+        $pos = array_search($this->agency, data_get($agency, 'code'));
+        if ($pos === false || empty($agency['name'])) {
+            return '';
+        }
+        return data_get($agency['name'], $pos);
     }
 
     public function history() 
