@@ -7,6 +7,8 @@ return [
     'guest_code' => 'KH',
     'parcel_code' => 'BP',
     'package_code' => 'PACK',
+    'company_location' => 'Quận 11, Hồ Chí Minh',
+    'company_transfer_location' => 'Quận 5, Hồ Chí Minh',
     'default' => [
         'vat' => 10,
         'support_gas' => 20,

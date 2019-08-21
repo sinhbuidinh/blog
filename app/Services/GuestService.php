@@ -90,7 +90,7 @@ class GuestService
             'address'         => data_get($input, 'address'),
             'price_table'     => data_get($input, 'price_table', 'init'),
             'discount'        => data_get($input, 'discount', 0),
-            'status'          => Guest::STATUS_ENABLE,
+            'status'          => Guest::STATUS_DISABLE,
         ];
     }
 }

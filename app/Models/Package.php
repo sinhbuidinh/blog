@@ -29,7 +29,7 @@ class Package extends BaseModel
         'parcel_list' => 'array'
     ];
     protected $fillable = [
-        'package_code', 'parcel_list', 'note'
+        'package_code', 'parcel_list', 'note', 'status',
     ];
 
     public function items()

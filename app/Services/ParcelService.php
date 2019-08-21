@@ -78,7 +78,7 @@ class ParcelService
             $history = [
                 'parcel_id' => $parcel_id,
                 'date_time' => now()->format('Y/m/d H:m:s'),
-                'location'  => trans('message.company_location'),
+                'location'  => config('setting.company_location'),
                 'status'    => Parcel::STATUS_INIT,
                 'note'      => data_get($input, 'note'),
             ];
