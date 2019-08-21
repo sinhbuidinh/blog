@@ -12,7 +12,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
-                {!! parseErrorsExceptInput($errors->getMessages()) !!}
+                @include('admin.layouts.session-message')
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

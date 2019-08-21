@@ -44,15 +44,14 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        $message = 'invalid login';
         if (Auth::attempt($credentials)) {
-            if (data_get(auth()->user(), 'is_admin') === 1) {
+            if (data_get(auth()->user(), 'is_admin') == 1) {
                 return redirect()->intended('/admin/dashboard');
             }
-            self::logout($request);
-            $message = 'Not allow login';
+            return redirect()->route('get.logout', ['error' => 'Not allow login']);
         }
-        return redirect()->route('login')->withInput()->withErrors($message);
+        session()->flash('error', 'invalid login');
+        return redirect()->route('login')->withInput();
     }
 
     public function index(Request $request)
@@ -72,6 +71,9 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
+        if ($request->get('error')) {
+            session()->flash('error', $request->get('error'));
+        }
         return $this->loggedOut($request) ?: redirect()->route('login');
     }
 }

@@ -43,6 +43,7 @@ Route::post('/login', '\App\Http\Controllers\Auth\LoginController@authenticate')
 Route::get('/register', '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('/register', '\App\Http\Controllers\Auth\RegisterController@register')->name('register');
 Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('get.logout');
 
 
 Route::post('/ajax/get_price', '\App\Http\Controllers\Admin\ParcelController@ajaxCalculatePrice')->name('ajax.calculate.price');
