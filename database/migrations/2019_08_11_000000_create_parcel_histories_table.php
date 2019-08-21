@@ -20,6 +20,7 @@ class CreateParcelHistoriesTable extends Migration
             $table->string('location')->nullable();
             $table->string('status')->nullable();
             $table->text('note')->nullable();
+            $table->integer('user_id')->nullable()->('last_action_user');
             $table->softDeletes();
             $table->timestamps();
         });

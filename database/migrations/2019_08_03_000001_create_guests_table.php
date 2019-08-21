@@ -32,6 +32,7 @@ class CreateGuestsTable extends Migration
             $table->string('price_table');
             $table->string('discount')->nullable();
             $table->tinyInteger('status')->comment('0:deleted, 1:enable')->default(1);
+            $table->integer('user_id')->nullable()->('last_action_user');
             $table->softDeletes();
             $table->timestamps();
         });

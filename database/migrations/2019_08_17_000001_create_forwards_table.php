@@ -26,6 +26,7 @@ class CreateForwardsTable extends Migration
             $table->string('forward_receiver')->nullable()->comment('nguoi-nhan-thuc');
             $table->string('forward_note')->nullable()->comment('ghi-chu');
             $table->tinyInteger('forward_status')->comment('0:deleted, 1:enable')->default(1);
+            $table->integer('user_id')->nullable()->('last_action_user');
             $table->softDeletes();
             $table->timestamps();
         });

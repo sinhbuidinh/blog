@@ -17,6 +17,7 @@ class CreatePackageItemsTable extends Migration
             $table->increments('id');
             $table->string('package_id')->nullable();
             $table->string('parcel_id');
+            $table->integer('user_id')->nullable()->('last_action_user');
             $table->softDeletes();
             $table->timestamps();
         });
