@@ -50,7 +50,7 @@ class ParcelController extends Controller
 
     public function create(CreateParcel $request)
     {
-        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_receive', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note']);
+        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'receiver_company', 'value_declare', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_receive', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note']);
         list($result, $message) = $this->parcelService->newParcel($data);
         if ($result !== false) {
             session()->flash('success', trans('message.create_parcel_success'));
@@ -93,7 +93,7 @@ class ParcelController extends Controller
 
     public function update(CreateParcel $request, $id = null)
     {
-        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_receive', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note']);
+        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'receiver_company', 'value_declare', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_receive', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note']);
         list($result, $message) = $this->parcelService->updateParcel($data, $id);
         if ($result !== false) {
             session()->flash('success', trans('message.update_parcel_success'));
@@ -101,6 +101,15 @@ class ParcelController extends Controller
         }
         session()->flash('error', $message);
         return redirect()->route('parcel.edit', $id)->withInput();
+    }
+
+    public function transfered(Request $request, $id)
+    {
+        $parcel = $this->parcelService->findById($id);
+        $data = [
+            'parcel' => $parcel,
+        ];
+        return view('admin.parcel.transfered', $data);
     }
 
     public function delete(Request $request, $id = null)
@@ -173,10 +182,10 @@ class ParcelController extends Controller
         $price = 0;
         $calculated = 0;
         foreach ($base as $weight_range => $base_price) {
-            $price += data_get($base_price, $km_type);
+            $price = data_get($base_price, $km_type);
             //range
             list($floor, $ceil) = explode('-', $weight_range);
-            if ($weight <= $ceil && $weight >= $floor) {
+            if ($weight >= $floor && $weight <= $ceil) {
                 $calculated += ($weight - $floor);
                 return [
                     'weight' => [
@@ -195,12 +204,25 @@ class ParcelController extends Controller
         }
         $over = $weight - $calculated;
         // dd($km_type, $weight, $calculated, $over, $price);
-        // get setting above
-        $above = data_get($prices, 'above');
-
         // every over weight will be multiple with price
-        $every = data_get($above, 'every');
-        $ranges = data_get($above, 'range', []);
+        $every = data_get($prices, 'above.every');
+        $ranges = data_get($prices, 'above.range', []);
+        if (empty($every) || empty($ranges)) {
+            return [
+                'weight' => [
+                    'base' => $calculated,
+                    'over' => 0,
+                ],
+                'price' => [
+                    'base' => formatPrice($price),
+                    'over' => 0,
+                ],
+                'total_base' => $price,
+                'total_format' => formatPrice($price),
+                'over_history' => [],
+            ];
+        }
+
         $total_over = 0;
         $over_history = [];
         foreach ($ranges as $weight_range => $overs) {

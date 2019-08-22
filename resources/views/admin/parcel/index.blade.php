@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('title'){{ trans('message.parcel_list') }}@endsection
 @section('head')
 <style type="text/css">
     #parcels_tbl thead th:not(.small) {
@@ -15,7 +16,7 @@
 @section('content')
 <div class="list_wrapper">
     <div class="index_top_block">
-        <h1 class="common_page_title">Danh sách {{ trans('label.parcel') }}</h1>
+        <h1 class="common_page_title">{{ trans('message.parcel_list') }}</h1>
         <div id="group_create">
             <a href="{{ route('parcel.input') }}"
                 class="create_new_btn">Tạo mới</a>
@@ -42,6 +43,7 @@
                         <tr>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
                             <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
+                            <th class="table_title parcel_code">{{ trans('label.already_transfer') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
@@ -62,6 +64,11 @@
                             <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
                         </td>
                         <td class="table_text parcel_code">{{ $parcel->bill_code }}</td>
+                        <td class="table_text">
+                            @if($parcel->readyComplete)
+                            <button type="button" data-url="{{ route('parcel.transfered', $parcel->id) }}" class="btn btn-primary confirm_complete">{{ trans('label.already_transfer') }}</button>
+                            @endif
+                        </td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>

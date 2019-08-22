@@ -144,26 +144,23 @@
                     <div class="col-sm-6 right">
                         <p class="file_form_top_title">{{ trans('label.receiver_info') }}</p>
                         <div class="row">
+                            <div class="col-sm-6 my-auto">{{ trans('label.delivery_to_company_name') }}</div>
                             <div class="col-sm-6 my-auto">{{ trans('label.full_name') }}</div>
-                            <div class="col-sm-6 my-auto">{{ trans('label.tel') }}</div>
                         </div>
                         <div class="row">
+                            <div class="col-sm-6 my-auto">
+                                <input type="text" class="full_width form-control" name="receiver_company" value="{{ old('receiver_company', $parcel->receiver_company) }}">
+                            </div>
                             <div class="col-sm-6 my-auto">
                                 @php
                                     $receiver_invalid = $errors->has('receiver') ? ' is-invalid' : '';
                                 @endphp
-                                <input type="text" class="full_width form-control{{ $receiver_invalid }}" name="receiver" value="{{ old('receiver', data_get($parcel, 'receiver')) }}">
-                            </div>
-                            <div class="col-sm-6 my-auto">
-                                @php
-                                    $receiver_tel_invalid = $errors->has('receiver_tel') ? ' is-invalid' : '';
-                                @endphp
-                                <input type="text" class="full_width form-control{{ $receiver_tel_invalid }}" name="receiver_tel" value="{{ old('receiver_tel', data_get($parcel, 'receiver_tel')) }}">
+                                <input type="text" class="full_width form-control{{ $receiver_invalid }}" name="receiver" value="{{ old('receiver', $parcel->receiver) }}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 my-auto">{{ trans('label.provincial') }}</div>
-                            <div class="col-sm-6 my-auto">{{ trans('label.district') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.tel') }}</div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 my-auto" id="div_provinces">
@@ -193,6 +190,18 @@
                                 </p>
                                 @endif
                             </div>
+                            <div class="col-sm-6 my-auto">
+                                @php
+                                    $receiver_tel_invalid = $errors->has('receiver_tel') ? ' is-invalid' : '';
+                                @endphp
+                                <input type="text" class="full_width form-control{{ $receiver_tel_invalid }}" name="receiver_tel" value="{{ old('receiver_tel', data_get($parcel, 'receiver_tel')) }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 my-auto">{{ trans('label.district') }}</div>
+                            <div class="col-sm-6 my-auto">{{ trans('label.ward') }}</div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-6 my-auto" id="div_districts">
                                 @php
                                     $district_invalid = $errors->has('district') ? ' is-invalid' : '';
@@ -219,11 +228,6 @@
                                 </p>
                                 @endif
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 my-auto">{{ trans('label.ward') }}</div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-6 my-auto" id="div_wards">
                                 @php
                                     $ward_invalid = $errors->has('ward') ? ' is-invalid' : '';
@@ -400,6 +404,14 @@
                                         $num_invalid = $errors->has('num_package') ? ' is-invalid' : '';
                                     @endphp
                                     <input type="number" name="num_package" value="{{ old('num_package', data_get($parcel, 'num_package', '1')) }}" class="full_width form-control{{ $num_invalid }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-4 my-auto">{{ trans('label.value_declare') }}</div>
+                                <div class="col-sm-8 my-auto">
+                                    <input type="number" id="value_declare" name="value_declare" value="{{ old('value_declare', $parcel->value_declare) }}" class="full_width form-control">
                                 </div>
                             </div>
                         </div>

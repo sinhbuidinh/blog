@@ -25,4 +25,5 @@ return [
     'note_history_company_transfer' => 'Đơn vị vận chuyển',
     'refund_success' => 'Chuyển hoàn thành công',
     'note_history_refund' => 'Đang chuyển hoàn',
+    'parcel_list' => 'Danh sách vận đơn',
 ];

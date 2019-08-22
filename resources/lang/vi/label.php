@@ -89,4 +89,8 @@ return [
     'destination' => 'Nơi đến',
     'agency' => 'Đơn vị vận chuyển',
     'agency_list_model' => 'Chọn Đơn vị vận chuyển',
+    'already_transfer' => 'Đã phát',
+    'parcel_completed' => 'Đã phát vận đơn',
+    'delivery_to_company_name' => 'Công ty nhận',
+    'value_declare' => 'Giá trị khai',
 ];

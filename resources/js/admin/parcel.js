@@ -40,7 +40,7 @@ $(function(){
     displayGuestInfo(guest);
     calculateTotal();
 });
-$(document).on('paste cut keyup change', '#total_service, #price, #refund, #forward, #price_vat, #cod, #support_remote, #support_gas', function(e){
+$(document).on('paste cut keyup change', '#total_service, #value_declare, #price, #refund, #forward, #price_vat, #cod, #support_remote, #support_gas', function(e){
     formatNumberObject($(this));
 });
 $(document).on('paste cut keyup change', '#total_service, #price, #refund, #forward, #vat, #price_vat, #cod, #support_remote_rate, #support_remote, #support_gas_rate, #support_gas, #total', function(e){
