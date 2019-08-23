@@ -93,4 +93,9 @@ return [
     'parcel_completed' => 'Đã phát vận đơn',
     'delivery_to_company_name' => 'Công ty nhận',
     'value_declare' => 'Giá trị khai',
+    'complete_receiver' => 'Người ký nhận',
+    'complete_receiver_tel' => 'SDT ký nhận',
+    'complete_receive_time' => 'Thời gian ký nhận',
+    'complete_note' => 'Ghi chú lúc ký nhận',
+    'update' => 'Cập nhật',
 ];

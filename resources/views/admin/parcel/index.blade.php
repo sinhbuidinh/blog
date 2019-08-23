@@ -100,3 +100,12 @@
     <div class="common_pager">{!! $parcels->links('admin.layouts.pagination') !!}</div>
 </div>
 @endsection
+@section('script')
+<script type="text/javascript">
+    $(function(){
+        $(document).on('click', '.confirm_complete', function(){
+            window.location.href = $(this).data('url');
+        });
+    });
+</script>
+@endsection

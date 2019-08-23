@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\ParcelService;
 use App\Request\Admin\CreateParcel;
 use App\Models\Parcel;
+use App\Request\Admin\CompleteTransfer;
 
 class ParcelController extends Controller
 {
@@ -110,6 +111,12 @@ class ParcelController extends Controller
             'parcel' => $parcel,
         ];
         return view('admin.parcel.transfered', $data);
+    }
+
+    public function completeTransfered(CompleteTransfer $request, $id)
+    {
+        $data = $request->only(['complete_receiver', 'complete_receiver_tel', 'complete_receive_time', 'complete_note']);
+        dd($data);
     }
 
     public function delete(Request $request, $id = null)
