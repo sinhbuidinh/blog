@@ -26,4 +26,6 @@ return [
     'refund_success' => 'Chuyển hoàn thành công',
     'note_history_refund' => 'Đang chuyển hoàn',
     'parcel_list' => 'Danh sách vận đơn',
+    'parcel_complete_transfered' => 'Cập nhật đã chuyển thành công',
+    'error_when_transfered' => 'Có lỗi khi cập nhật đã chuyển vận đơn',
 ];

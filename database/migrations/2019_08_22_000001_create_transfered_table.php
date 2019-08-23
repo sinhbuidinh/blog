@@ -13,11 +13,11 @@ class CreateTransferedTable extends Migration
      */
     public function up()
     {
-        Schema::create('transfered', function (Blueprint $table) {
+        Schema::create('transfereds', function (Blueprint $table) {
             $table->increments('id');
             $table->string('parcel_id');
             $table->string('complete_receiver')->comment('nguoi-nhan');
-            $table->string('complete_receiver_tel')->comment('sdt-nguoi-nhan');
+            $table->string('complete_receiver_tel')->nullable()->comment('sdt-nguoi-nhan');
             $table->dateTime('complete_receive_time')->nullable();
             $table->string('complete_note')->nullable()->comment('ghi-chu');
             $table->integer('user_id')->nullable()->comment('last_action_user');
@@ -33,6 +33,6 @@ class CreateTransferedTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transfered');
+        Schema::dropIfExists('transfereds');
     }
 }

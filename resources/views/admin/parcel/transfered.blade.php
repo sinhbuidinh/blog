@@ -65,7 +65,7 @@
                         <div class="row col-sm-6">
                             <div class="col-sm-4">{{ trans('label.company_name') }}</div>
                             <div class="col-sm-8">
-                                <textarea class="full_width form-control" name="company_name" disabled>{{ $parcel->company_name }}</textarea>
+                                <textarea class="full_width form-control" name="company_name" disabled>{{ $parcel->companyName }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="row col-sm-12">
                         <div class="col-sm-8">
-                            <textarea class="full_width form-control" name="guest_address" disabled>{{ $parcel->guest_address }}</textarea>
+                            <textarea class="full_width form-control" name="guest_address" disabled>{{ $parcel->guestAddress }}</textarea>
                         </div>
                     </div>
                 </div>

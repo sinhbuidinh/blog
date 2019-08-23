@@ -58,7 +58,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                             <div class="col-md-6">
                                 <div class="mailer-prop-container">
                                     <span class="mailer-prop">{{ trans('label.receiver_signature') }}</span>
-                                    <span class="mailer-prop-value">{{ data_get($parcel, 'receiver_signature') }}</span>
+                                    <span class="mailer-prop-value">{{ data_get($parcel, 'receiverSignature') }}</span>
                                 </div>
                             </div>
                         </div>

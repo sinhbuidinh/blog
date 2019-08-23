@@ -14,7 +14,7 @@ class AddParcelsReceiverCompanyTable extends Migration
     public function up()
     {
         Schema::table('parcels', function (Blueprint $table) {
-            $table->string('receiver_company')->comment('company-receive-info')->after('time_receive');
+            $table->string('receiver_company')->nullable()->comment('company-receive-info')->after('time_receive');
             $table->string('value_declare')->nullable()->comment('value_parcel')->after('total_service');
         });
     }

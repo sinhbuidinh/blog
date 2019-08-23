@@ -7,6 +7,9 @@ use App\Repositories\GuestRepository;
 use App\Models\Guest;
 use App\Models\Parcel;
 use App\Models\ParcelHistory;
+use App\Models\Package;
+use App\Models\PackageItem;
+use App\Models\Transfered;
 use DB;
 use Log;
 use Exception;
@@ -126,6 +129,90 @@ class ParcelService
             DB::rollBack();
             return [false, $error];
         }
+    }
+
+    public function completeTransfered($input, $id)
+    {
+        $error = null;
+        $parcel = [];
+        try {
+            DB::beginTransaction();
+            $parcel = self::findById($id);
+            if (!data_get($parcel, 'id')) {
+                throw new Exception('Not found');
+            }
+            $parcelId = data_get($parcel, 'id');
+            //insert Transfered
+            Transfered::create([
+                'parcel_id' => $parcelId,
+                'complete_receiver' => data_get($input, 'complete_receiver'),
+                'complete_receive_time' => data_get($input, 'complete_receive_time'),
+                'complete_note' => data_get($input, 'complete_note'),
+            ]);
+            //insert history
+            $history = [
+                'parcel_id' => $parcelId,
+                'date_time' => data_get($input, 'complete_receive_time', now()->format('Y/m/d H:m:s')),
+                'location' => self::lastAddressWhenComplete($parcel),
+                'status' => Parcel::STATUS_COMPLETE,
+                'note' => data_get($input, 'complete_note'),
+            ];
+            ParcelHistory::create($history);
+            //update package have parcel
+            list($packageId, $package_items, $not_completed) = self::getParcelInSamePackage($parcelId);
+            if (empty($packageId)) {
+                throw new Exception('Not found package of parcel');
+            }
+            if (empty($not_completed)) {
+                //update package
+                Package::where('id', $packageId)->update([
+                    'status' => Package::STATUS_COMPLETE
+                ]);
+            }
+            //format data before update
+            $parcel->update([
+                'status' => Parcel::STATUS_COMPLETE
+            ]);
+            DB::commit();
+            return [$parcel, $error];
+        } catch (Exception $e) {
+            // $error = trans('message.error_when_transfered');
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
+    public function getParcelInSamePackage($parcelId)
+    {
+        $package = PackageItem::where('parcel_id', $parcelId)->first();
+        $packageId = data_get($package, 'package_id');
+        $items = $this->repo->search([
+            'parcel_id' => $parcelId,
+            'package_id' => $packageId,
+        ], true, true);
+        $except_parcel = $items->filter(function ($value, $key) use ($parcelId) {
+            return data_get($value, 'parcel_id') != $parcelId;
+        });
+        $not_completed = [];
+        if (count($except_parcel) > 0) {
+            $not_completed = $except_parcel->filter(function ($value, $key) use ($parcelId) {
+                return data_get($value, 'status') != Parcel::STATUS_COMPLETE;
+            });
+        }
+        return [$packageId, $except_parcel, $not_completed];
+    }
+
+    public function lastAddressWhenComplete($parcel)
+    {
+        $id = data_get($parcel, 'id');
+        $forward = $this->repo->getForwardInfo($id);
+        $address = data_get($parcel, 'address');
+        if (count($forward) > 0) {
+            $address = data_get($forward, 'forward_address');
+        }
+        return $address;
     }
 
     public function findById($id)

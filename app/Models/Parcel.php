@@ -41,8 +41,19 @@ class Parcel extends BaseModel
         'guest_id', 'guest_code', 'bill_code', 'parcel_code', 'type', 'real_weight', 'weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'services', 'total_service', 'time_input', 'time_receive', 'receiver', 'receiver_tel', 'receiver_company', 'value_declare', 'provincial', 'district', 'ward', 'address', 'price', 'cod', 'vat', 'price_vat', 'refund', 'forward', 'support_gas', 'support_remote', 'total', 'status', 'note', 'agency'
     ];
 
+    public function transfered()
+    {
+        return $this->hasMany('App\Models\Transfered', 'parcel_id', 'id');
+    }
+
+    public function guest()
+    {
+        return $this->belongsTo('App\Models\Guest');
+    }
+
     public function getStatusNameAttribute()
     {
+        //status
         return data_get(self::$statusNames, $this->status);
     }
 
@@ -90,6 +101,24 @@ class Parcel extends BaseModel
         $services = stringify2array($this->services);
         $names = array_pluck($services, 'name') ?: [];
         return implode(', ', $names);
+    }
+
+    public function getReceiverSignatureAttribute()
+    {
+        //transfered -> complete_receiverd
+        return data_get($this->transfered()->first(), 'complete_receiver');
+    }
+
+    public function getCompanyNameAttribute()
+    {
+        //company_name
+        return data_get($this->guest()->first(), 'company_name');
+    }
+
+    public function getGuestAddressAttribute()
+    {
+        //company address
+        return data_get($this->guest()->first(), 'address');
     }
 
     public function getHistoryStatusNameAttribute()

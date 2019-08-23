@@ -25,7 +25,11 @@ class ParcelRepository extends BaseRepository
         })->when($getPackage, function($query) {
             $query->join('package_items', 'package_items.parcel_id', '=', 'parcels.id')
             ->join('packages', 'packages.id', '=', 'package_items.package_id')
-            ->addSelect('packages.package_code');
+            ->addSelect('packages.package_code', 'package_items.parcel_id');
+        })->when(data_get($wheres, 'parcel_id'), function($query, $parcelId){
+            $query->where('parcels.id', $parcelId);
+        })->when(data_get($wheres, 'package_id'), function($query, $packageId){
+            $query->where('package_items.package_id', $packageId);
         });
         $parcels = $parcels->orderBy('created_at', 'desc');
         if ($getAll === true) {
@@ -33,6 +37,11 @@ class ParcelRepository extends BaseRepository
         }
         $limit = config('setting.pager.common_limit');
         return $parcels->paginate($limit);
+    }
+
+    public function getForwardInfo($parcelId)
+    {
+        return $this->model->select('forwards.*')->join('forwards', 'parcel_id', '=', 'parcels.id')->where('parcel_id', $parcelId)->orderBy('created_at', 'desc')->get();
     }
 
     public function parcelIncludedHistory($code, $selects = '*')
