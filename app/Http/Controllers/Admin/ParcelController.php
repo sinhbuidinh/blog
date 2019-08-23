@@ -238,29 +238,29 @@ class ParcelController extends Controller
 
         $total_over = 0;
         $over_history = [];
+        $over_level = 0;
         foreach ($ranges as $weight_range => $overs) {
             list($floor, $ceil) = explode('-', $weight_range);
+            if ($ceil == '~') {
+                $ceil = '99999';
+            }
             $over_price = data_get($overs, $km_type);
             // find weight apply for price_range
-            if ($ceil == '~') {
-                $over_weight = $over;
+            if ($over >= $floor && $over <= $ceil) {
+                $over_weight = $over - $floor;
             } else {
-                if ($over >= $floor && $over <= $ceil) {
-                    $over_weight = $over - $floor;
-                } else {
-                    $over_weight = $ceil - $floor;
-                }
+                $over_level++;
+                continue;
             }
             // time over for apply price of range
-            $times_over = ceil($over_weight/$every);
-            $total_over += ($times_over * $over_price);
+            $total_over = ($over_weight * $over_price);
             $over_history[] = [
                 'weight_range' => $weight_range,
                 'prices'       => $overs,
                 'over_weight'  => $over_weight,
                 'floor'        => $floor,
                 'ceil'         => $ceil,
-                'times_over'   => $times_over,
+                'over_level'   => $over_level,
                 'total_over'   => $total_over,
             ];
         }
