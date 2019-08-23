@@ -67,6 +67,8 @@
                         <td class="table_text">
                             @if($parcel->readyComplete)
                             <button type="button" data-url="{{ route('parcel.transfered', $parcel->id) }}" class="btn btn-primary confirm_complete">{{ trans('label.already_transfer') }}</button>
+                            @else
+                            <p>{{ $parcel->statusName }}</p>
                             @endif
                         </td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>

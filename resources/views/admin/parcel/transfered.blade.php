@@ -152,7 +152,7 @@
     $(function(){
         $('.datepicker').datepicker({
             todayHighlight: true,
-            dateFormat: 'dd-mm-yy',
+            dateFormat: 'yy-mm-dd',
             startDate: '-0d',
             onSelect: function(datetext) {
                 var d = new Date(); // for now
