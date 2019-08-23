@@ -99,7 +99,7 @@
             </div>
         </div>
     </div>
-    <div class="common_pager">{!! $parcels->links('admin.layouts.pagination') !!}</div>
+    <div class="common_pager">{!! $parcels->links('pagination::bootstrap-4') !!}</div>
 </div>
 @endsection
 @section('script')

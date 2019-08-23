@@ -78,6 +78,6 @@
             </div>
         </div>
     </div>
-    <div class="common_pager">{!! $forwards->links('admin.layouts.pagination') !!}</div>
+    <div class="common_pager">{!! $forwards->links('pagination::bootstrap-4') !!}</div>
 </div>
 @endsection

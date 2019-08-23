@@ -2,7 +2,7 @@
 
 return [
     'pager' => [
-        'common_limit' => 10
+        'common_limit' => 30
     ],
     'guest_code' => 'KH',
     'parcel_code' => 'BP',
