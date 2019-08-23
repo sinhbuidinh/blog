@@ -253,7 +253,8 @@ class ParcelController extends Controller
                 continue;
             }
             // time over for apply price of range
-            $total_over = ($over_weight * $over_price);
+            $times_over = ceil($over_weight/$every);
+            $total_over = ($times_over * $over_price);
             $over_history[] = [
                 'weight_range' => $weight_range,
                 'prices'       => $overs,
@@ -261,6 +262,7 @@ class ParcelController extends Controller
                 'floor'        => $floor,
                 'ceil'         => $ceil,
                 'over_level'   => $over_level,
+                'times_over'   => $times_over,
                 'total_over'   => $total_over,
             ];
         }
