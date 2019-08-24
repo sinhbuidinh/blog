@@ -75,7 +75,7 @@
                                     @foreach ($guests as $guest)
                                         @php
                                             $selected_guest = '';
-                                            if (old('guest_id', -999) == data_get($guest, 'id')) {
+                                            if (old('guest_id', $last_guest) == data_get($guest, 'id')) {
                                                 $selected_guest = ' selected="selected"';
                                             }
                                         @endphp
@@ -165,7 +165,7 @@
                                 @php
                                     $province_invalid = $errors->has('province') ? ' is-invalid' : '';
                                 @endphp
-                                <select id="province" class="full_width form-control{{ $province_invalid }}" name="province">
+                                <select id="province" class="full_width search form-control{{ $province_invalid }}" name="province">
                                     <option value="">{{ trans('label.please_choose') }}</option>
                                     @if(!empty($provincials))
                                     @foreach ($provincials as $code => $info)
@@ -204,7 +204,7 @@
                                 @php
                                     $district_invalid = $errors->has('district') ? ' is-invalid' : '';
                                 @endphp
-                                <select name="district" class="full_width form-control{{ $district_invalid }}" id="district">
+                                <select name="district" class="full_width search form-control{{ $district_invalid }}" id="district">
                                     <option value="">{{ trans('label.please_choose') }}</option>
                                     @if(!empty($districts))
                                     @foreach ($districts as $code => $district)
@@ -230,7 +230,7 @@
                                 @php
                                     $ward_invalid = $errors->has('ward') ? ' is-invalid' : '';
                                 @endphp
-                                <select name="ward" class="full_width form-control{{ $ward_invalid }}" id="ward">
+                                <select name="ward" class="full_width search form-control{{ $ward_invalid }}" id="ward">
                                     <option value="">{{ trans('label.please_choose') }}</option>
                                     @if(!empty($wards))
                                     @foreach ($wards as $code => $ward)

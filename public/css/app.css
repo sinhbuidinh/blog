@@ -12198,3 +12198,23 @@ a.text-dark:focus {
   padding: 0;
 }
 
+.page_number_text {
+  font-size: 12px;
+  color: #535353;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  margin: 0 0 20px;
+  text-align: left;
+}
+
+#select2-province-container,
+#select2-district-container,
+#select2-ward-container {
+  padding: 4px 4px 0 10px;
+}
+
+.select2-container--default .select2-selection--single,
+#select2-province-container {
+  height: calc(1.6em + 0.75rem + 2px);
+}
+

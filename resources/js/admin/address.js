@@ -1,6 +1,9 @@
 var please_choose_district = 'Chọn quận/huyện';
 var please_choose_ward = 'Chọn xã/phường';
 
+$(function(){
+    $('select.search').select2();
+});
 $(document).on('change', '#province', function(){
     var select_province = $(this).find(":selected");
     actionProvince(select_province);
@@ -79,7 +82,7 @@ function genDistricts(data)
         $('#district').removeClass('is-invalid');
         removeErrorAddrBefore();
     }
-    var districts = '<select name="district" class="full_width form-control" id="district">';
+    var districts = '<select name="district" class="full_width form-control search" id="district">';
     districts += optionDistrict(please_choose_district, '', '');
     $.each(data, function(key, value) {
         var name = value.name_with_type;
@@ -89,9 +92,11 @@ function genDistricts(data)
         districts += optionDistrict(name, code, url, display);
     });
     districts += '</select>';
-    $('#district').remove();
+    // $('#district').remove();
+    $('#div_districts').html('');
     $('#div_districts').find('div.common_form_error').remove();
     $('#div_districts').append(districts);
+    $('#district').select2();
 }
 function optionDistrict(name, code, url, display)
 {
@@ -135,7 +140,7 @@ function genWards(data)
         $('#ward').removeClass('is-invalid');
         removeErrorAddrBefore();
     }
-    var wards = '<select name="ward" class="full_width form-control" id="ward">';
+    var wards = '<select name="ward" class="full_width form-control search" id="ward">';
     wards += optionWard(please_choose_ward, '', '');
     $.each(data, function(key, value) {
         var name = value.name_with_type;
@@ -144,8 +149,10 @@ function genWards(data)
         wards += optionWard(name, code, display);
     });
     wards += '</select>';
-    $('#ward').remove();
+    // $('#ward').remove();
+    $('#div_wards').html('');
     $('#div_wards').append(wards);
+    $('#ward').select2();
 }
 function optionWard(name, code, display)
 {

@@ -39,8 +39,10 @@ class ParcelController extends Controller
         if (old('province') && old('district')) {
             $cal_remote = Parcel::isCalRemote(old('province'), old('district'));
         }
+        $last_parcel_guest = $this->parcelService->getLastGuest();
         $data = [
             'cal_remote'       => $cal_remote,
+            'last_guest'       => data_get($last_parcel_guest, 'id', -999),
             'guests'           => $this->parcelService->guestList(),
             'services'         => $services,
             'services_display' => $services_display,

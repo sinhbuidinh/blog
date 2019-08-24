@@ -35,6 +35,11 @@ class ParcelService
         return $this->guestRepo->getListAvailable();
     }
 
+    public function getLastGuest()
+    {
+        return $this->repo->getLastGuest();
+    }
+
     public function getServiceList()
     {
         $raw = config('division.services.list');

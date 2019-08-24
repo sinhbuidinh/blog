@@ -48,6 +48,11 @@ class ParcelRepository extends BaseRepository
         return $parcels->paginate($limit);
     }
 
+    public function getLastGuest()
+    {
+        return $this->model->select('guests.*', 'parcels.id AS parcel_id')->join('guests', 'guests.id', '=', 'parcels.guest_id')->orderBy('parcels.id', 'desc')->first();
+    }
+
     public function getForwardInfo($parcelId)
     {
         return $this->model->select('forwards.*')->join('forwards', 'parcel_id', '=', 'parcels.id')->where('parcel_id', $parcelId)->orderBy('created_at', 'desc')->get();
