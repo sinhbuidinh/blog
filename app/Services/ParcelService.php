@@ -43,11 +43,25 @@ class ParcelService
     public function getServiceList()
     {
         $raw = config('division.services.list');
+        $timer = config('price.timer_price');
+        $raw['super_fast'] = $timer;
         if (empty($raw)) {
             return [$raw, []];
         }
         $result = [];
         foreach ($raw as $key => $service) {
+            if ($key === 'super_fast') {
+                $result[] = [
+                    'name'    => trans('label.superfast'),
+                    'value'   => 0,
+                    'display' => trans('message.price_by_area'),
+                    'math'    => data_get($service, 'math', '+'),
+                    'note'    => trans('message.superfast_display'),
+                    'key'     => 'timer_price',
+                    'price'   => json_encode($timer, true),
+                ];
+                continue;
+            }
             $append = [
                 'name'    => $service['name'],
                 'value'   => $service['value'],

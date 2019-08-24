@@ -105,7 +105,6 @@ $(document).on('paste cut keyup change', '#province, #district, #ward, #guest_id
         calService();
         return false;
     }
-    // console.log('re-calculate price');
     $('#price').removeClass('is-invalid');
     var data = {
         province: province,
@@ -308,9 +307,21 @@ function getPriceService(weight, define)
     }
     return service_price;
 }
-function priceByDefine(weight, range)
+function priceByDefine(weight, config)
 {
-    var base = typeof range.base != 'undefined' ? range.base : '';
+    //check exist weight by
+    var carat = typeof config.weight_by != 'undefined' ? config.weight_by : '';
+    if (carat !== '' && carat === 'gram') {
+        weight = weight * 1000;
+    }
+    //check define by area or not
+    var define_area = typeof config.define != 'undefined' ? config.define : '';
+    if (define_area !== '') {
+        return priceByArea(weight, config);
+    }
+
+    //normal case services
+    var base = typeof config.base != 'undefined' ? config.base : '';
     var price = 0;
     var calculated_weight = 0;
     if (base === '') {
@@ -332,15 +343,83 @@ function priceByDefine(weight, range)
         calculated_weight += (ceil - floor);
     });
     var over = parseFloat(weight - calculated_weight);
-    var above = typeof range.above != 'undefined' ? range.above : '';
+    var above = typeof config.above != 'undefined' ? config.above : '';
     if (above === '' || over <= 0) {
         return price;
     }
     var every = typeof above.every != 'undefined' ? above.every : '';
-    var range = typeof above.range != 'undefined' ? above.range : '';
+    var config = typeof above.config != 'undefined' ? above.config : '';
     var over_weight = total_over = 0;
-    if (range === '') {
+    if (config === '') {
         return price;
+    }
+    Object.keys(config).forEach(function(key) {
+        var floor, ceil, rg;
+        rg = key.split('-');
+        floor = typeof rg[0] == 'undefined' ? '' : rg[0];
+        ceil = typeof rg[1] == 'undefined' ? '' : rg[1];
+        if (ceil == '~') {
+            ceil = 99999;
+        }
+        // find weight apply for price_range
+        if (over >= floor && over <= ceil) {
+            over_weight = over - floor;
+        } else {
+            return;
+        }
+        // time over for apply price of range
+        var times_over = Math.ceil(over_weight/every);
+        total_over = (times_over * config[key]);
+    });
+    return parseFloat(price + total_over);
+}
+function priceByArea(weight, config)
+{
+    var define_area = typeof config.define != 'undefined' ? config.define : '';
+    if (define_area === '') {
+        return 0;
+    }
+    var area = areaByProvince(define_area);
+    //find price with area
+    var price = typeof config.price != 'undefined' ? config.price : '';
+    if (price === '') {
+        return 0;
+    }
+    var base = typeof price.base != 'undefined' ? price.base : '';
+    if (base === '') {
+        return 0;
+    }
+    var base_price = 0;
+    var calculated_weight = 0;
+    Object.keys(base).forEach(function(key) {
+        base_price = base[key].hasOwnProperty(area) ? base[key][area] : 0;
+        var floor, ceil, rg;
+        rg = key.split('-');
+        floor = typeof rg[0] == 'undefined' ? '' : rg[0];
+        ceil = typeof rg[1] == 'undefined' ? '' : rg[1];
+        if (ceil === '~') {
+            ceil = 99999;
+        }
+        if (floor === '' || ceil === '') {
+            return;
+        }
+        if (weight >= floor && weight <= ceil) {
+            calculated_weight += (weight - floor); 
+            return;
+        }
+        calculated_weight += (ceil - floor);
+    });
+    var over = parseFloat(weight - calculated_weight);
+    var above = typeof price.above != 'undefined' ? price.above : '';
+    if (above === '' || over <= 0) {
+        return base_price;
+    }
+    var every = typeof above.every != 'undefined' ? above.every : '';
+    var range = typeof above.range != 'undefined' ? above.range : '';
+    var over_weight = 0;
+    var total_over = 0;
+    if (range === '') {
+        return base_price;
     }
     Object.keys(range).forEach(function(key) {
         var floor, ceil, rg;
@@ -357,10 +436,28 @@ function priceByDefine(weight, range)
             return;
         }
         // time over for apply price of range
+        var over_price = range[key].hasOwnProperty(area) ? range[key][area] : 0;
         var times_over = Math.ceil(over_weight/every);
-        total_over = (times_over * range[key]);
+        total_over = (times_over * over_price);
     });
-    return parseFloat(price + total_over);
+    return parseFloat(base_price + total_over);
+}
+function areaByProvince(define_area)
+{
+    var province = typeof $('#province').val() != 'undefined' ? $('#province').val() : '';
+    var keys = Object.keys(define_area);
+    var last = keys[keys.length-1];
+    if (province === '') {
+        return last;
+    }
+    Object.keys(define_area).forEach(function(key) {
+        //check province in array or not
+        var areas = define_area[key];
+        if (areas.includes(province)) {
+            return key;
+        }
+    });
+    return last;
 }
 //function add service & price
 function closePopup(selector)

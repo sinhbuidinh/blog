@@ -28,4 +28,6 @@ return [
     'parcel_list' => 'Danh sách vận đơn',
     'parcel_complete_transfered' => 'Cập nhật đã chuyển thành công',
     'error_when_transfered' => 'Có lỗi khi cập nhật đã chuyển vận đơn',
+    'price_by_area' => 'Giá theo vùng',
+    'superfast_display' => 'Nội thành: 30,000, Bình thuận xuống miền tây(trừ Cà Mau, Sóc Trăng, Bạc Liêu, Kiên Giang, An Giang) 70,000, Các tỉnh còn lại 90,000',
 ];

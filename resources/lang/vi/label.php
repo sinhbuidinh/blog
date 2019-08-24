@@ -101,4 +101,5 @@ return [
     'create_date' => 'Ngày tạo',
     'pick_date' => 'Chọn ngày',
     'pick_status' => 'Chọn tình trạng',
+    'superfast' => 'DV Phát hẹn giờ',
 ];
