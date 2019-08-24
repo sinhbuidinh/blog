@@ -17,10 +17,12 @@ class ParcelRepository extends BaseRepository
             $query->where('bill_code', 'like', '%' . $keyword . '%')
                 ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
         })->when(data_get($wheres, 'status'), function ($query, $status) {
-            if (is_array($status)) {
-                $query->whereIn('parcels.status', $status);
-            } else {
-                $query->where('parcels.status', $status);
+            if (!is_null($status)) {
+                if (is_array($status)) {
+                    $query->whereIn('parcels.status', $status);
+                } else {
+                    $query->where('parcels.status', $status);
+                }
             }
         })->when($getPackage, function($query) {
             $query->join('package_items', 'package_items.parcel_id', '=', 'parcels.id')
@@ -30,6 +32,13 @@ class ParcelRepository extends BaseRepository
             $query->where('parcels.id', $parcelId);
         })->when(data_get($wheres, 'package_id'), function($query, $packageId){
             $query->where('package_items.package_id', $packageId);
+        })->when(data_get($wheres, 'date'), function($query, $date){
+            $query->where(function ($query) use ($date) {
+                $query->whereRaw("DATE_FORMAT(`time_receive`, '%Y-%m-%d') = '$date'")
+                ->orWhereRaw("DATE_FORMAT(`parcels`.`created_at`, '%Y-%m-%d') = '$date'");
+            });
+        })->when(data_get($wheres, 'guest_id'), function($query, $guestId){
+            $query->where('guest_id', $guestId);
         });
         $parcels = $parcels->orderBy('created_at', 'desc');
         if ($getAll === true) {

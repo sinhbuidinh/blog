@@ -98,4 +98,7 @@ return [
     'complete_receive_time' => 'Thời gian ký nhận',
     'complete_note' => 'Ghi chú lúc ký nhận',
     'update' => 'Cập nhật',
+    'create_date' => 'Ngày tạo',
+    'pick_date' => 'Chọn ngày',
+    'pick_status' => 'Chọn tình trạng',
 ];

@@ -24,10 +24,38 @@
     <div class="search_form">
         <form action="{{ route('forward')}}" method="get">
             <div class="list_search list_search_with_button">
-                <input type="text" id="keyword" name="keyword" placeholder="{{ trans('label.forward_keyword_holder') }}" value="{{ old('keyword', data_get($search, 'keyword')) }}" />
-                <button type="submit" class="list_search_submit">
-                    <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
-                </button>
+                <div class="row col-sm-12">
+                    <div class="col-sm-3">
+                        <input type="text" id="keyword" name="keyword" placeholder="{{ trans('label.forward_keyword_holder') }}" value="{{ old('keyword', data_get($search, 'keyword')) }}" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="guest_id" id="guest_id">
+                            @php
+                                $guest_id = old('guest_id', data_get($search, 'guest_id'));
+                            @endphp
+                            <option value="">{{ trans('label.please_choose') }}</option>
+                            @if(!empty($guests))
+                            @foreach($guests as $guest)
+                                @php
+                                    $guest_selected = '';
+                                    if (data_get($guest, 'id') == $guest_id) {
+                                        $guest_selected = 'selected="selected"';
+                                    }
+                                @endphp
+                                <option value="{{ data_get($guest, 'id') }}" {{ $guest_selected }}>{{ data_get($guest, 'company_name') }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="datepicker" id="date" name="date" value="{{ old('date', data_get($search, 'date')) }}" placeholder="{{ trans('label.pick_date') }}" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="list_search_submit">
+                            <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -80,4 +108,15 @@
     </div>
     <div class="common_pager">{!! $forwards->links('pagination::bootstrap-4') !!}</div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+    $(function(){
+        $('.datepicker').datepicker({
+            todayHighlight: true,
+            dateFormat: 'yy-mm-dd',
+            startDate: '-0d',
+        });
+    });
+</script>
 @endsection

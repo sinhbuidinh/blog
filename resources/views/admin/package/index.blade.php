@@ -12,10 +12,39 @@
     <div class="search_form">
         <form action="{{ route('package')}}" method="get">
             <div class="list_search list_search_with_button">
-                <input type="text" id="keyword" name="keyword" placeholder="Nhập mã bảng kê" value="{{ old('keyword', data_get($search, 'keyword')) }}" />
-                <button type="submit" class="list_search_submit">
-                    <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
-                </button>
+                <div class="row col-sm-12">
+                    <div class="col-sm-3">
+                        <input type="text" id="keyword" name="keyword" placeholder="Nhập mã bảng kê" value="{{ old('keyword', data_get($search, 'keyword')) }}" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" class="datepicker" id="date" name="date" placeholder="{{ trans('label.pick_date') }}" value="{{ old('date', data_get($search, 'date')) }}" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="status" id="status">
+                            @php
+                                $last_status = old('status', data_get($search, 'status'));
+                                $status = (is_null($last_status) && $last_status != 0) ? -999 : $last_status;
+                            @endphp
+                            <option value="">{{ trans('label.pick_status') }}</option>
+                            @if(!empty($statuses))
+                            @foreach($statuses as $id => $name)
+                                @php
+                                    $status_selected = '';
+                                    if ($id == $status) {
+                                        $status_selected = 'selected="selected"';
+                                    }
+                                @endphp
+                                <option value="{{ $id }}" {{ $status_selected }}>{{ $name }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="list_search_submit">
+                            <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
+                        </button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -31,8 +60,8 @@
                             <th class="table_title">{{ trans('label.package_code') }}</th>
                             <th class="table_title">{{ trans('label.confirm') }}</th>
                             <th class="table_title">{{ trans('label.parcel_list') }}</th>
-                            <th class="table_title">{{ trans('label.status') }}</th>
                             <th class="table_title">{{ trans('label.agency') }}</th>
+                            <th class="table_title">{{ trans('label.create_date') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
                             <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
@@ -45,13 +74,13 @@
                         <td class="table_text">
                             @if($package->readyTransfer)
                             <button type="button" data-url="{{ route('package.transfer', $package->id) }}" class="btn btn-primary confirm_transfer">{{ trans('label.transfer') }}</button>
+                            @else
+                            <p class="status_label">{{ $package->statusName }}</p>
                             @endif
                         </td>
                         <td class="table_text">{{ $package->parcelDisplay }}</td>
-                        <td class="table_text">
-                            <p class="status_label">{{ $package->statusName }}</p>
-                        </td>
                         <td class="table_text">{{ $package->agencyName }}</td>
+                        <td class="table_text">{{ $package->created_at }}</td>
                         <td class="table_text">{{ $package->note }}</td>
                         <td class="table_text small" style="text-align:center;">
                             <a href="{{ route('package.delete', $package->id) }}">
@@ -101,6 +130,11 @@
 <script type="text/javascript">
     $(function(){
         $('select.select2').select2();
+        $('.datepicker').datepicker({
+            todayHighlight: true,
+            dateFormat: 'yy-mm-dd',
+            startDate: '-0d',
+        });
     });
     $(document).on('click', '.confirm_transfer', function(){
         $('#agency_list').click();

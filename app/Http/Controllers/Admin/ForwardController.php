@@ -20,10 +20,15 @@ class ForwardController extends Controller
 
     public function index(Request $request)
     {
-        $search = ['keyword' => $request->keyword];
+        $search = [
+            'keyword'  => $request->keyword,
+            'guest_id' => $request->guest_id,
+            'date'     => $request->date,
+        ];
         $data = [
             'user'     => $request->user(),
             'search'   => $search,
+            'guests'   => $this->parcelService->guestList(),
             'forwards' => $this->forwardService->getList($search),
         ];
         return view('admin.forward.index', $data);

@@ -21,12 +21,17 @@ class PackageController extends Controller
 
     public function index(Request $request)
     {
-        $search = ['keyword' => $request->keyword];
+        $search = [
+            'keyword' => $request->keyword,
+            'date'    => $request->date,
+            'status'  => $request->status,
+        ];
         $data = [
             'user'     => $request->user(),
             'search'   => $search,
             'agency'   => code2Name('setting.transport_agent'),
             'packages' => $this->packageService->getList($search),
+            'statuses' => $this->packageService->getStatuses(),
         ];
         return view('admin.package.index', $data);
     }

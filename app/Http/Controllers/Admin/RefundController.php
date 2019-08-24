@@ -19,10 +19,15 @@ class RefundController extends Controller
 
     public function index(Request $request)
     {
-        $search = ['keyword' => $request->keyword];
+        $search = [
+            'keyword'  => $request->keyword,
+            'guest_id' => $request->guest_id,
+            'date'     => $request->date,
+        ];
         $data = [
             'user'    => $request->user(),
             'search'  => $search,
+            'guests'  => $this->parcelService->guestList(),
             'refunds' => $this->refundService->getList($search),
         ];
         return view('admin.refund.index', $data);

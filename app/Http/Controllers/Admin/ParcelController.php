@@ -18,9 +18,14 @@ class ParcelController extends Controller
 
     public function index(Request $request)
     {
-        $search = ['keyword' => $request->keyword];
+        $search = [
+            'keyword'  => $request->keyword,
+            'guest_id' => $request->guest_id,
+            'date'     => $request->date,
+        ];
         $data = [
             'user' => $request->user(),
+            'guests' => $this->parcelService->guestList(),
             'search' => $search,
             'parcels' => $this->parcelService->getList($search),
         ];

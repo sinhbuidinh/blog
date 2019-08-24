@@ -28,6 +28,11 @@ class PackageService
         return $this->repo->search($wheres);
     }
 
+    public function getStatuses()
+    {
+        return $this->repo->getStatusList();
+    }
+
     public function newPackage($input)
     {
         $error = null;
