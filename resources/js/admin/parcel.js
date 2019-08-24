@@ -3,6 +3,9 @@ function formatNumber(string)
     string = removeFormat(string);
     // return string.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var parts = string.toString().split(".");
+    if (isNotSelected(parts[0], true)) {
+        return false;
+    }
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 }
@@ -79,7 +82,7 @@ $(document).on('paste cut keyup change', '#service_type, #parcel_type, #long, #w
 $(document).on('paste cut keyup change', '#total_service, #value_declare, #price, #refund, #forward, #price_vat, #cod, #support_remote, #support_gas', function(e){
     formatNumberObject($(this));
 });
-$(document).on('paste cut keyup change', '#total_service, #price, #refund, #forward, #vat, #price_vat, #cod, #support_remote_rate, #support_remote, #support_gas_rate, #support_gas, #total', function(e){
+$(document).on('paste cut keyup change', '#total_service, #value_declare, #price, #refund, #forward, #vat, #price_vat, #cod, #support_remote_rate, #support_remote, #support_gas_rate, #support_gas, #total', function(e){
     calculateTotal();
 });
 $(document).on('paste cut keyup change', '#province, #district, #ward, #guest_id, #service_type, #parcel_type, #weight, #real_weight', function(e){
@@ -237,6 +240,11 @@ function calService()
     }
 
     var price = $('#price').val() != '' ? removeFormat($('#price').val()) : 0;
+    var declare = $('#value_declare').val() != '' ? removeFormat($('#value_declare').val()) : 0;
+    var service_price_percent = price;
+    if (!isNotSelected(declare, true)) {
+        service_price_percent = declare;
+    }
     inputs.each(function(index){
         var math = $(this).data('math');
         var key = $(this).data('key');
@@ -253,7 +261,7 @@ function calService()
         });
         display.push(name);
         if (math == '*') {
-            service_price = parseFloat(price * value);
+            service_price = parseFloat(service_price_percent * value);
         } else {
             service_price = parseFloat(value);
         }

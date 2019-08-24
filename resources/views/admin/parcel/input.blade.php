@@ -409,7 +409,7 @@
                             <div class="row">
                                 <div class="col-sm-4 my-auto">{{ trans('label.value_declare') }}</div>
                                 <div class="col-sm-8 my-auto">
-                                    <input type="number" id="value_declare" name="value_declare" value="{{ old('value_declare') }}" class="full_width form-control">
+                                    <input type="text" id="value_declare" name="value_declare" value="{{ old('value_declare') }}" class="full_width form-control">
                                 </div>
                             </div>
                         </div>

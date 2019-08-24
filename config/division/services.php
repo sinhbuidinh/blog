@@ -3,13 +3,12 @@
 return [
     'list' => [
         'transfer_guarantee' => [
-            'value' => 0.02,
+            'value' => 0.01,
             'math' => '*',
-            'display' => '2%',
-            'atleast' => 100000,
+            'display' => '1%',
             'limit' => 100000000,
             'name' => 'DV Bảo hiểm vận chuyển',
-            'note' => 'Phí bảo hiểm tối thiểu 100,000 đồng/bill. Giá trị khai tối đa 100,000,000 đồng/bill',
+            'note' => 'Giá trị khai tối đa 100,000,000 đồng/bill',
         ],
         'cod_parcel' => [
             'value' => 0.02,
@@ -19,12 +18,6 @@ return [
             'atleast' => 15000,
             'name' => 'DV Thu hộ',
             'note' => 'Tối thiểu 15,000 đồng/bill',
-        ],
-        'full_name' => [
-            'value' => 5000,
-            'display' => '5,000 đồng/bill',
-            'note' => 'Cung cấp họ và tên người nhận',
-            'name' => 'DV Thông tin đầy đủ',
         ],
         'bao_phat' => [
             'value' => 5000,
@@ -86,8 +79,8 @@ return [
         ],
         'out_hourswork' => [
             'name' => 'DV Ngoài giờ hành chánh',
-            'value' => 200000,
-            'display' => '200,000 đồng/bill',
+            'value' => 250000,
+            'display' => '250,000 đồng/bill',
             'note' => 'Ngoài giờ hành chánh, Chủ Nhật, Ngày nghỉ',
         ],
         'freeze' => [
@@ -102,6 +95,17 @@ return [
             'display' => '12,000 đồng/kg',
             'atleast' => 250000,
             'note' => 'Tối thiểu 250,000 đồng/bill',
+            'price' => [
+                'base' => [
+                    '0-2' => 250000,
+                ],
+                'above' => [
+                    'every' => 1,
+                    'range' => [
+                        '0-~' => 12000
+                    ],
+                ],
+            ],
         ],
         'one_shield' => [
             'name' => 'DV Hàng nguyên khối',
@@ -120,12 +124,6 @@ return [
                 'weight' => '> 30',
             ],
             'note' => 'Nếu kiện hàng có trọng lượng lớn hơn 30kg',
-        ],
-        'call_flower' => [
-            'name' => 'DV Điện hoa',
-            'value' => 200000,
-            'display' => '200,000 đồng/bill',
-            'note' => 'Chưa tính tiền mua hoa',
         ],
         'bill_finance' => [
             'name' => 'Hóa đơn tài chính',
