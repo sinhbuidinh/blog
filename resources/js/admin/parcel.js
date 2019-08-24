@@ -102,7 +102,7 @@ $(document).on('paste cut keyup change', '#province, #district, #ward, #guest_id
         || isNotSelected(weight)
         || isNotSelected(real_weight)
     ) {
-        // console.log('not enough params');
+        calService();
         return false;
     }
     // console.log('re-calculate price');
@@ -239,39 +239,36 @@ function calService()
         return 0;
     }
 
-    var price = $('#price').val() != '' ? removeFormat($('#price').val()) : 0;
+    var weight = $('#weight').val();
+    var main_price = $('#price').val() != '' ? removeFormat($('#price').val()) : 0;
     var declare = $('#value_declare').val() != '' ? removeFormat($('#value_declare').val()) : 0;
-    var service_price_percent = price;
+    var price_with_percent = price;
     if (!isNotSelected(declare, true)) {
-        service_price_percent = declare;
+        price_with_percent = declare;
     }
     inputs.each(function(index){
         var math = $(this).data('math');
         var key = $(this).data('key');
         var atleast = typeof $(this).data('atleast') != 'undefined' ? $(this).data('atleast') : '';
         var limit = typeof $(this).data('limit') != 'undefined' ? $(this).data('limit') : '';
+        var range = typeof $(this).data('price_range') != 'undefined' ? $(this).data('price_range') : '';
         var name = $(this).data('name');
         var value = $(this).val();
         //append price by math
-        services.push({
+        var cal_services = {
             "key": key,
             "name": name,
             "math": math,
             "value": value,
-        });
+            "atleast": atleast,
+            "limit": limit,
+            "range": range,
+            "price_with_percent": price_with_percent,
+            "main_price": main_price,
+        };
+        services.push(cal_services);
         display.push(name);
-        if (math == '*') {
-            service_price = parseFloat(service_price_percent * value);
-        } else {
-            service_price = parseFloat(value);
-        }
-        // check limit
-        if (atleast != '' && service_price < parseFloat(atleast)) {
-            service_price = atleast;
-        }
-        if (limit != '' && service_price > parseFloat(limit)) {
-            service_price = limit;
-        }
+        service_price = getPriceService(weight, cal_services);
         total += service_price;
     });
     $('#services_display').val(display.join(', '));
@@ -279,6 +276,91 @@ function calService()
     $("#total_service").val(formatNumber(total));
     closePopup();
     return total;
+}
+function getPriceService(weight, define)
+{
+    if (!define.hasOwnProperty('math')
+        || !define.hasOwnProperty('value')
+        || !define.hasOwnProperty('main_price')
+    ) {
+        return 0;
+    }
+    var range = define.range;
+    if (range !== '') {
+        return priceByDefine(weight, range);
+    }
+    // price calculate base on value_declare
+    var math = define.math;
+    var value = define.value;
+    var service_price = parseFloat(value);
+    if (math == '*') {
+        var price = typeof define.price_with_percent != 'undefined' ? define.price_with_percent : define.main_price;
+        service_price = parseFloat(price * value);
+    }
+    // check limit
+    var atleast = define.atleast;
+    if (atleast != '' && service_price < parseFloat(atleast)) {
+        service_price = atleast;
+    }
+    var limit = define.limit;
+    if (limit != '' && service_price > parseFloat(limit)) {
+        service_price = limit;
+    }
+    return service_price;
+}
+function priceByDefine(weight, range)
+{
+    var base = typeof range.base != 'undefined' ? range.base : '';
+    var price = 0;
+    var calculated_weight = 0;
+    if (base === '') {
+        return price;
+    }
+    Object.keys(base).forEach(function(key) {
+        price = base[key];
+        var floor, ceil, rg;
+        rg = key.split('-');
+        floor = typeof rg[0] == 'undefined' ? '' : rg[0];
+        ceil = typeof rg[1] == 'undefined' ? '' : rg[1];
+        if (floor === '' || ceil === '') {
+            return;
+        }
+        if (weight >= floor && weight <= ceil) {
+            calculated_weight += (weight - floor); 
+            return;
+        }
+        calculated_weight += (ceil - floor);
+    });
+    var over = parseFloat(weight - calculated_weight);
+    var above = typeof range.above != 'undefined' ? range.above : '';
+    if (above === '' || over <= 0) {
+        return price;
+    }
+    var every = typeof above.every != 'undefined' ? above.every : '';
+    var range = typeof above.range != 'undefined' ? above.range : '';
+    var over_weight = total_over = 0;
+    if (range === '') {
+        return price;
+    }
+    Object.keys(range).forEach(function(key) {
+        var floor, ceil, rg;
+        rg = key.split('-');
+        floor = typeof rg[0] == 'undefined' ? '' : rg[0];
+        ceil = typeof rg[1] == 'undefined' ? '' : rg[1];
+        if (ceil == '~') {
+            ceil = 99999;
+        }
+        // find weight apply for price_range
+        if (over >= floor && over <= ceil) {
+            over_weight = over - floor;
+        } else {
+            return;
+        }
+        // time over for apply price of range
+        var times_over = Math.ceil(over_weight/every);
+        total_over = (times_over * range[key]);
+    });
+    return parseFloat(price + total_over);
 }
 //function add service & price
 function closePopup(selector)

@@ -62,6 +62,9 @@ class ParcelService
             if (!empty($service['limit'])) {
                 $append['limit'] = $service['limit'];
             }
+            if (!empty($service['price'])) {
+                $append['price'] = json_encode($service['price'], true);
+            }
             $result[] = $append;
         }
         return [$raw, $result];

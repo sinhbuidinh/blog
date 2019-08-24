@@ -645,6 +645,9 @@
                                 @if(!empty($s['limit']))
                                 data-limit="{{ $s['limit'] }}"
                                 @endif
+                                @if(!empty($s['price']))
+                                data-price_range="{{ $s['price'] }}"
+                                @endif
                                 data-name="{{ $s['name'] }}"
                                 data-math="{{ data_get($s, 'math', '+') }}"
                                 value="{{ $s['value'] }}">

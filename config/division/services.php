@@ -57,10 +57,16 @@ return [
             'display' => '200,000 đồng/bill',
             'name' => 'DV Hồ sơ thầu',
             'note' => '+ 15,000 đồng/kg cho kg tiếp theo trên 2 kg',
-            'append_more' => [
-                'operator' => '>',
-                'compare' => 2,
-                'value' => 15000,
+            'price' => [
+                'base' => [
+                    '0-2' => 200000,
+                ],
+                'above' => [
+                    'every' => 1,
+                    'range' => [
+                        '0-~' => 15000
+                    ],
+                ],
             ],
         ],
         'express' => [
@@ -87,7 +93,7 @@ return [
             'name' => 'DV Hàng đông lạnh',
             'value' => 15000,
             'display' => '15,000 đồng/kg',
-            'note' => 'Hàng đông lạnh đi chuyến Express thì không cộng thêm phí Hàng nặng phát nhanh(not yet)',
+            'note' => 'Hàng đông lạnh đi chuyến Express thì không cộng thêm phí Hàng nặng phát nhanh',
         ],
         'security' => [
             'name' => 'Phí An Ninh',
