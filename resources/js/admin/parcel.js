@@ -4,7 +4,7 @@ function formatNumber(string)
     // return string.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     var parts = string.toString().split(".");
     if (isNotSelected(parts[0], true)) {
-        return false;
+        return 0;
     }
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
