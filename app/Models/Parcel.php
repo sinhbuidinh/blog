@@ -141,6 +141,11 @@ class Parcel extends BaseModel
         return data_get($agency['name'], $pos);
     }
 
+    public function getParcelDisplayForPackageAttribute()
+    {
+        return ($this->bill_code) ? $this->bill_code : $this->parcel_code;
+    }
+
     public function history() 
     {
         return $this->hasMany('App\Models\ParcelHistory', 'parcel_id', 'id');
