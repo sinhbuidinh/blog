@@ -40,6 +40,13 @@ $(function(){
     displayGuestInfo(guest);
     calculateTotal();
 });
+$(document).on('paste cut keyup change', '#weight', function(e){
+    var weight = $(this).val();
+    if (isNotSelected(weight, 0)) {
+        return false;
+    }
+    $('#real_weight').val(weight);
+});
 $(document).on('paste cut keyup change', '#service_type, #parcel_type, #long, #wide, #height', function(e){
     if ($('#parcel_type').val() != $('#parcel_type_pack').val()) {
         return false;
@@ -75,7 +82,7 @@ $(document).on('paste cut keyup change', '#total_service, #value_declare, #price
 $(document).on('paste cut keyup change', '#total_service, #price, #refund, #forward, #vat, #price_vat, #cod, #support_remote_rate, #support_remote, #support_gas_rate, #support_gas, #total', function(e){
     calculateTotal();
 });
-$(document).on('change', '#province, #district, #ward, #guest_id, #service_type, #parcel_type, #weight, #real_weight', function (){
+$(document).on('paste cut keyup change', '#province, #district, #ward, #guest_id, #service_type, #parcel_type, #weight, #real_weight', function(e){
     var province      = $('#province').val();
     var district      = $('#district').val();
     var ward          = $('#ward').val();
