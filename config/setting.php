@@ -48,4 +48,6 @@ return [
             'transport' => 'Vận tải',
         ],
     ],
+    'fast_transfer_weight' => 6000,
+    'delivery_transfer_weight' => 3000,
 ];

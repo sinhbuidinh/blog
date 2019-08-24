@@ -40,6 +40,35 @@ $(function(){
     displayGuestInfo(guest);
     calculateTotal();
 });
+$(document).on('paste cut keyup change', '#service_type, #parcel_type, #long, #wide, #height', function(e){
+    if ($('#parcel_type').val() != $('#parcel_type_pack').val()) {
+        return false;
+    }
+    var long, wide, height, type, weight, real, transfer_define;
+    long   = $('#long').val();
+    wide   = $('#wide').val();
+    height = $('#height').val();
+    if (isNotSelected(long, true)
+        || isNotSelected(wide, true)
+        || isNotSelected(height, true)
+    ) {
+        return false;
+    }
+    type   = $('#service_type').val();
+    if (type == $('#service_type_quick').val()) {
+        transfer_define = $('#fast_transfer_weight').val();
+    } else if (type == $('#service_type_trans').val()) {
+        transfer_define = $('#delivery_transfer_weight').val();
+    } else {
+        return false;
+    }
+    if (isNotSelected(transfer_define, true)) {
+        return false;
+    }
+    weight = real = (long * wide * height) / transfer_define;
+    $('#weight').val(weight);
+    $('#real_weight').val(real);
+});
 $(document).on('paste cut keyup change', '#total_service, #value_declare, #price, #refund, #forward, #price_vat, #cod, #support_remote, #support_gas', function(e){
     formatNumberObject($(this));
 });
@@ -155,8 +184,12 @@ function calPrice(input_obj)
         }
     });
 }
-function isNotSelected(value)
+function isNotSelected(value, checkzero)
 {
+    var checkzero = typeof checkzero != 'undefined' ? true : false;
+    if (checkzero === true && value == 0) {
+        return true;
+    }
     if (typeof value == 'undefined' || value == '') {
         return true;
     }

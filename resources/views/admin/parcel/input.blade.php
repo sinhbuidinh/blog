@@ -46,6 +46,12 @@
                 <div class="hidden">
                     {{ csrf_field() }}
                     <input type="hidden" id="tax_value" value="10" />
+                    <input type="hidden" id="parcel_type_pack" value="{{ config('setting.parcel_type.code.package') }}" />
+                    <input type="hidden" id="parcel_type_doc" value="{{ config('setting.parcel_type.code.document') }}" />
+                    <input type="hidden" id="service_type_quick" value="{{ config('setting.transfer_type.code.quick') }}" />
+                    <input type="hidden" id="service_type_trans" value="{{ config('setting.transfer_type.code.transport') }}" />
+                    <input type="hidden" id="fast_transfer_weight" value="{{ config('setting.fast_transfer_weight') }}" />
+                    <input type="hidden" id="delivery_transfer_weight" value="{{ config('setting.delivery_transfer_weight') }}" />
                 </div>
                 <div class="row col-sm-12">
                     <div class="col-sm-2 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
