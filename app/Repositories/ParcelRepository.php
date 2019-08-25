@@ -16,14 +16,6 @@ class ParcelRepository extends BaseRepository
         $parcels = $this->model->select('parcels.*')->when(data_get($wheres, 'keyword'), function ($query, $keyword) {
             $query->where('bill_code', 'like', '%' . $keyword . '%')
                 ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
-        })->when(data_get($wheres, 'status'), function ($query, $status) {
-            if (!is_null($status)) {
-                if (is_array($status)) {
-                    $query->whereIn('parcels.status', $status);
-                } else {
-                    $query->where('parcels.status', $status);
-                }
-            }
         })->when($getPackage, function($query) {
             $query->join('package_items', 'package_items.parcel_id', '=', 'parcels.id')
             ->join('packages', 'packages.id', '=', 'package_items.package_id')
@@ -40,6 +32,14 @@ class ParcelRepository extends BaseRepository
         })->when(data_get($wheres, 'guest_id'), function($query, $guestId){
             $query->where('guest_id', $guestId);
         });
+        if (!is_null(data_get($wheres, 'status'))) {
+            $status = $wheres['status'];
+            if (is_array($status)) {
+                $parcels = $parcels->whereIn('parcels.status', $status);
+            } else {
+                $parcels = $parcels->where('parcels.status', $status);
+            }
+        }
         $parcels = $parcels->orderBy('created_at', 'desc');
         if ($getAll === true) {
             return $parcels->get();

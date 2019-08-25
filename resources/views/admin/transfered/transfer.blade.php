@@ -8,7 +8,7 @@
         </div>
         @include('admin.layouts.session-message')
         <div class="file_form_wrap">
-            <form class="login_form skip_alert_changes" action="{{ route('parcel.complete_transfered', $parcel->id) }}" id="parcel_form" method="post">
+            <form class="login_form skip_alert_changes" action="{{ route('complete_transfered', $parcel->id) }}" id="parcel_form" method="post">
                 <div class="hidden">
                     {{ csrf_field() }}
                 </div>

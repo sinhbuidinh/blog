@@ -27,6 +27,11 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('transfereds') }}" class="{{ $controller == 'TransferedController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/transfered.png?v=1.0.1') }}">{{ trans('label.sidebar_transfered') }}
+            </a>
+        </li>
+        <li>
             <a href="{{ route('guest') }}" class="{{ $controller == 'GuestController' ? 'active' : ''}}">
                 <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">{{ trans('label.sidebar_guest') }}
             </a>

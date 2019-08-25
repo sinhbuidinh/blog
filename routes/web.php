@@ -59,6 +59,11 @@ Route::group([
     Route::prefix('dashboard')->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard');
     });
+    Route::prefix('transfered')->group(function () {
+        Route::get('/', 'TransferedController@index')->name('transfereds');
+        Route::get('/transfered/{id}', 'TransferedController@transfered')->name('transfer');
+        Route::post('/transfered/{id}', 'TransferedController@completeTransfered')->name('complete_transfered');
+    });
     Route::prefix('parcel')->group(function () {
         Route::get('/', 'ParcelController@index')->name('parcel');
         Route::get('/create', 'ParcelController@input')->name('parcel.input');
@@ -67,8 +72,6 @@ Route::group([
         Route::get('/edit/{id}', 'ParcelController@edit')->name('parcel.edit');
         Route::get('/delete/{id}', 'ParcelController@delete')->name('parcel.delete');
         Route::post('/update/{id}', 'ParcelController@update')->name('parcel.update');
-        Route::get('/transfered/{id}', 'ParcelController@transfered')->name('parcel.transfered');
-        Route::post('/transfered/{id}', 'ParcelController@completeTransfered')->name('parcel.complete_transfered');
     });
     Route::prefix('guest')->group(function () {
         Route::get('/', 'GuestController@index')->name('guest');

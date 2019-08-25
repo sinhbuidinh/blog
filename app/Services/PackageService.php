@@ -30,7 +30,9 @@ class PackageService
 
     public function getStatuses()
     {
-        return $this->repo->getStatusList();
+        $statuses = $this->repo->getStatusList();
+        unset($statuses[Package::STATUS_DELETED]);
+        return $statuses;
     }
 
     public function newPackage($input)

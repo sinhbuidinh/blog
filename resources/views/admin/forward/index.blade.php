@@ -33,7 +33,7 @@
                             @php
                                 $guest_id = old('guest_id', data_get($search, 'guest_id'));
                             @endphp
-                            <option value="">{{ trans('label.please_choose') }}</option>
+                            <option value="">{{ trans('label.please_choose_guest') }}</option>
                             @if(!empty($guests))
                             @foreach($guests as $guest)
                                 @php

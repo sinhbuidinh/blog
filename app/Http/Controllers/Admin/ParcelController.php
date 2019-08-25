@@ -11,6 +11,7 @@ use App\Request\Admin\CompleteTransfer;
 
 class ParcelController extends Controller
 {
+    private $parcelService;
     public function __construct(ParcelService $parcelService)
     {
         $this->parcelService = $parcelService;
@@ -22,12 +23,14 @@ class ParcelController extends Controller
             'keyword'  => $request->keyword,
             'guest_id' => $request->guest_id,
             'date'     => $request->date,
+            'status'   => $request->status,
         ];
         $data = [
             'user' => $request->user(),
             'guests' => $this->parcelService->guestList(),
             'search' => $search,
             'parcels' => $this->parcelService->getList($search),
+            'statuses' => $this->parcelService->getStatuses(),
         ];
         return view('admin.parcel.index', $data);
     }
@@ -109,27 +112,6 @@ class ParcelController extends Controller
         }
         session()->flash('error', $message);
         return redirect()->route('parcel.edit', $id)->withInput();
-    }
-
-    public function transfered(Request $request, $id)
-    {
-        $parcel = $this->parcelService->findById($id);
-        $data = [
-            'parcel' => $parcel,
-        ];
-        return view('admin.parcel.transfered', $data);
-    }
-
-    public function completeTransfered(CompleteTransfer $request, $id)
-    {
-        $data = $request->only(['complete_receiver', 'complete_receiver_tel', 'complete_receive_time', 'complete_note']);
-        list($result, $message) = $this->parcelService->completeTransfered($data, $id);
-        if ($result !== false) {
-            session()->flash('success', trans('message.parcel_complete_transfered'));
-            return redirect()->route('parcel');
-        }
-        session()->flash('error', $message);
-        return redirect()->route('parcel.transfered', $id)->withInput();
     }
 
     public function delete(Request $request, $id = null)

@@ -15,13 +15,18 @@ class PackageRepository extends BaseRepository
     {
         $packages = $this->model->when(data_get($wheres, 'keyword'), function ($query, $keyword) {
             $query->where('package_code', 'like', '%' . $keyword . '%');
-        })->when(data_get($wheres, 'status'), function ($query, $status) {
-            if (!is_null($status)) {
-                $query->where('status', $status);
-            }
         })->when(data_get($wheres, 'date'), function ($query, $date) {
             $query->whereRaw("DATE_FORMAT(`created_at`, '%Y-%m-%d') = '$date'");
-        })->orderBy('created_at', 'desc');
+        });
+        if (!is_null(data_get($wheres, 'status'))) {
+            $status = $wheres['status'];
+            if (is_array($status)) {
+                $packages = $packages->whereIn('status', $status);
+            } else {
+                $packages = $packages->where('status', $status);
+            }
+        }
+        $packages = $packages->orderBy('created_at', 'desc');
         if ($getAll === true) {
             return $packages->get();
         }

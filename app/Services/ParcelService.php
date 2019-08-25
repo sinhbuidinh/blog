@@ -354,4 +354,21 @@ class ParcelService
         ], true);
         return $list;
     }
+
+    public function getStatuses()
+    {
+        $statuses = Parcel::$statusNames;
+        unset($statuses[Parcel::STATUS_DELETED]);
+        return $statuses;
+    }
+
+    public function getStatusesTransfered()
+    {
+        $statuses = Parcel::$statusNames;
+        unset($statuses[Parcel::STATUS_DELETED]);
+        unset($statuses[Parcel::STATUS_INIT]);
+        unset($statuses[Parcel::STATUS_INPACKAGE]);
+        unset($statuses[Parcel::STATUS_COMPLETE]);
+        return $statuses;
+    }
 }
