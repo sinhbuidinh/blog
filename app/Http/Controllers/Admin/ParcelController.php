@@ -116,11 +116,12 @@ class ParcelController extends Controller
 
     public function delete(Request $request, $id = null)
     {
-        $parcel = $this->parcelService->findById($id);
-        $parcel->delete();
-        $parcel->status = Parcel::STATUS_DELETED;
-        $parcel->save();
-        session()->flash('success', trans('message.delete_parcel_success'));
+        list($result, $msg) = $this->parcelService->deleteParcel($id);
+        if ($result === false) {
+            session()->flash('error', $msg);
+        } else {
+            session()->flash('success', trans('message.delete_parcel_success'));
+        }
         return redirect()->route('parcel');
     }
 

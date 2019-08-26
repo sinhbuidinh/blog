@@ -24,25 +24,23 @@ class CreateParcel extends FormRequest
     public function rules()
     {
         return [
-            'guest_id'            => 'required',
-            'province'            => 'required',
-            'district'            => 'required',
-            'ward'                => 'required',
-            'address'             => 'required',
-            'type'                => 'required',
-            // 'parcel_type'         => 'required',
-            'weight'              => 'required',
-            'real_weight'         => 'required',
-            'type_transfer'       => 'required',
-            'time_receive'        => 'required',
-            'price'               => 'required',
-            'vat'                 => 'required',
-            'price_vat'           => 'required',
-            'support_gas_rate'    => 'required',
-            'support_gas'         => 'required',
-            // 'support_remote_rate' => 'required',
-            // 'support_remote'      => 'required',
-            'total'               => 'required',
+            'bill_code'        => 'unique:parcels,bill_code,'.$this->id,
+            'guest_id'         => 'required',
+            'province'         => 'required',
+            'district'         => 'required',
+            'ward'             => 'required',
+            'address'          => 'required',
+            'type'             => 'required',
+            'weight'           => 'required',
+            'real_weight'      => 'required',
+            'type_transfer'    => 'required',
+            'time_receive'     => 'required',
+            'price'            => 'required',
+            'vat'              => 'required',
+            'price_vat'        => 'required',
+            'support_gas_rate' => 'required',
+            'support_gas'      => 'required',
+            'total'            => 'required',
         ];
     }
 
@@ -50,6 +48,7 @@ class CreateParcel extends FormRequest
     {
         return [
             'required' => "Bắt buộc nhập",
+            'bill_code.unique' => 'Mã hóa đơn không được trùng',
         ];
     }
 }

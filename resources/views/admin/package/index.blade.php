@@ -69,6 +69,12 @@
                     <tbody>
                     @if($packages)
                     @foreach ($packages as $package)
+                    @php
+                        $display = '';
+                        if (!empty($package->parcelDisplay)) {
+                            $display = $package->parcelDisplay;
+                        }
+                    @endphp
                     <tr>
                         <td class="table_text">{{ $package->package_code }}</td>
                         <td class="table_text">
@@ -78,7 +84,7 @@
                             <p class="status_label">{{ $package->statusName }}</p>
                             @endif
                         </td>
-                        <td class="table_text">{{ $package->parcelDisplay }}</td>
+                        <td class="table_text"><button type="button" data-display="{{ $display }}" class="btn btn-primary show_parcels">{{ trans('label.show_parcels') }}</button></td>
                         <td class="table_text">{{ $package->agencyName }}</td>
                         <td class="table_text">{{ $package->created_at }}</td>
                         <td class="table_text">{{ $package->note }}</td>
@@ -125,9 +131,16 @@
         </div>
     </div>
 </div>
+@include('admin.layouts.dialog', [
+    'target_id' => 'show_parcels',
+    'save_id' => 'save_parcels',
+    'hide_save_btn' => true,
+    'title' => trans('label.parcel_list'),
+])
 @endsection
 @section('script')
 <script type="text/javascript">
+    var target_show_parcel = 'show_parcels';
     $(function(){
         $('select.select2').select2();
         $('.datepicker').datepicker({
@@ -135,6 +148,7 @@
             dateFormat: 'yy-mm-dd',
             startDate: '-0d',
         });
+        $('#body_'+target_show_parcel).html('');
     });
     $(document).on('click', '.confirm_transfer', function(){
         $('#agency_list').click();
@@ -148,6 +162,12 @@
         }
         var page_destination = $('#transfer_url').val() + '?agency=' + agency;
         window.location.href = page_destination;
+    });
+    $(document).on('click', '.show_parcels', function(e){
+        $('#body_'+target_show_parcel).html('');
+        var new_body = $(this).data('display');
+        $('#body_'+target_show_parcel).html(new_body);
+        $('#btn_show_'+target_show_parcel).click();
     });
 </script>
 @endsection

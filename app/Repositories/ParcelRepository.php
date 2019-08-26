@@ -31,6 +31,8 @@ class ParcelRepository extends BaseRepository
             });
         })->when(data_get($wheres, 'guest_id'), function($query, $guestId){
             $query->where('guest_id', $guestId);
+        })->when(data_get($wheres, 'bill_code_check'), function($query){
+            $query->whereNotNull('bill_code');
         });
         if (!is_null(data_get($wheres, 'status'))) {
             $status = $wheres['status'];

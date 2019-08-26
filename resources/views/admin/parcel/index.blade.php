@@ -11,10 +11,11 @@
     .page_list_block .table_text:not(.small) a {
         display: unset;
     }
-    .list_search.list_search_with_button input[id="date"] {
-        width: 180px;
+    #date_from, #date_to {
+        width: 120px;
     }
 </style>
+
 @endsection
 @section('content')
 <div class="list_wrapper">
@@ -70,8 +71,10 @@
                             @endif
                         </select>
                     </div>
-                    <div class="col-sm-2">
-                        <input type="text" class="datepicker" id="date" name="date" placeholder="{{ trans('label.pick_date') }}" value="{{ old('date', data_get($search, 'date')) }}" autocomplete="off" />
+                    <div class="col-sm-4 input-group input-daterange">
+                        <input type="text" class="form-control" id="date_from" name="date_from" value="{{ old('date_from') }}" autocomplete="off">
+                        <div class="input-group-addon">to</div>
+                        <input type="text" class="form-control" id="date_to" name="date_to" value="{{ old('date_to') }}" autocomplete="off">
                     </div>
                     <div class="col-sm-1">
                         <button type="submit" class="list_search_submit">
@@ -160,10 +163,10 @@
         $(document).on('click', '.confirm_complete', function(){
             window.location.href = $(this).data('url');
         });
-        $('.datepicker').datepicker({
-            todayHighlight: true,
-            dateFormat: 'yy-mm-dd',
-            startDate: '-0d',
+        $('.input-daterange input').each(function() {
+            $(this).datepicker({
+                autoclose: true
+            });
         });
     });
 </script>

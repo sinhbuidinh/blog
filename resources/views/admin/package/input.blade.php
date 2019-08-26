@@ -43,6 +43,7 @@
                 <hr>
                 <div class="row col-sm-12">
                     <div class="table-responsive col-sm-12">
+                        <p>{{ trans('label.number_parcel') }}: <b id="number_parcel">0</b></p>
                         <table class="table full_width table-bordered" id="parcels_tbl">
                             <thead>
                             <tr>

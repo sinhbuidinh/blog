@@ -50,7 +50,8 @@ class Package extends BaseModel
 
     public function getParcelDisplayAttribute()
     {
-        return implode(', ', array_values($this->parcel_list));
+        $parcel_info = $this->items()->join('parcels', 'parcels.id', '=', 'package_items.parcel_id')->select('parcels.bill_code')->pluck('bill_code')->filter()->all();
+        return implode(', ', $parcel_info);
     }
 
     public function getParcelIdsJsonAttribute()

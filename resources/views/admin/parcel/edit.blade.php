@@ -52,6 +52,11 @@
                         <div class="col-sm-3 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
                         <div class="col-sm-9">
                             <input type="text" class="full_width form-control" name="bill_code" id="bill_code" value="{{ old('bill_code', $parcel->bill_code) }}">
+                            @if ($errors->has('bill_code'))
+                            <p class="common_form_error">
+                                {{ $errors->first('bill_code') }}
+                            </p>
+                            @endif
                         </div>
                     </div>
                     <div class="row col-sm-6 full_width">
@@ -645,6 +650,9 @@
                                 @endif
                                 @if(!empty($s['limit']))
                                 data-limit="{{ $s['limit'] }}"
+                                @endif
+                                @if(!empty($s['price']))
+                                data-price_range="{{ $s['price'] }}"
                                 @endif
                                 data-name="{{ $s['name'] }}"
                                 data-math="{{ data_get($s, 'math', '+') }}"

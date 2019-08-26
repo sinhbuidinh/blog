@@ -8,6 +8,7 @@ use App\Models\Guest;
 use App\Models\Parcel;
 use App\Models\ParcelHistory;
 use App\Models\Package;
+use App\Models\Forward;
 use App\Models\PackageItem;
 use App\Models\Transfered;
 use DB;
@@ -206,6 +207,30 @@ class ParcelService
         }
     }
 
+    public function deleteParcel($id)
+    {
+        $error = null;
+        $parcel = [];
+        try {
+            $parcel = self::findById($id);
+            //find parcel_histories, package_items, forwards, transfered delete too
+            ParcelHistory::where('parcel_id', $id)->delete();
+            PackageItem::where('parcel_id', $id)->delete();
+            Forward::where('parcel_id', $id)->delete();
+            Transfered::where('parcel_id', $id)->delete();
+            $parcel->delete();
+            $parcel->status = Parcel::STATUS_DELETED;
+            $parcel->save();
+            DB::commit();
+            return [$parcel, $error];
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
     public function getParcelInSamePackage($parcelId)
     {
         $package = PackageItem::where('parcel_id', $parcelId)->first();
@@ -334,7 +359,8 @@ class ParcelService
     {
         //find list with status = INIT
         $list = $this->repo->search($search = [
-            'status' => Parcel::STATUS_INIT
+            'status' => Parcel::STATUS_INIT,
+            'bill_code_check' => true,
         ], true);
         return $list;
     }
@@ -342,7 +368,8 @@ class ParcelService
     public function getListForRefund()
     {
         $list = $this->repo->search($search = [
-            'status' => Parcel::STATUS_TRANSFER
+            'status' => Parcel::STATUS_TRANSFER,
+            'bill_code_check' => true,
         ], true);
         return $list;
     }
@@ -350,7 +377,8 @@ class ParcelService
     public function getListForForward()
     {
         $list = $this->repo->search($search = [
-            'status' => Parcel::STATUS_TRANSFER
+            'status' => Parcel::STATUS_TRANSFER,
+            'bill_code_check' => true,
         ], true);
         return $list;
     }

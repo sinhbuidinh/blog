@@ -105,4 +105,6 @@ return [
     'sidebar_transfered' => 'QL Hoàn Tất Vận Chuyển',
     'please_choose_guest' => 'Chọn khách hàng',
     'please_choose_status' => 'Chọn tình trạng vận đơn',
+    'show_parcels' => 'Danh sách vận đơn',
+    'number_parcel' => 'Số vận đơn',
 ];

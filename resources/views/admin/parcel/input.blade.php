@@ -57,6 +57,11 @@
                     <div class="col-sm-2 my-auto" style="font-weight: bold;">{{ trans('label.bill_code') }}</div>
                     <div class="col-sm-3">
                         <input type="text" class="full_width form-control" name="bill_code" id="bill_code" value="{{ old('bill_code') }}">
+                        @if ($errors->has('bill_code'))
+                        <p class="common_form_error">
+                            {{ $errors->first('bill_code') }}
+                        </p>
+                        @endif
                     </div>
                 </div>
                 <div class="row">

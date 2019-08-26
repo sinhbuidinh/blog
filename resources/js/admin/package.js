@@ -15,6 +15,8 @@ $(function(){
             return false;
         }
         genParcel(data);
+        var old_num = $('#number_parcel').html();
+        $('#number_parcel').html(parseInt(old_num) + 1);
     });
     $('#parcel_code').on('select2:unselect', function (e) {
         var data = dataFromSelect(e);
@@ -22,6 +24,8 @@ $(function(){
             return false;
         }
         removeParcel(data);
+        var old_num = $('#number_parcel').html();
+        $('#number_parcel').html(parseInt(old_num) - 1);
     });
     function dataFromSelect(e)
     {
