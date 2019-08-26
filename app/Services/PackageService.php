@@ -145,4 +145,32 @@ class PackageService
             return [false, $error];
         }
     }
+
+    public function deletePackage($id)
+    {
+        $error = null;
+        $package = [];
+        try {
+            $package = $this->packageService->findById($id);
+            $pack_status = $package->status;
+            if ($pack_status != Package::STATUS_INIT) {
+                session()->flash('error', trans('message.not_allow_delete_package'));
+                return redirect()->route('package');
+            }
+            //find all parcel => Change status to init
+            $parcels = $package->parcelIds();
+            Parcel::whereIn('id', $ids)->update(['status' => Parcel::STATUS_INIT]);
+
+            $package->delete();
+            $package->status = Package::STATUS_DELETED;
+            $package->save();
+            DB::commit();
+            return [$package, $error];
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
 }

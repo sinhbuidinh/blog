@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\GuestService;
 use App\Services\ParcelService;
 use App\Request\Admin\CreateGuest;
+use App\Models\Guest;
 
 class GuestController extends Controller
 {

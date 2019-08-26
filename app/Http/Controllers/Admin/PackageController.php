@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\PackageService;
 use App\Services\ParcelService;
 use App\Request\Admin\CreatePackage;
+use App\Models\Package;
 
 class PackageController extends Controller
 {
@@ -64,11 +65,12 @@ class PackageController extends Controller
 
     public function delete(Request $request, $id = null)
     {
-        $package = $this->packageService->findById($id);
-        $package->delete();
-        $package->status = PACKAGE::STATUS_DELETED;
-        $package->save();
-        session()->flash('success', trans('message.delete_package_success'));
+        list($result, $message) = $this->packageService->deletePackage($id);
+        if ($result !== false) {
+            session()->flash('success', trans('message.delete_package_success'));
+        } else {
+            session()->flash('error', $message);
+        }
         return redirect()->route('package');
     }
 
