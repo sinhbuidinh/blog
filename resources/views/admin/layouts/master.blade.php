@@ -17,6 +17,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/admin/index.css') }}" rel="stylesheet">
     @yield('head')
