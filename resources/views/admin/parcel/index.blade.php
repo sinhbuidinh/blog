@@ -14,8 +14,18 @@
     #date_from, #date_to {
         width: 120px;
     }
+    #keyword {
+        width: 245px
+    }
     #date_to {
         margin-left: 10px;
+    }
+    .list_search.list_search_with_button input,
+    .list_search.list_search_with_button select {
+        padding: 0 0 0 10px;
+    }
+    .list_search.list_search_with_button div[class^="col-sm"] {
+        padding: 0 0 0 10px;
     }
 </style>
 

@@ -129,8 +129,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                             <tr>
                                 <th scope="col">Ngày giờ</th>
                                 <th scope="col">Địa điểm</th>
-                                <th scope="col">Tình trạng</th>
-                                <th scope="col">Ghi chú</th>
+                                <th scope="col">Tình trạng</th>=
                             </tr>
                         </thead>
                         <tbody>
@@ -139,8 +138,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                                 <tr>
                                     <td>{{ data_get($history, 'date_time') }}</td>
                                     <td>{{ data_get($history, 'location') }}</td>
-                                    <td>{{ data_get($history, 'historyStatusName') }}</td>
-                                    <td>{{ data_get($history, 'history_note') }}</td>
+                                    <td>{{ data_get($history, 'historyStatusName') }}</td>=
                                 </tr>
                             @endforeach
                             @endif
