@@ -6,6 +6,8 @@ $(function(){
             $('#button_none_parcel').click();
             return false;
         }
+        $(this).attr("disabled", true);
+        $(this).html('Sending, please wait...');
         $('#parcel_form').submit();
     });
     $("#parcel_code").select2();
