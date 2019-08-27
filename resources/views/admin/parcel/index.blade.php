@@ -28,7 +28,6 @@
         padding: 0 0 0 10px;
     }
 </style>
-
 @endsection
 @section('content')
 <div class="list_wrapper">
@@ -65,7 +64,7 @@
                             @endif
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <select class="form-control" name="status" id="status">
                             @php
                                 $status = old('status', data_get($search, 'status'));
@@ -84,10 +83,8 @@
                             @endif
                         </select>
                     </div>
-                    <div class="col-sm-4 input-daterange input-group" id="datepicker">
-                        <input type="text" class="input-sm form-control" id="date_from" name="from" value="{{ old('date_from') }}" autocomplete="off">
-                        <span class="input-group-addon">to</span>
-                        <input type="text" class="input-sm form-control" id="date_to" name="to" value="{{ old('date_to') }}" autocomplete="off">
+                    <div class="col-sm-3">
+                        <input type="text" class="input-sm form-control" id="dates" name="dates" value="{{ old('dates') }}" autocomplete="off">
                     </div>
                     <div class="col-sm-1">
                         <button type="submit" class="list_search_submit">
@@ -171,16 +168,16 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('js/moment.min.js') }}"></script>
+<script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(function(){
         $(document).on('click', '.confirm_complete', function(){
             window.location.href = $(this).data('url');
         });
-        $('.input-daterange').datepicker({
-            autoclose: true
+        $('input[name="dates"]').daterangepicker({
+            opens: 'left'
         });
-        $('.ui-widget.ui-widget-content').hide();
     });
 </script>
 @endsection

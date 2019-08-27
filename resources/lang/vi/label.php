@@ -102,7 +102,7 @@ return [
     'pick_date' => 'Chọn ngày',
     'pick_status' => 'Chọn tình trạng',
     'superfast' => 'DV Phát hẹn giờ',
-    'sidebar_transfered' => 'QL Hoàn Tất Vận Chuyển',
+    'sidebar_transfered' => 'Xác nhận vận đơn',
     'please_choose_guest' => 'Chọn khách hàng',
     'please_choose_status' => 'Chọn tình trạng vận đơn',
     'show_parcels' => 'Danh sách vận đơn',
