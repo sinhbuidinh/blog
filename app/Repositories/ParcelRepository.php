@@ -24,10 +24,10 @@ class ParcelRepository extends BaseRepository
             $query->where('parcels.id', $parcelId);
         })->when(data_get($wheres, 'package_id'), function($query, $packageId){
             $query->where('package_items.package_id', $packageId);
-        })->when(data_get($wheres, 'date'), function($query, $date){
-            $query->where(function ($query) use ($date) {
-                $query->whereRaw("DATE_FORMAT(`time_receive`, '%Y-%m-%d') = '$date'")
-                ->orWhereRaw("DATE_FORMAT(`parcels`.`created_at`, '%Y-%m-%d') = '$date'");
+        })->when(data_get($wheres, 'dates'), function($query, $dates){
+            list($from, $to) = explode(' to ', $dates);
+            $query->where(function ($query) use ($from, $to) {
+                $query->whereRaw("DATE_FORMAT(`time_receive`, '%Y-%m-%d') >= '$from' AND DATE_FORMAT(`time_receive`, '%Y-%m-%d') <= '$to'");
             });
         })->when(data_get($wheres, 'guest_id'), function($query, $guestId){
             $query->where('guest_id', $guestId);

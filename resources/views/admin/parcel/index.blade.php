@@ -84,7 +84,7 @@
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="input-sm form-control" id="dates" name="dates" value="{{ old('dates') }}" autocomplete="off">
+                        <input type="text" class="input-sm form-control" id="dates" name="dates" value="{{ old('dates', data_get($search, 'dates')) }}" autocomplete="off">
                     </div>
                     <div class="col-sm-1">
                         <button type="submit" class="list_search_submit">
@@ -109,7 +109,7 @@
                             <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
-                            <th class="table_title">{{ trans('label.time_input') }}</th>
+                            <th class="table_title">{{ trans('label.time_get') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
                             <th class="table_title">{{ trans('label.agency') }}</th>
                             <th class="table_title">{{ trans('label.address') }}</th>
@@ -176,7 +176,16 @@
             window.location.href = $(this).data('url');
         });
         $('input[name="dates"]').daterangepicker({
-            opens: 'left'
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+        $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format('YYYY-MM-DD'));
+        });
+        $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
         });
     });
 </script>
