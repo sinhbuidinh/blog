@@ -30,7 +30,7 @@ class TransferedController extends Controller
         $search = [
             'keyword'  => $request->keyword,
             'guest_id' => $request->guest_id,
-            'date'     => $request->date,
+            'dates'    => $request->dates,
             'status'   => $status,
         ];
         $data = [

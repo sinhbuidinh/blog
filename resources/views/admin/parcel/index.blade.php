@@ -11,14 +11,8 @@
     .page_list_block .table_text:not(.small) a {
         display: unset;
     }
-    #date_from, #date_to {
-        width: 120px;
-    }
     #keyword {
         width: 245px
-    }
-    #date_to {
-        margin-left: 10px;
     }
     .list_search.list_search_with_button input,
     .list_search.list_search_with_button select {

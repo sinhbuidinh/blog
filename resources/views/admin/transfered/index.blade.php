@@ -11,8 +11,15 @@
     .page_list_block .table_text:not(.small) a {
         display: unset;
     }
-    .list_search.list_search_with_button input[id="date"] {
-        width: 180px;
+    #keyword {
+        width: 245px
+    }
+    .list_search.list_search_with_button input,
+    .list_search.list_search_with_button select {
+        padding: 0 0 0 10px;
+    }
+    .list_search.list_search_with_button div[class^="col-sm"] {
+        padding: 0 0 0 10px;
     }
 </style>
 @endsection
@@ -51,7 +58,7 @@
                             @endif
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <select class="form-control" name="status" id="status">
                             @php
                                 $status = old('status', data_get($search, 'status'));
@@ -70,8 +77,8 @@
                             @endif
                         </select>
                     </div>
-                    <div class="col-sm-2">
-                        <input type="text" class="datepicker" id="date" name="date" placeholder="{{ trans('label.pick_date') }}" value="{{ old('date', data_get($search, 'date')) }}" autocomplete="off" />
+                    <div class="col-sm-3">
+                        <input type="text" class="datepicker" id="dates" name="dates" placeholder="{{ trans('label.pick_date') }}" value="{{ old('dates', data_get($search, 'dates')) }}" autocomplete="off" />
                     </div>
                     <div class="col-sm-1">
                         <button type="submit" class="list_search_submit">
@@ -155,15 +162,25 @@
 </div>
 @endsection
 @section('script')
+<script src="{{ asset('js/moment.min.js') }}"></script>
+<script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(function(){
         $(document).on('click', '.confirm_complete', function(){
             window.location.href = $(this).data('url');
         });
-        $('.datepicker').datepicker({
-            todayHighlight: true,
-            dateFormat: 'yy-mm-dd',
-            startDate: '-0d',
+        
+        $('input[name="dates"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+        $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format('YYYY-MM-DD'));
+        });
+        $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
         });
     });
 </script>

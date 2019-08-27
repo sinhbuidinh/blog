@@ -1,5 +1,18 @@
 @extends('admin.layouts.master')
-
+@section('head')
+<style type="text/css">
+    #keyword {
+        width: 245px
+    }
+    .list_search.list_search_with_button input,
+    .list_search.list_search_with_button select {
+        padding: 0 0 0 10px;
+    }
+    .list_search.list_search_with_button div[class^="col-sm"] {
+        padding: 0 0 0 10px;
+    }
+</style>
+@endsection
 @section('content')
 <div class="list_wrapper">
     <div class="index_top_block">
@@ -15,9 +28,6 @@
                 <div class="row col-sm-12">
                     <div class="col-sm-3">
                         <input type="text" id="keyword" name="keyword" placeholder="Nhập mã bảng kê" value="{{ old('keyword', data_get($search, 'keyword')) }}" autocomplete="off" />
-                    </div>
-                    <div class="col-sm-3">
-                        <input type="text" class="datepicker" id="date" name="date" placeholder="{{ trans('label.pick_date') }}" value="{{ old('date', data_get($search, 'date')) }}" autocomplete="off" />
                     </div>
                     <div class="col-sm-4">
                         <select class="form-control" name="status" id="status">
@@ -39,7 +49,10 @@
                             @endif
                         </select>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
+                        <input type="text" class="datepicker" id="dates" name="dates" placeholder="{{ trans('label.pick_date') }}" value="{{ old('dates', data_get($search, 'dates')) }}" autocomplete="off" />
+                    </div>
+                    <div class="col-sm-1">
                         <button type="submit" class="list_search_submit">
                             <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
                         </button>
@@ -139,14 +152,23 @@
 ])
 @endsection
 @section('script')
+<script src="{{ asset('js/moment.min.js') }}"></script>
+<script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
     var target_show_parcel = 'show_parcels';
     $(function(){
         $('select.select2').select2();
-        $('.datepicker').datepicker({
-            todayHighlight: true,
-            dateFormat: 'yy-mm-dd',
-            startDate: '-0d',
+        $('input[name="dates"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+        $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' to ' + picker.endDate.format('YYYY-MM-DD'));
+        });
+        $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
         });
         $('#body_'+target_show_parcel).html('');
     });

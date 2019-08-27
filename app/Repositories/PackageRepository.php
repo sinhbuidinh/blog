@@ -15,8 +15,9 @@ class PackageRepository extends BaseRepository
     {
         $packages = $this->model->when(data_get($wheres, 'keyword'), function ($query, $keyword) {
             $query->where('package_code', 'like', '%' . $keyword . '%');
-        })->when(data_get($wheres, 'date'), function ($query, $date) {
-            $query->whereRaw("DATE_FORMAT(`created_at`, '%Y-%m-%d') = '$date'");
+        })->when(data_get($wheres, 'dates'), function ($query, $dates) {
+            list($from, $to) = explode(' to ', $dates);
+            $query->whereRaw("DATE_FORMAT(`created_at`, '%Y-%m-%d') >= '$from' AND DATE_FORMAT(`created_at`, '%Y-%m-%d') <= '$to'");
         });
         if (!is_null(data_get($wheres, 'status'))) {
             $status = $wheres['status'];

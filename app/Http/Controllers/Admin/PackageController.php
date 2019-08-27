@@ -24,7 +24,7 @@ class PackageController extends Controller
     {
         $search = [
             'keyword' => $request->keyword,
-            'date'    => $request->date,
+            'dates'   => $request->dates,
             'status'  => $request->status,
         ];
         $data = [
