@@ -69,7 +69,7 @@
                             data-total="{{ data_get($parcel, 'total') }}"
                             data-total_service="{{ data_get($parcel, 'total_service') }}"
                             data-services="{{ data_get($parcel, 'services') }}"
-                            value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'parcel_code') }}</option>
+                            value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'bill_code') }}</option>
                             @endforeach
                             @endif
                         </select>

@@ -48,7 +48,7 @@ class RefundService
                     'date_time' => now()->format('Y/m/d H:m:s'),
                     'location'  => trans('message.note_history_refund'),
                     'status'    => Parcel::STATUS_REFUND,
-                    'note'      => trans('message.note_history_refund'),
+                    'note'      => data_get($input, 'note'),
                 ];
                 $package_id = PackageItem::where('parcel_id', $parcel_id)->pluck('package_id')->first();
                 $packages[$package_id][$parcel_id] = true;

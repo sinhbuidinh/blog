@@ -1,5 +1,5 @@
 $(function(){
-    $("#parcel_code").select2();
+    $("#parcel").select2();
     $(document).on('click', '#forward_parcel', function(){
         $(this).attr("disabled", true);
         $(this).html('Sending, please wait...');

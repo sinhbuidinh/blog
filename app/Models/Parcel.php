@@ -123,7 +123,14 @@ class Parcel extends BaseModel
 
     public function getHistoryStatusNameAttribute()
     {
-        return data_get(self::$statusNames, $this->history_status);
+        $name = data_get(self::$statusNames, $this->history_status);
+        if (($this->history_status == STATUS_REFUND
+            || $this->history_status == STATUS_FORWARD)
+            && !empty($this->history_note)
+        ) {
+            return $name . ': '. $this->history_note;
+        }
+        return $name;
     }
 
     public function getImgTrackAttribute()

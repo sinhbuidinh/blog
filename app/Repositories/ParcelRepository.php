@@ -64,7 +64,7 @@ class ParcelRepository extends BaseRepository
         ->where(function($query) use ($code) {
             $query->where('parcel_code', $code)
                 ->orWhere('bill_code', $code);
-        })->orderBy('parcel_histories.id', 'DESC')->get($selects);
+        })->whereNull('parcel_histories.deleted_at')->orderBy('parcel_histories.id', 'DESC')->get($selects);
     }
 
     public function countRefundParcel(int $package_id)

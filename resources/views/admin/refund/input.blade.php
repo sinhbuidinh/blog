@@ -33,7 +33,7 @@
                             data-type="{{ data_get($parcel, 'typeName') }}"
                             data-address="{{ data_get($parcel, 'address') }}"
                             data-note="{{ data_get($parcel, 'note') }}"
-                            value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'parcel_code') }}</option>
+                            value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'bill_code') }}</option>
                             @endforeach
                             </optgroup>
                             @endif
