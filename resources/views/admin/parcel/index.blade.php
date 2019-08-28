@@ -109,7 +109,6 @@
                             <th class="table_title">{{ trans('label.address') }}</th>
                             <th class="table_title">{{ trans('label.total') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
-                            <th class="table_title parcel_code">{{ trans('label.already_transfer') }}</th>
                             <th class="table_title small">{{ trans('label.edit') }}</th>
                             <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
@@ -133,13 +132,6 @@
                         <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">{{ $parcel->total }}</td>
                         <td class="table_text">{{ $parcel->note }}</td>
-                        <td class="table_text">
-                            @if($parcel->readyComplete)
-                            <button type="button" data-url="{{ route('transfer', $parcel->id) }}" class="btn btn-primary confirm_complete">{{ trans('label.already_transfer') }}</button>
-                            @else
-                            <p>{{ $parcel->statusName }}</p>
-                            @endif
-                        </td>
                         <td class="table_text small">
                             <a href="{{ route('parcel.edit', $parcel->id) }}">
                                 <img src="{{ asset('images/edit.png?v=1.0.1') }}">
