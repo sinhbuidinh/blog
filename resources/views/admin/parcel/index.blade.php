@@ -21,6 +21,32 @@
     .list_search.list_search_with_button div[class^="col-sm"] {
         padding: 0 0 0 10px;
     }
+    table#parcels_tbl {
+        border-collapse: collapse;
+        overflow-x: scroll;
+        display: block;
+    }
+    #parcels_tbl thead {
+        background-color: #EFEFEF;
+    }
+    #parcels_tbl thead,
+    #parcels_tbl tbody {
+        display: block;
+    }
+    #parcels_tbl tbody {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 450px;
+    }
+    #parcels_tbl td,
+    #parcels_tbl th {
+        min-width: 150px;
+        height: 25px;
+        border: dashed 1px lightblue;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+    }
 </style>
 @endsection
 @section('content')
@@ -114,8 +140,8 @@
                         </tr>
                     </thead>
                     @if($parcels)
-                    @foreach ($parcels as $parcel)
                     <tbody>
+                    @foreach ($parcels as $parcel)
                     <tr>
                         <td class="table_text parcel_code">
                             <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
@@ -143,8 +169,8 @@
                             </a>
                         </td>
                     </tr>
-                    </tbody>
                     @endforeach
+                    </tbody>
                     @endif
                 </table>
             </div>
@@ -158,6 +184,9 @@
 <script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(function(){
+        $('table').on('scroll', function() {
+            $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
+        });
         $(document).on('click', '.confirm_complete', function(){
             window.location.href = $(this).data('url');
         });
