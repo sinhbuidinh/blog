@@ -138,7 +138,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                                 <tr>
                                     <td>{{ data_get($history, 'date_time') }}</td>
                                     <td>{{ data_get($history, 'location') }}</td>
-                                    <td>{{ data_get($history, 'historyStatusName') }}</td>=
+                                    <td>{!! data_get($history, 'historyStatusName') !!}</td>=
                                 </tr>
                             @endforeach
                             @endif
