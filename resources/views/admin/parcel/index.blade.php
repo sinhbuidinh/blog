@@ -40,7 +40,7 @@
     }
     #parcels_tbl td,
     #parcels_tbl th {
-        min-width: 150px;
+        min-width: 180px;
         height: 25px;
         border: dashed 1px lightblue;
         overflow: hidden;

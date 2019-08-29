@@ -104,4 +104,7 @@ Route::group([
         Route::post('/create', 'ForwardController@create')->name('forward.create');
         Route::get('/complete', 'ForwardController@complete')->name('create.forward.complete');
     });
+    Route::prefix('debt')->group(function () {
+        Route::get('/', 'DebtController@index')->name('debt');
+    });
 });

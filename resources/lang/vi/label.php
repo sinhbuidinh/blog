@@ -108,4 +108,5 @@ return [
     'please_choose_status' => 'Chọn tình trạng vận đơn',
     'show_parcels' => 'Danh sách vận đơn',
     'number_parcel' => 'Số vận đơn',
+    'sidebar_debt' => 'QL Công nợ',
 ];
