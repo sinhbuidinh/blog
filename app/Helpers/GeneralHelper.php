@@ -71,15 +71,18 @@ function formatPrice($price, $decimals = 2, $end = '')
     if ($price === '' || $price === null) {
         return '';
     }
-    
     if (!is_numeric($price)) {
         $price = 0;
     }
-
     if (strpos($price, '.') === false) {
         return number_format($price).$end;
     }
     return number_format($price, $decimals).$end;
+}
+function removeFormatPrice($string)
+{
+    $string = str_replace(",", "", $string);
+    return $string;
 }
 function getProvinceById($id)
 {

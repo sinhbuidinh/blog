@@ -109,4 +109,12 @@ return [
     'show_parcels' => 'Danh sách vận đơn',
     'number_parcel' => 'Số vận đơn',
     'sidebar_debt' => 'QL Công nợ',
+    'stt' => 'STT',
+    'date_send' => 'Ngày gửi',
+    'refund_forward' => 'Cước CH-CT',
+    'total_services' => 'Phí DVGT',
+    'remote_other' => 'PP Vùng sâu & khác',
+    'gas_vat' => 'PP Nhiên liệu & VAT',
+    'total_amount' => 'Thành tiền(VAT)',
+    'amounts' => 'Tổng tiền',
 ];

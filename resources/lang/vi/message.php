@@ -33,4 +33,6 @@ return [
     'superfast_display' => 'Nội thành: 30,000, Bình thuận xuống miền tây(trừ Cà Mau, Sóc Trăng, Bạc Liêu, Kiên Giang, An Giang) 70,000, Các tỉnh còn lại 90,000',
     'debt_info' => 'Quản lý công nợ',
     'dates_input' => 'Chọn khoản thời gian cần thống kê',
+    'choose_dates' => 'Chọn khoản thời gian cần thống kê',
+    'invalid_dates' => 'Khoản thời gian không đúng định dạng',
 ];

@@ -26,9 +26,9 @@ class ParcelService
         $this->guestRepo = $guestRepo;
     }
 
-    public function getList($wheres = [])
+    public function getList($wheres = [], $getAll = false, $getPackage = false)
     {
-        return $this->repo->search($wheres);
+        return $this->repo->search($wheres, $getAll, $getPackage);
     }
 
     public function guestList()

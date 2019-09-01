@@ -106,5 +106,6 @@ Route::group([
     });
     Route::prefix('debt')->group(function () {
         Route::get('/', 'DebtController@index')->name('debt');
+        Route::get('/export', 'DebtController@export')->name('debt.export');
     });
 });

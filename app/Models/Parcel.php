@@ -121,6 +121,54 @@ class Parcel extends BaseModel
         return data_get($this->guest()->first(), 'address');
     }
 
+    public function getProvinceNameAttribute()
+    {
+        $provincial = getProvinceById($this->provincial);
+        $slug = data_get($provincial, 'slug');
+        $slug_arr = explode('-', $slug);
+        $slug_first = array_map(function($v){
+            return ucfirst($v);
+        }, $slug_arr);
+        $slug_str = implode(' ', $slug_first);
+        return $slug_str;
+    }
+
+    public function forwardAndRefund($format = true)
+    {
+        $total = removeFormatPrice($this->forward) + removeFormatPrice($this->refund);
+        if ($format == true) {
+            return formatPrice($total);
+        }
+        return $total;
+    }
+
+    public function totalServicePrice($format = true)
+    {
+        $total = removeFormatPrice($this->total_service);
+        if ($format == true) {
+            return formatPrice($total);
+        }
+        return $total;
+    }
+
+    public function remoteAndOther($format = true)
+    {
+        $total = removeFormatPrice($this->support_remote);
+        if ($format == true) {
+            return formatPrice($total);
+        }
+        return $total;
+    }
+
+    public function gasAndVat($format = true)
+    {
+        $total = removeFormatPrice($this->support_gas) + removeFormatPrice($this->price_vat);
+        if ($format == true) {
+            return formatPrice($total);
+        }
+        return $total;
+    }
+
     public function getHistoryStatusNameAttribute()
     {
         $name = data_get(self::$statusNames, $this->history_status);

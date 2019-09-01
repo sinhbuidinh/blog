@@ -24,27 +24,59 @@ class DebtController extends Controller
             'dates'    => $request->dates,
             'status'   => Parcel::STATUS_COMPLETE,
         ];
+        $parcels = [];
+        $amount = 0;
+        // if (!empty($search['dates'])) {
+            $parcels = $this->parcelService->getList($search, true);
+            $amount = self::calTotalAmount($parcels);
+        // }
         $data = [
-            'user'     => $request->user(),
-            'search'   => $search,
-            'guests'   => $this->parcelService->guestList(),
-            'parcels'  => $this->parcelService->getList($search),
+            'user'    => $request->user(),
+            'search'  => $search,
+            'guests'  => $this->parcelService->guestList(),
+            'parcels' => $parcels,
+            'amount'  => formatPrice($amount),
         ];
         return view('admin.debt.index', $data);
+    }
+
+    private function calTotalAmount($parcels)
+    {
+        $totals = $parcels->pluck('total', 'id');
+        $amount = 0;
+        foreach($totals as $id => $total) {
+            $amount += removeFormatPrice($total);
+        }
+        return $amount;
     }
 
     public function export(Request $request)
     {
         $dates = $request->get('dates');
+        if (empty($dates)) {
+            session()->flash('error', trans('message.choose_dates'));
+            return redirect()->route('debt')->withInput();
+        }
+        list($from, $to) = explode(' to ', $dates);
+        if (empty($from) || empty($to)) {
+            session()->flash('error', trans('message.invalid_dates'));
+            return redirect()->route('debt')->withInput();
+        }
         $guestId = $request->get('guest_id');
         $search = [
             'guest_id' => $guestId,
             'dates'    => $dates,
             'status'   => Parcel::STATUS_COMPLETE,
         ];
-        $parcels = $this->parcelService->getList($search);
+        $parcels = $this->parcelService->getList($search, true);
+        $amount = self::calTotalAmount($parcels);
         $fileName = self::debtFileName($guestId, $dates);
-        return Excel::download(new DebtExport($parcels), $fileName);
+        $params = [
+            'from' => $from,
+            'to' => $to,
+            'amount' => formatPrice($amount),
+        ];
+        return Excel::download(new DebtExport($parcels, $params), $fileName);
     }
 
     private function debtFileName($guestId, $dates)

@@ -37,6 +37,19 @@
         text-overflow: ellipsis;
         max-width: 100px;
     }
+    #parcels_tbl th:first-child,
+    #parcels_tbl td:first-child {
+        min-width: 50px !important;
+        width: 50px;
+        padding: 12px !important;
+        text-align: center;
+    }
+    img#download {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        background: transparent;
+    }
 </style>
 @endsection
 
@@ -46,7 +59,7 @@
         <h1 class="common_page_title">{{ trans('message.debt_info') }}</h1>
     </div>
     <div class="search_form">
-        <form action="{{ route('debt')}}" method="get">
+        <form action="{{ route('debt')}}" method="get" id="debt_info">
             <div class="list_search list_search_with_button">
                 <div class="row col-sm-12">
                     <div class="col-sm-5">
@@ -76,6 +89,9 @@
                             <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
                         </button>
                     </div>
+                    <div class="col-sm-1">
+                        <img id="download" data-url="{{ route('debt.export') }}" src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}">
+                    </div>
                 </div>
             </div>
         </form>
@@ -83,7 +99,7 @@
     @include('admin.layouts.session-message')
     <div class="page_list_block">
         <div class="page_table">
-            @include('admin.debt.info')
+            @include('admin.debt.export')
         </div>
     </div>
 </div>
@@ -93,7 +109,13 @@
 <script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(function(){
-        $('table').on('scroll', function() {
+        $('#download').on('click', function(){
+            var url = $(this).data('url');
+            var data = $('#debt_info').serialize();
+            var goto = url + '?' + data;
+            window.location.href = goto;
+        });
+        $('table.scroll-table').on('scroll', function() {
             $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
         });
         $('#guest_id').select2();
