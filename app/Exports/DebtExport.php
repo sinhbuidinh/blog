@@ -9,10 +9,12 @@ class DebtExport implements FromView, ShouldAutoSize
 {
     private $parcels;
     private $params;
-    public function __construct($parcels, $params)
+    private $guest;
+    public function __construct($parcels, $params, $guest)
     {
         $this->parcels = $parcels;
         $this->params = $params;
+        $this->guest = $guest;
     }
     public function view(): View
     {
@@ -21,6 +23,7 @@ class DebtExport implements FromView, ShouldAutoSize
         $amount = !empty($this->params['amount']) ? $this->params['amount'] : null;
         return view('admin.debt.export', [
             'parcels' => $this->parcels,
+            'guest' => $this->guest,
             'from' => $from,
             'to' => $to,
             'amount' => $amount,

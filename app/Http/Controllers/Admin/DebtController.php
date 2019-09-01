@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ParcelService;
+use App\Services\GuestService;
 use App\Models\Parcel;
 use App\Exports\DebtExport;
 use Excel;
@@ -12,9 +13,11 @@ use Excel;
 class DebtController extends Controller
 {
     private $parcelService;
-    public function __construct(ParcelService $parcelService)
+    private $guestService;
+    public function __construct(ParcelService $parcelService, GuestService $guestService)
     {
         $this->parcelService = $parcelService;
+        $this->guestService = $guestService;
     }
 
     public function index(Request $request)
@@ -70,17 +73,18 @@ class DebtController extends Controller
         ];
         $parcels = $this->parcelService->getList($search, true);
         $amount = self::calTotalAmount($parcels);
-        $fileName = self::debtFileName($guestId, $dates);
+        list($fileName, $guest) = self::debtFileName($guestId, $dates);
         $params = [
             'from' => $from,
             'to' => $to,
             'amount' => formatPrice($amount),
         ];
-        return Excel::download(new DebtExport($parcels, $params), $fileName);
+        return Excel::download(new DebtExport($parcels, $params, $guest), $fileName);
     }
 
     private function debtFileName($guestId, $dates)
     {
+        $guest = [];
         $fileName = 'congno';
         if (!empty($guestId)) {
             $guest = $this->guestService->findById($guestId);
@@ -92,6 +96,6 @@ class DebtController extends Controller
             $date = $from . '_to_' . $to;
         }
         $fileName .= '-'.$date;
-        return $fileName.'.xlsx';
+        return [$fileName.'.xlsx', $guest];
     }
 }
