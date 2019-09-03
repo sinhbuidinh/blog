@@ -48,6 +48,11 @@ class Package extends BaseModel
         return $this->status == self::STATUS_INIT;
     }
 
+    public function getFromAttribute()
+    {
+        return trans('message.note_history_company');
+    }
+
     public function getParcelDisplayAttribute()
     {
         $parcel_info = $this->items()->join('parcels', 'parcels.id', '=', 'package_items.parcel_id')->select('parcels.bill_code')->pluck('bill_code')->filter()->all();
@@ -73,4 +78,11 @@ class Package extends BaseModel
         }
         return data_get($agency['name'], $pos);
     }
+
+    public function getParcelsProvinceNameAttribute()
+    {
+        $provincial = getProvinceById($this->provincial);
+        return data_get($provincial, 'name');
+    }
+
 }

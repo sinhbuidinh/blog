@@ -39,4 +39,12 @@ class PackageRepository extends BaseRepository
     {
         return Package::$statusNames;
     }
+
+    public function getParcelsInPackage($id)
+    {
+        return $this->model->select('parcels.*')
+            ->join('package_items', 'packages.id', '=', 'package_items.package_id')
+            ->join('parcels', 'parcels.id', '=', 'package_items.parcel_id')
+            ->where('packages.id', $id)->get();
+    }
 }

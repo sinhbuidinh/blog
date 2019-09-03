@@ -117,4 +117,6 @@ return [
     'gas_vat' => 'PP Nhiên liệu & VAT',
     'total_amount' => 'Thành tiền(VAT)',
     'amounts' => 'Tổng tiền',
+    'from' => 'Từ',
+    'to' => 'Đến',
 ];

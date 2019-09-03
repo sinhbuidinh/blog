@@ -8,6 +8,8 @@ use App\Services\PackageService;
 use App\Services\ParcelService;
 use App\Request\Admin\CreatePackage;
 use App\Models\Package;
+use Excel;
+use App\Exports\PackageExport;
 
 class PackageController extends Controller
 {
@@ -86,5 +88,40 @@ class PackageController extends Controller
             session()->flash('success', trans('message.update_transfer_success'));
         }
         return redirect()->route('package');
+    }
+
+    public function parcels(Request $request, $id = null)
+    {
+        list($package, $parcels) = $this->packageService->getParcels($id);
+        $data = [
+            'parcels' => $parcels,
+            'package' => $package,
+        ];
+        return view('admin.package.parcels', $data);
+    }
+
+    public function export(Request $request, $id)
+    {
+        list($package, $parcels) = $this->packageService->getParcels($id);
+        $fileName = self::packFileName();
+        return Excel::download(new PackageExport($parcels, $package), $fileName);
+    }
+
+    private function packFileName()
+    {
+        return 'danhsachbuupham.xlsx';
+    }
+
+    private function calTotalAmount($parcels)
+    {
+        $totals = $parcels->pluck('total', 'id');
+        $amount = 0;
+        if (count($totals) <= 0) {
+            return $amount;
+        }
+        foreach($totals as $id => $total) {
+            $amount += removeFormatPrice($total);
+        }
+        return $amount;
     }
 }

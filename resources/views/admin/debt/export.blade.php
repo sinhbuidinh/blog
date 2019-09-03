@@ -1,7 +1,7 @@
 @php
+    $table  = empty($export) ? 'page_table table table-bordered full_width scroll-table' : '';
     $border = !empty($export) ? 'border: 1px solid black;' : '';
-    $table = !empty($export) ? 'page_table table table-bordered full_width scroll-table' : '';
-    $thead = !empty($export) ? 'font-weight: bold;border: 1px solid black;' : '';
+    $thead  = !empty($export) ? 'font-weight: bold;border: 1px solid black;' : '';
 @endphp
 @if(!empty($export))
 <table id="tbl_header">

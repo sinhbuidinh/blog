@@ -11,6 +11,9 @@
     .list_search.list_search_with_button div[class^="col-sm"] {
         padding: 0 0 0 10px;
     }
+    .p-15 {
+        padding: 15px;
+    }
 </style>
 @endsection
 @section('content')
@@ -72,7 +75,6 @@
                         <tr>
                             <th class="table_title">{{ trans('label.package_code') }}</th>
                             <th class="table_title">{{ trans('label.confirm') }}</th>
-                            <th class="table_title">{{ trans('label.parcel_list') }}</th>
                             <th class="table_title">{{ trans('label.agency') }}</th>
                             <th class="table_title">{{ trans('label.create_date') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
@@ -89,7 +91,9 @@
                         }
                     @endphp
                     <tr>
-                        <td class="table_text">{{ $package->package_code }}</td>
+                        <td>
+                            <a class="p-15" href="{{ route('package.parcels', $package->id) }}">{{ $package->package_code }}</a>
+                        </td>
                         <td class="table_text">
                             @if($package->readyTransfer)
                             <button type="button" data-url="{{ route('package.transfer', $package->id) }}" class="btn btn-primary confirm_transfer">{{ trans('label.transfer') }}</button>
@@ -97,7 +101,6 @@
                             <p class="status_label">{{ $package->statusName }}</p>
                             @endif
                         </td>
-                        <td class="table_text"><button type="button" data-display="{{ $display }}" class="btn btn-primary show_parcels">{{ trans('label.show_parcels') }}</button></td>
                         <td class="table_text">{{ $package->agencyName }}</td>
                         <td class="table_text">{{ $package->created_at }}</td>
                         <td class="table_text">{{ $package->note }}</td>
@@ -144,18 +147,11 @@
         </div>
     </div>
 </div>
-@include('admin.layouts.dialog', [
-    'target_id' => 'show_parcels',
-    'save_id' => 'save_parcels',
-    'hide_save_btn' => true,
-    'title' => trans('label.parcel_list'),
-])
 @endsection
 @section('script')
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
-    var target_show_parcel = 'show_parcels';
     $(function(){
         $('select.select2').select2();
         $('input[name="dates"]').daterangepicker({
@@ -170,7 +166,6 @@
         $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
-        $('#body_'+target_show_parcel).html('');
     });
     $(document).on('click', '.confirm_transfer', function(){
         $('#agency_list').click();
@@ -184,12 +179,6 @@
         }
         var page_destination = $('#transfer_url').val() + '?agency=' + agency;
         window.location.href = page_destination;
-    });
-    $(document).on('click', '.show_parcels', function(e){
-        $('#body_'+target_show_parcel).html('');
-        var new_body = $(this).data('display');
-        $('#body_'+target_show_parcel).html(new_body);
-        $('#btn_show_'+target_show_parcel).click();
     });
 </script>
 @endsection

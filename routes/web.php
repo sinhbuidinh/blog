@@ -89,6 +89,8 @@ Route::group([
         Route::get('/complete', 'PackageController@complete')->name('create.package.complete');
         Route::get('/delete/{id}', 'PackageController@delete')->name('package.delete');
         Route::get('/transfer/{id}', 'PackageController@transfer')->name('package.transfer');
+        Route::get('/parcels/{id}', 'PackageController@parcels')->name('package.parcels');
+        Route::get('/export/{id}', 'PackageController@export')->name('package.export');
     });
 
     Route::prefix('refund')->group(function () {

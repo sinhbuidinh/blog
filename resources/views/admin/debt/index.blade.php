@@ -8,37 +8,38 @@
     th.parcel_code, td.parcel_code {
         width: 180px !important;
     }
-    .page_list_block .table_text:not(.small) a {
+    .page_list_block .table_text a {
         display: unset;
     }
-    table#parcels_tbl {
+    table {
         border-collapse: collapse;
+        width: 300px;
         overflow-x: scroll;
         display: block;
     }
-    #parcels_tbl thead {
+    thead {
         background-color: #EFEFEF;
     }
-    #parcels_tbl thead,
-    #parcels_tbl tbody {
+    thead,
+    tbody {
         display: block;
     }
-    #parcels_tbl tbody {
+    tbody {
         overflow-y: scroll;
         overflow-x: hidden;
-        height: 450px;
+        height: 140px;
     }
-    #parcels_tbl td:not(.small),
-    #parcels_tbl th:not(.small) {
+    td, th {
         min-width: 180px;
         height: 25px;
         border: dashed 1px lightblue;
         overflow: hidden;
         text-overflow: ellipsis;
         max-width: 100px;
+        padding: 10px;
     }
-    #parcels_tbl th:first-child,
-    #parcels_tbl td:first-child {
+    th:first-child,
+    td:first-child {
         min-width: 50px !important;
         width: 50px;
         padding: 12px !important;
@@ -98,7 +99,7 @@
     </div>
     @include('admin.layouts.session-message')
     <div class="page_list_block">
-        <div class="page_table">
+        <div class="page_table table-responsive">
             @include('admin.debt.export')
         </div>
     </div>

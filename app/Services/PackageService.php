@@ -96,6 +96,13 @@ class PackageService
         return $this->repo->find($id);
     }
 
+    public function getParcels($packageId)
+    {
+        $pack = self::findById($packageId);
+        $parcels = $this->repo->getParcelsInPackage($packageId);
+        return [$pack, $parcels];
+    }
+
     public function updateTransfer($packageId, $agency)
     {
         $error = null;

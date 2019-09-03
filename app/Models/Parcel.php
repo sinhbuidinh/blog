@@ -124,13 +124,7 @@ class Parcel extends BaseModel
     public function getProvinceNameAttribute()
     {
         $provincial = getProvinceById($this->provincial);
-        $slug = data_get($provincial, 'slug');
-        $slug_arr = explode('-', $slug);
-        $slug_first = array_map(function($v){
-            return ucfirst($v);
-        }, $slug_arr);
-        $slug_str = implode(' ', $slug_first);
-        return $slug_str;
+        return data_get($provincial, 'name');
     }
 
     public function forwardAndRefund($format = true)
