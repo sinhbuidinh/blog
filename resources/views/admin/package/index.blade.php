@@ -114,7 +114,7 @@
             </div>
         </div>
     </div>
-    <div class="common_pager">{!! $packages->links('pagination::bootstrap-4') !!}</div>
+    <div class="common_pager">{!! $packages->appends($search)->links('pagination::bootstrap-4') !!}</div>
 </div>
 <input type="hidden" name="transfer_url" id="transfer_url">
 <button type="button" name="agency_list" id="agency_list" class="full_width form-control" data-toggle="modal" data-target="#agency_list_model" style="display: none;">{{ trans('label.agency') }}</button>
