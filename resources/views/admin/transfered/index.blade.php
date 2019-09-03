@@ -158,7 +158,7 @@
             </div>
         </div>
     </div>
-    <div class="common_pager">{!! $parcels->links('pagination::bootstrap-4') !!}</div>
+    <div class="common_pager">{!! $parcels->appends($search)->links('pagination::bootstrap-4') !!}</div>
 </div>
 @endsection
 @section('script')

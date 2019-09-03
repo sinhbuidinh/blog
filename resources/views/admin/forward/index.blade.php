@@ -116,7 +116,7 @@
             </div>
         </div>
     </div>
-    <div class="common_pager">{!! $forwards->links('pagination::bootstrap-4') !!}</div>
+    <div class="common_pager">{!! $forwards->appends($search)->links('pagination::bootstrap-4') !!}</div>
 </div>
 @endsection
 @section('script')
