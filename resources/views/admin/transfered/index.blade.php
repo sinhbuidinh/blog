@@ -2,14 +2,34 @@
 @section('title'){{ trans('message.parcel_list') }}@endsection
 @section('head')
 <style type="text/css">
-    #parcels_tbl thead th:not(.small) {
-        width: 150px;
-    }
-    th.parcel_code, td.parcel_code {
-        width: 180px !important;
-    }
     .page_list_block .table_text:not(.small) a {
         display: unset;
+    }
+    table#parcels_tbl {
+        border-collapse: collapse;
+        overflow-x: scroll;
+        display: block;
+    }
+    #parcels_tbl thead {
+        background-color: #EFEFEF;
+    }
+    #parcels_tbl thead,
+    #parcels_tbl tbody {
+        display: block;
+    }
+    #parcels_tbl tbody {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 340px;
+    }
+    #parcels_tbl td:not(.small),
+    #parcels_tbl th:not(.small) {
+        min-width: 180px;
+        height: 25px;
+        border: dashed 1px lightblue;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
     }
     #keyword {
         width: 245px
@@ -95,7 +115,7 @@
     <div class="page_list_block">
         <div class="page_table">
             <div class="tbl-content table-responsive col-sm-12">
-                <table class="page_table table table-bordered full_width" id="parcels_tbl">
+                <table class="page_table table table-bordered scroll-table full_width" id="parcels_tbl">
                     <thead>
                         <tr>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
@@ -114,9 +134,9 @@
                             <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
                     </thead>
+                    <tbody>
                     @if($parcels)
                     @foreach ($parcels as $parcel)
-                    <tbody>
                     <tr>
                         <td class="table_text parcel_code">
                             <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
@@ -151,9 +171,9 @@
                             </a>
                         </td>
                     </tr>
-                    </tbody>
                     @endforeach
                     @endif
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -169,7 +189,9 @@
         $(document).on('click', '.confirm_complete', function(){
             window.location.href = $(this).data('url');
         });
-        
+        $('table.scroll-table').on('scroll', function() {
+            $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
+        });
         $('input[name="dates"]').daterangepicker({
             autoUpdateInput: false,
             locale: {

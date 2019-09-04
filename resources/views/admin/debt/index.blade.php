@@ -11,25 +11,27 @@
     .page_list_block .table_text a {
         display: unset;
     }
-    table {
+    table#tbl_header,
+    table#parcels_tbl {
         border-collapse: collapse;
-        width: 300px;
+        width: 100%;
         overflow-x: scroll;
         display: block;
     }
-    thead {
+    table#parcels_tbl thead {
         background-color: #EFEFEF;
     }
-    thead,
-    tbody {
+    table#parcels_tbl thead,
+    table#parcels_tbl tbody {
         display: block;
     }
-    tbody {
+    table#parcels_tbl tbody {
         overflow-y: scroll;
         overflow-x: hidden;
-        height: 140px;
+        height: 340px;
     }
-    td, th {
+    table#parcels_tbl td, 
+    table#parcels_tbl th {
         min-width: 180px;
         height: 25px;
         border: dashed 1px lightblue;
@@ -38,8 +40,8 @@
         max-width: 100px;
         padding: 10px;
     }
-    th:first-child,
-    td:first-child {
+    table#parcels_tbl th:first-child,
+    table#parcels_tbl td:first-child {
         min-width: 50px !important;
         width: 50px;
         padding: 12px !important;
@@ -64,16 +66,16 @@
             <div class="list_search list_search_with_button">
                 <div class="row col-sm-12">
                     <div class="col-sm-5">
-                        <select class="form-control" name="guest_id" id="guest_id">
-                            @php
-                                $guest_id = old('guest_id', data_get($search, 'guest_id'));
-                            @endphp
+                        @php
+                            $guest_id = old('guest_id', data_get($search, 'guest_id'));
+                        @endphp
+                        <select class="form-control {{$guest_id}}" name="guest_id" id="guest_id">
                             <option value="">{{ trans('label.please_choose_guest') }}</option>
                             @if(!empty($guests))
                             @foreach($guests as $guest)
                                 @php
                                     $guest_selected = '';
-                                    if (data_get($guest, 'id') == $guest_id) {
+                                    if (!empty($guest_id) && data_get($guest, 'id') == $guest_id) {
                                         $guest_selected = 'selected="selected"';
                                     }
                                 @endphp
@@ -98,6 +100,7 @@
         </form>
     </div>
     @include('admin.layouts.session-message')
+    <p class="page_number_text"><span>{{ trans('label.total_parcels') .':'.count($parcels) }}</span></p>
     <div class="page_list_block">
         <div class="page_table table-responsive">
             @include('admin.debt.export')

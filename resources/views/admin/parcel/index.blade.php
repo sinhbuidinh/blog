@@ -36,10 +36,10 @@
     #parcels_tbl tbody {
         overflow-y: scroll;
         overflow-x: hidden;
-        height: 450px;
+        height: 340px;
     }
-    #parcels_tbl td,
-    #parcels_tbl th {
+    #parcels_tbl td:not(.small),
+    #parcels_tbl th:not(.small) {
         min-width: 180px;
         height: 25px;
         border: dashed 1px lightblue;
@@ -104,7 +104,7 @@
                         </select>
                     </div>
                     <div class="col-sm-3">
-                        <input type="text" class="input-sm form-control" id="dates" name="dates" value="{{ old('dates', data_get($search, 'dates')) }}" autocomplete="off">
+                        <input type="text" class="input-sm form-control" id="dates" name="dates" value="{{ old('dates', data_get($search, 'dates')) }}" autocomplete="off" placeholder="{{ trans('label.pick_date') }}">
                     </div>
                     <div class="col-sm-1">
                         <button type="submit" class="list_search_submit">

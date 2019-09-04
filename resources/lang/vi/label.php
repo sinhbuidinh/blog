@@ -119,4 +119,5 @@ return [
     'amounts' => 'Tổng tiền',
     'from' => 'Từ',
     'to' => 'Đến',
+    'total_parcels' => 'Tổng số vận đơn',
 ];

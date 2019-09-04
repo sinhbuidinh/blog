@@ -27,7 +27,7 @@ class PackageRepository extends BaseRepository
                 $packages = $packages->where('status', $status);
             }
         }
-        $packages = $packages->orderBy('created_at', 'desc');
+        $packages = $packages->orderBy('created_at', 'asc');
         if ($getAll === true) {
             return $packages->get();
         }

@@ -50,3 +50,9 @@ function dateCalulateDays($date1, $date2)
     $interval = date_diff($date1_create, $date2_create);
     return $interval->format('%R%a days');
 }
+function getThisMonthDatepicker()
+{
+    $start = date('Y-m-01');
+    $end = date('Y-m-t');
+    return $start . ' to '. $end;
+}

@@ -22,17 +22,20 @@ class DebtController extends Controller
 
     public function index(Request $request)
     {
+        $guest = $this->parcelService->getLastGuest();
+        $guest_id = $request->has('guest_id') ? $request->guest_id : data_get($guest, 'id', -999);
+        $dates = $request->has('dates') ? $request->dates : getThisMonthDatepicker();
         $search = [
-            'guest_id' => $request->guest_id,
-            'dates'    => $request->dates,
+            'guest_id' => $guest_id,
+            'dates'    => $dates,
             'status'   => Parcel::STATUS_COMPLETE,
         ];
         $parcels = [];
         $amount = 0;
-        // if (!empty($search['dates'])) {
+        if (!empty($search['dates'])) {
             $parcels = $this->parcelService->getList($search, true);
             $amount = self::calTotalAmount($parcels);
-        // }
+        }
         $data = [
             'user'    => $request->user(),
             'search'  => $search,

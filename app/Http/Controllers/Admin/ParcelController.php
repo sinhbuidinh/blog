@@ -19,10 +19,11 @@ class ParcelController extends Controller
 
     public function index(Request $request)
     {
+        $dates = $request->has('dates') ? $request->dates : getThisMonthDatepicker();
         $search = [
             'keyword'  => $request->keyword,
             'guest_id' => $request->guest_id,
-            'dates'    => $request->dates,
+            'dates'    => $dates,
             'status'   => $request->status,
         ];
         $data = [

@@ -40,7 +40,7 @@ class ParcelRepository extends BaseRepository
                 $parcels = $parcels->where('parcels.status', $status);
             }
         }
-        $parcels = $parcels->orderBy('created_at', 'desc');
+        $parcels = $parcels->orderBy('created_at', 'asc');
         if ($getAll === true) {
             return $parcels->get();
         }

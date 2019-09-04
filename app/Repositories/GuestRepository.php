@@ -27,7 +27,7 @@ class GuestRepository extends BaseRepository
             });
         }
 
-        $guests = $guests->orderBy('created_at', 'desc');
+        $guests = $guests->orderBy('created_at', 'asc');
         if ($getAll === true) {
             return $guests->get();
         }

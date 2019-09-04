@@ -44,6 +44,10 @@
             <td style="font-weight: bold;">{{ trans('label.address') }}</td>
             <td colspan="8" style="text-align: left;">{{ data_get($guest, 'address') }}</td>
         </tr>
+        <tr>
+            <td style="font-weight: bold;">{{ trans('label.total_parcels') }}</td>
+            <td colspan="8" style="text-align: left;">{{ count($parcels) }}</td>
+        </tr>
     </tbody>
 </table>
 @endif
