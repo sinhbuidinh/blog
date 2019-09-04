@@ -37,8 +37,8 @@
         </tr>
         <tr>
             <td style="{{ $bold }}">{{ trans('label.note') }}</td>
-            <td colspan="5">{{ data_get($package, 'note') }}</td>
-            <td colspan="4">&nbsp;</td>
+            <td colspan="4">{{ data_get($package, 'note') }}</td>
+            <td colspan="5">&nbsp;</td>
         </tr>
         <tr>
             <td colspan="10" style="text-align: center;{{ $bold }}">CÁC BƯU PHẨM GỬI ĐI</td>
