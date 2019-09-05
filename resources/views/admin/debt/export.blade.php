@@ -74,7 +74,7 @@
     <tr>
         <td style="{{ $border }}" class="{{ $parcel->id }}">{{ $k + 1 }}</td>
         <td style="{{ $border }}">{{ $parcel->bill_code }}</td>
-        <td style="{{ $border }}">{{ $parcel->time_receive }}</td>
+        <td style="{{ $border }}">{{ $parcel->dateReceive }}</td>
         <td style="{{ $border }}">{{ $parcel->transferName }}</td>
         <td style="{{ $border }}">{{ $parcel->provinceName }}</td>
         <td style="{{ $border }}">{{ $parcel->weight }}</td>

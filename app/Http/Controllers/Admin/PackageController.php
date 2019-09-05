@@ -93,9 +93,11 @@ class PackageController extends Controller
     public function parcels(Request $request, $id = null)
     {
         list($package, $parcels) = $this->packageService->getParcels($id);
+        $amounts = self::calTotalAmount($parcels);
         $data = [
             'parcels' => $parcels,
             'package' => $package,
+            'amounts' => formatPrice($amounts),
         ];
         return view('admin.package.parcels', $data);
     }
@@ -103,8 +105,10 @@ class PackageController extends Controller
     public function export(Request $request, $id)
     {
         list($package, $parcels) = $this->packageService->getParcels($id);
+        $amounts = self::calTotalAmount($parcels);
+        $amounts = formatPrice($amounts);
         $fileName = self::packFileName();
-        return Excel::download(new PackageExport($parcels, $package), $fileName);
+        return Excel::download(new PackageExport($parcels, $package, $amounts), $fileName);
     }
 
     private function packFileName()
