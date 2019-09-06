@@ -59,12 +59,14 @@ function stringify2array($string)
     }
     return json_decode(html_entity_decode(stripslashes($string)), true);
 }
-function array_key_last($array)
-{
-    if (!is_array($array) || empty($array)) {
-        return NULL;
+if (!function_exists('array_key_last')) {
+    function array_key_last($array)
+    {
+        if (!is_array($array) || empty($array)) {
+            return NULL;
+        }
+        return array_keys($array)[count($array)-1];
     }
-    return array_keys($array)[count($array)-1];
 }
 function formatPrice($price, $decimals = 2, $end = '')
 {
@@ -81,6 +83,9 @@ function formatPrice($price, $decimals = 2, $end = '')
 }
 function removeFormatPrice($string)
 {
+    if (empty($string)) {
+        return 0;
+    }
     $string = str_replace(",", "", $string);
     return $string;
 }

@@ -57,6 +57,11 @@ class Parcel extends BaseModel
         return data_get(self::$statusNames, $this->status);
     }
 
+    public function getDateReceiveAttribute()
+    {
+        return date("Y-m-d", strtotime($this->time_receive));
+    }
+
     public function getTypeNameAttribute()
     {
         $list = config('setting.parcel_type');

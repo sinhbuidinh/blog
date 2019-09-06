@@ -25,32 +25,35 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
-            <td colspan="10" style="text-align: center;font-weight: bold;">BẢNG KÊ BƯU PHẨM KN 247Express</td>
+            <td colspan="12" style="text-align: center;font-weight: bold;">BẢNG KÊ BƯU PHẨM KN 247Express</td>
         </tr>
         <tr>
             <td style="{{ $bold }}">{{ trans('label.from') }}</td>
-            <td colspan="4">{{ data_get($package, 'from') }}</td>
+            <td colspan="5">{{ data_get($package, 'from') }}</td>
             <td style="{{ $bold }}">{{ trans('label.to') }}</td>
-            <td colspan="4">{{ data_get($package, 'agencyName') }}</td>
+            <td colspan="5">{{ data_get($package, 'agencyName') }}</td>
         </tr>
         <tr>
             <td style="{{ $bold }}">{{ trans('label.note') }}</td>
-            <td colspan="4">{{ data_get($package, 'note') }}</td>
-            <td colspan="5">&nbsp;</td>
+            <td colspan="5">{{ data_get($package, 'note') }}</td>
+            <td style="{{ $bold }}">{{ trans('label.amounts') }}</td>
+            <td colspan="5">{{ $amounts ?? 0 }}</td>
         </tr>
         <tr>
-            <td colspan="10" style="text-align: center;{{ $bold }}">CÁC BƯU PHẨM GỬI ĐI</td>
+            <td colspan="12" style="text-align: center;{{ $bold }}">CÁC BƯU PHẨM GỬI ĐI</td>
         </tr>
         <tr>
             <td style="{{ $bold }}">{{ trans('label.stt') }}</td>
-            <td style="{{ $bold }}">{{ trans('label.bill_code') }}</td>
+            <td colspan="2" style="{{ $bold }}">{{ trans('label.bill_code') }}</td>
             <td style="{{ $bold }}">{{ trans('label.weight') }}</td>
             <td style="{{ $bold }}">{{ trans('label.destination') }}</td>
             <td style="{{ $bold }}">{{ trans('label.note') }}</td>
             <td style="{{ $bold }}">{{ trans('label.stt') }}</td>
-            <td style="{{ $bold }}">{{ trans('label.bill_code') }}</td>
+            <td colspan="2" style="{{ $bold }}">{{ trans('label.bill_code') }}</td>
             <td style="{{ $bold }}">{{ trans('label.weight') }}</td>
             <td style="{{ $bold }}">{{ trans('label.destination') }}</td>
             <td style="{{ $bold }}">{{ trans('label.note') }}</td>
@@ -60,11 +63,11 @@
                 <tr>
             @endif
                 <td>{{ $stt }}</td>
-                <td>{{ data_get($parcel, 'bill_code') }}</td>
+                <td colspan="2">{{ data_get($parcel, 'bill_code') }}</td>
                 <td>{{ data_get($parcel, 'weight') }}</td>
                 <td>{{ data_get($parcel, 'parcelsProvinceName') }}</td>
                 <td>{{ data_get($parcel, 'note') }}</td>
-            @if($row != 0 && ($row % 2) == 0)
+            @if($row != 0 && ($row % 2) != 0)
                 </tr>
             @endif
             @php
@@ -74,7 +77,7 @@
         @endforeach
         @if(count($parcels) % 2 != 0)
                 <td></td>
-                <td></td>
+                <td colspan="2"></td>
                 <td></td>
                 <td></td>
                 <td></td>
