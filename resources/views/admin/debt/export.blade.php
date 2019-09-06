@@ -18,7 +18,7 @@
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td>&nbsp;</td>
+            <td>{{ trans('label.page_name') }}</td>
             <td colspan="7" style="text-align: center;font-weight: bold;">Từ ngày {{ $from }} đến ngày {{ $to }}</td>
         </tr>
         <tr>
@@ -33,20 +33,24 @@
             <td>&nbsp;</td>
         </tr>
         <tr>
+            <td>&nbsp;</td>
             <td style="font-weight: bold;">{{ trans('label.guest_name') }}</td>
-            <td colspan="8" style="text-align: left;">{{ data_get($guest, 'company_name') }}</td>
+            <td colspan="7" style="text-align: left;">{{ data_get($guest, 'company_name') }}</td>
         </tr>
         <tr>
+            <td>&nbsp;</td>
             <td style="font-weight: bold;">{{ trans('label.guest_code') }}</td>
-            <td colspan="8" style="text-align: left;">{{ data_get($guest, 'guest_code') }}</td>
+            <td colspan="7" style="text-align: left;">{{ data_get($guest, 'guest_code') }}</td>
         </tr>
         <tr>
+            <td>&nbsp;</td>
             <td style="font-weight: bold;">{{ trans('label.address') }}</td>
-            <td colspan="8" style="text-align: left;">{{ data_get($guest, 'address') }}</td>
+            <td colspan="7" style="text-align: left;">{{ data_get($guest, 'address') }}</td>
         </tr>
         <tr>
+            <td>&nbsp;</td>
             <td style="font-weight: bold;">{{ trans('label.total_parcels') }}</td>
-            <td colspan="8" style="text-align: left;">{{ count($parcels) }}</td>
+            <td colspan="7" style="text-align: left;">{{ count($parcels) }}</td>
         </tr>
     </tbody>
 </table>
@@ -74,16 +78,16 @@
     <tr>
         <td style="{{ $border }}" class="{{ $parcel->id }}">{{ $k + 1 }}</td>
         <td style="{{ $border }}">{{ $parcel->bill_code }}</td>
-        <td style="{{ $border }}">{{ $parcel->time_receive }}</td>
+        <td style="{{ $border }}">{{ $parcel->receiveDate }}</td>
         <td style="{{ $border }}">{{ $parcel->transferName }}</td>
         <td style="{{ $border }}">{{ $parcel->provinceName }}</td>
         <td style="{{ $border }}">{{ $parcel->weight }}</td>
-        <td style="{{ $border }}">{{ $parcel->price }}</td>
-        <td style="{{ $border }}">{{ $parcel->forwardAndRefund() }}</td>
-        <td style="{{ $border }}">{{ $parcel->totalServicePrice() }}</td>
-        <td style="{{ $border }}">{{ $parcel->remoteAndOther() }}</td>
-        <td style="{{ $border }}">{{ $parcel->gasAndVat() }}</td>
-        <td style="{{ $border }}">{{ $parcel->total }}</td>
+        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->price) : $parcel->price }}</td>
+        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->forwardAndRefund()) : $parcel->forwardAndRefund() }}</td>
+        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->totalServicePrice()) : $parcel->totalServicePrice() }}</td>
+        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->remoteAndOther()) : $parcel->remoteAndOther() }}</td>
+        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->gasAndVat()) : $parcel->gasAndVat() }}</td>
+        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->total) : $parcel->total }}</td>
     </tr>
     @endforeach
     <tr>
@@ -98,7 +102,7 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td style="{{ $border }}font-weight: bold">{{ trans('label.amounts') }}</td>
-        <td style="{{ $border }}">{{ $amount }}</td>
+        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($amount) : $amount }}</td>
     </tr>
     </tbody>
     @endif

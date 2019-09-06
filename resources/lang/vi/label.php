@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'page_name' => 'KN247 Express',
     'sidebar_dashboard' => 'Dashboard',
     'sidebar_parcel' => 'QL Vận Đơn',
     'sidebar_guest' => 'QL Khách Hàng',

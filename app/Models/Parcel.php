@@ -121,6 +121,12 @@ class Parcel extends BaseModel
         return data_get($this->guest()->first(), 'address');
     }
 
+    public function getReceiveDateAttribute()
+    {
+        //company address
+        return date('Y-m-d', strtotime($this->time_receive));
+    }
+
     public function getProvinceNameAttribute()
     {
         $provincial = getProvinceById($this->provincial);
@@ -166,8 +172,8 @@ class Parcel extends BaseModel
     public function getHistoryStatusNameAttribute()
     {
         $name = data_get(self::$statusNames, $this->history_status);
-        if (($this->history_status == STATUS_REFUND
-            || $this->history_status == STATUS_FORWARD)
+        if (($this->history_status == self::STATUS_REFUND
+            || $this->history_status == self::STATUS_FORWARD)
             && !empty($this->history_note)
         ) {
             return $name . ': '. $this->history_note;
