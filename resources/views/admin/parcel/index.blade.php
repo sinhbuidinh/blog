@@ -47,6 +47,9 @@
         text-overflow: ellipsis;
         max-width: 100px;
     }
+    p#download {
+        cursor: pointer;
+    }
 </style>
 @endsection
 @section('content')
@@ -59,7 +62,7 @@
         </div>
     </div>
     <div class="search_form">
-        <form action="{{ route('parcel')}}" method="get">
+        <form id="search_form" action="{{ route('parcel')}}" method="get">
             <div class="list_search list_search_with_button">
                 <div class="row col-sm-12">
                     <div class="col-sm-3">
@@ -84,7 +87,7 @@
                             @endif
                         </select>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <select class="form-control" name="status" id="status">
                             @php
                                 $status = old('status', data_get($search, 'status'));
@@ -106,9 +109,13 @@
                     <div class="col-sm-3">
                         <input type="text" class="input-sm form-control" id="dates" name="dates" value="{{ old('dates', data_get($search, 'dates')) }}" autocomplete="off" placeholder="{{ trans('label.pick_date') }}">
                     </div>
-                    <div class="col-sm-1">
-                        <button type="submit" class="list_search_submit">
+                    <div class="col-sm-2">
+                        <button type="submit" style="display: inline-block;" class="list_search_submit">
                             <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
+                        </button>
+                        <p id="download" style="display: inline-block">
+                            <img style="width: 40px;" src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}" />Export
+                            <input type="hidden" id="parcel_download" value="{{ route('parcel.export') }}">
                         </button>
                     </div>
                 </div>
@@ -126,6 +133,7 @@
                         <tr>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
                             <th class="table_title">{{ trans('label.status') }}</th>
+                            <th class="table_title">{{ trans('label.receiver_info') }}</th>
                             <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
@@ -148,6 +156,11 @@
                         </td>
                         <td class="table_text">
                             <p class="status_label">{{ $parcel->statusName }}</p>
+                        </td>
+                        <td>
+                            @if($parcel->isTransfered)
+                            <p>{!! $parcel->receiverParcelExport !!}</p>
+                            @endif
                         </td>
                         <td class="table_text parcel_code">{{ $parcel->bill_code }}</td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>
@@ -186,6 +199,10 @@
     $(function(){
         $('table').on('scroll', function() {
             $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
+        });
+        $(document).on('click', '#download', function(){
+            var vars = $('#search_form').serialize();
+            window.location.href = $('#parcel_download').val() + '?' + vars;
         });
         $(document).on('click', '.confirm_complete', function(){
             window.location.href = $(this).data('url');

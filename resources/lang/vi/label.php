@@ -2,6 +2,7 @@
 
 return [
     'page_name' => 'KN247 Express',
+    'parcel_file_begin' => 'danhsachvandon',
     'sidebar_dashboard' => 'Dashboard',
     'sidebar_parcel' => 'QL Vận Đơn',
     'sidebar_guest' => 'QL Khách Hàng',
@@ -13,6 +14,9 @@ return [
     'bill_code' => 'Số phiếu',
     'guest_info' => 'Thông tin khách hàng',
     'receiver_info' => 'Thông tin người nhận',
+    'begin_receiver' => 'CTY nhận/Người nhận',
+    'receive_on' => 'Nhận lúc',
+    'detail_address' => 'Địa chỉ chi tiết',
     'guest_name' => 'Tên khách',
     'receiver' => 'Người nhận',
     'tel' => 'SDT',

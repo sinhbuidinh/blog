@@ -5,27 +5,26 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ParcelService;
+use App\Services\GuestService;
 use App\Request\Admin\CreateParcel;
 use App\Models\Parcel;
 use App\Request\Admin\CompleteTransfer;
+use App\Exports\ParcelExport;
+use Excel;
 
 class ParcelController extends Controller
 {
     private $parcelService;
-    public function __construct(ParcelService $parcelService)
+    private $guestService;
+    public function __construct(ParcelService $parcelService, GuestService $guestService)
     {
         $this->parcelService = $parcelService;
+        $this->guestService = $guestService;
     }
 
     public function index(Request $request)
     {
-        $dates = $request->has('dates') ? $request->dates : getThisMonthDatepicker();
-        $search = [
-            'keyword'  => $request->keyword,
-            'guest_id' => $request->guest_id,
-            'dates'    => $dates,
-            'status'   => $request->status,
-        ];
+        $search = self::getSearchParams($request);
         $data = [
             'user' => $request->user(),
             'guests' => $this->parcelService->guestList(),
@@ -34,6 +33,60 @@ class ParcelController extends Controller
             'statuses' => $this->parcelService->getStatuses(),
         ];
         return view('admin.parcel.index', $data);
+    }
+
+    private function getSearchParams(Request $request)
+    {
+        $dates = $request->has('dates') ? $request->dates : getThisMonthDatepicker();
+        return [
+            'keyword'  => $request->keyword,
+            'guest_id' => $request->guest_id,
+            'dates'    => $dates,
+            'status'   => $request->status,
+        ];
+    }
+
+    public function export(Request $request)
+    {
+        $params['search'] = self::getSearchParams($request);
+        $parcels = $this->parcelService->getList($params['search'], true);
+        $params['amounts'] = self::calTotalAmount($parcels);
+        list($fileName, $params['guest']) = self::parcelFileName($params['search']);
+        return Excel::download(new ParcelExport($parcels, $params), $fileName);
+    }
+
+    private function calTotalAmount($parcels)
+    {
+        $totals = $parcels->pluck('total', 'id');
+        $amount = 0;
+        foreach($totals as $id => $total) {
+            $amount += removeFormatPrice($total);
+        }
+        return $amount;
+    }
+
+    private function parcelFileName($search)
+    {
+        $guest = [];
+        $v = trans('label.parcel_file_begin');
+        if(!empty($search['keyword'])) {
+            $v .= 'keyword='.$search['keyword'];
+        }
+        if(!empty($search['guest_id'])) {
+            $guestId = $search['guest_id'];
+            $guest = $this->guestService->findById($guestId);
+            $v .= '_' . data_get($guest, 'guest_code');
+        }
+        if(!empty($search['dates'])) {
+            $range = str_replace(' to ', '-', $search['dates']);
+            $v .= '_' . $range;
+        }
+        if(!empty($search['status'])) {
+            $name = data_get(Parcel::$statusNames, $search['status']);
+            $v .= '_' . $name;
+        }
+        $v .= '.xlsx';
+        return [$v, $guest];
     }
 
     public function input(Request $request)

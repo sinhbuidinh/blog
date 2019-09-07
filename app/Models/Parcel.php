@@ -51,9 +51,13 @@ class Parcel extends BaseModel
         return $this->belongsTo('App\Models\Guest');
     }
 
+    public function getIsTransferedAttribute()
+    {
+        return $this->status == self::STATUS_COMPLETE;
+    }
+
     public function getStatusNameAttribute()
     {
-        //status
         return data_get(self::$statusNames, $this->status);
     }
 
@@ -112,6 +116,26 @@ class Parcel extends BaseModel
     {
         //transfered -> complete_receiverd
         return data_get($this->transfered()->first(), 'complete_receiver');
+    }
+
+    public function getReceiverTimeAttribute()
+    {
+        //transfered -> complete_receive_time
+        return data_get($this->transfered()->first(), 'complete_receive_time');
+    }
+
+    public function getReceiverParcelExportAttribute()
+    {
+        if (empty($this->receiverSignature) || empty($this->receiverTime)) {
+            return '';
+        }
+        return $this->receiverSignature . '<br><b>' . trans('label.receive_on') . ':</b><br>' . $this->receiverTime;
+    }
+
+    public function getCancelInfoAttribute()
+    {
+        // @TODO access to cancel tbl to get reason cancel
+        return '';
     }
 
     public function getCompanyNameAttribute()

@@ -72,6 +72,7 @@ Route::group([
         Route::get('/edit/{id}', 'ParcelController@edit')->name('parcel.edit');
         Route::get('/delete/{id}', 'ParcelController@delete')->name('parcel.delete');
         Route::post('/update/{id}', 'ParcelController@update')->name('parcel.update');
+        Route::get('/export', 'ParcelController@export')->name('parcel.export');
     });
     Route::prefix('guest')->group(function () {
         Route::get('/', 'GuestController@index')->name('guest');
