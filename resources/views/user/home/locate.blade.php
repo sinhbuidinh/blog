@@ -96,7 +96,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                 <!-- status info -->
                 <div class="row  hidden-xs hidden-sm visible-lg visible-md visible-xl d-none d-lg-block d-md-block">
                     <div class="col-md-12">
-                        <ul class="checklist-tracking">
+                        <ul class="checklist-tracking" style="padding-left: 0;">
                             @if(!empty($tracks))
                             @php
                                 $i = 1;
@@ -129,7 +129,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                             <tr>
                                 <th scope="col">Ngày giờ</th>
                                 <th scope="col">Địa điểm</th>
-                                <th scope="col">Tình trạng</th>=
+                                <th scope="col">Tình trạng</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -138,7 +138,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                                 <tr>
                                     <td>{{ data_get($history, 'date_time') }}</td>
                                     <td>{{ data_get($history, 'location') }}</td>
-                                    <td>{!! data_get($history, 'historyStatusName') !!}</td>=
+                                    <td>{!! data_get($history, 'historyStatusName') !!}</td>
                                 </tr>
                             @endforeach
                             @endif
