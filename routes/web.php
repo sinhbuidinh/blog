@@ -63,6 +63,8 @@ Route::group([
         Route::get('/', 'TransferedController@index')->name('transfereds');
         Route::get('/transfered/{id}', 'TransferedController@transfered')->name('transfer');
         Route::post('/transfered/{id}', 'TransferedController@completeTransfered')->name('complete_transfered');
+        Route::get('/fail/{id}', 'TransferedController@fail')->name('fail');
+        Route::post('/fail/{id}', 'TransferedController@failInfo')->name('fail_info');
     });
     Route::prefix('parcel')->group(function () {
         Route::get('/', 'ParcelController@index')->name('parcel');

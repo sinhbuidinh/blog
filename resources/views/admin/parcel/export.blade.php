@@ -83,7 +83,7 @@
             <td style="{{ $border }}">{!! $parcel->receiverParcelExport !!}</td>
             <td style="{{ $border }}">{{ $parcel->weight }}</td>
             <td style="{{ $border }}">{{ removeFormatPrice($parcel->total) }}</td>
-            <td style="{{ $border }}">{{ $parcel->cancelInfo }}</td>
+            <td style="{{ $border }}">{{ $parcel->failInfo }}</td>
         </tr>
         @endforeach
         <tr>

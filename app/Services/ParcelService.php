@@ -11,6 +11,7 @@ use App\Models\Package;
 use App\Models\Forward;
 use App\Models\PackageItem;
 use App\Models\Transfered;
+use App\Models\Fail;
 use DB;
 use Log;
 use Exception;
@@ -175,7 +176,7 @@ class ParcelService
             //insert history
             $history = [
                 'parcel_id' => $parcelId,
-                'date_time' => data_get($input, 'complete_receive_time', now()->format('Y/m/d H:m:s')),
+                'date_time' => data_get($input, 'complete_receive_time', now()->format('Y-m-d H:m:s')),
                 'location' => self::lastAddressWhenComplete($parcel),
                 'status' => Parcel::STATUS_COMPLETE,
                 'note' => data_get($input, 'complete_note'),
@@ -200,6 +201,45 @@ class ParcelService
             return [$parcel, $error];
         } catch (Exception $e) {
             // $error = trans('message.error_when_transfered');
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
+    public function failTransfered($input, $id)
+    {
+        $error = null;
+        $parcel = [];
+        try {
+            DB::beginTransaction();
+            $parcel = self::findById($id);
+            if (!data_get($parcel, 'id')) {
+                throw new Exception('Not found');
+            }
+            $parcelId = data_get($parcel, 'id');
+            //insert Fail
+            Fail::create([
+                'parcel_id' => $parcelId,
+                'reason'    => data_get($input, 'reason'),
+                'fail_time' => data_get($input, 'fail_time'),
+                'fail_note' => data_get($input, 'fail_note'),
+            ]);
+            //insert history
+            $history = [
+                'parcel_id' => $parcelId,
+                'date_time' => data_get($input, 'fail_time', now()->format('Y-m-d H:m:s')),
+                'location'  => self::lastAddressWhenComplete($parcel),
+                'status'    => Parcel::STATUS_FAIL,
+                'note'      => data_get($input, 'fail_note'),
+            ];
+            ParcelHistory::create($history);
+            $parcel->update(['status' => Parcel::STATUS_FAIL]);
+            DB::commit();
+            return [$parcel, $error];
+        } catch (Exception $e) {
+            // $error = trans('message.error_when_update_fail');
             $error = $e->getMessage();
             Log::error(generateTraceMessage($e));
             DB::rollBack();
@@ -245,7 +285,7 @@ class ParcelService
         $not_completed = [];
         if (count($except_parcel) > 0) {
             $not_completed = $except_parcel->filter(function ($value, $key) use ($parcelId) {
-                return data_get($value, 'status') != Parcel::STATUS_COMPLETE;
+                return (data_get($value, 'status') != Parcel::STATUS_COMPLETE || data_get($value, 'status') != Parcel::STATUS_REFUND || data_get($value, 'status') != Parcel::STATUS_DELETED);
             });
         }
         return [$packageId, $except_parcel, $not_completed];
@@ -388,6 +428,11 @@ class ParcelService
         $statuses = Parcel::$statusNames;
         unset($statuses[Parcel::STATUS_DELETED]);
         return $statuses;
+    }
+
+    public function allReason()
+    {
+        return Fail::$fails;
     }
 
     public function getStatusesTransfered()

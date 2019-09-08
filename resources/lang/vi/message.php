@@ -35,4 +35,5 @@ return [
     'dates_input' => 'Chọn khoản thời gian cần thống kê',
     'choose_dates' => 'Chọn khoản thời gian cần thống kê',
     'invalid_dates' => 'Khoản thời gian không đúng định dạng',
+    'parcel_updated_fail' => 'Cập nhật phát lỗi không thành công',
 ];

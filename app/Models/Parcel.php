@@ -20,6 +20,7 @@ class Parcel extends BaseModel
     const STATUS_REFUND         = 4;
     const STATUS_FORWARD        = 5;
     const STATUS_COMPLETE       = 6;
+    const STATUS_FAIL           = 7;
     const STATUS_DELETED_NAME   = 'Đã xóa';
     const STATUS_INIT_NAME      = 'Nhập hệ thống';
     const STATUS_INPACKAGE_NAME = 'Đã đóng bảng kê';
@@ -27,6 +28,7 @@ class Parcel extends BaseModel
     const STATUS_REFUND_NAME    = 'Chuyển hoàn';
     const STATUS_FORWARD_NAME   = 'Chuyển tiếp';
     const STATUS_COMPLETE_NAME  = 'Đã phát';
+    const STATUS_FAIL_NAME      = 'Phát lỗi';
     static $statusNames = [
         self::STATUS_DELETED   => self::STATUS_DELETED_NAME,
         self::STATUS_INIT      => self::STATUS_INIT_NAME,
@@ -35,11 +37,18 @@ class Parcel extends BaseModel
         self::STATUS_REFUND    => self::STATUS_REFUND_NAME,
         self::STATUS_FORWARD   => self::STATUS_FORWARD_NAME,
         self::STATUS_COMPLETE  => self::STATUS_COMPLETE_NAME,
+        self::STATUS_COMPLETE  => self::STATUS_COMPLETE_NAME,
+        self::STATUS_FAIL      => self::STATUS_FAIL_NAME,
     ];
 
     protected $fillable = [
         'guest_id', 'guest_code', 'bill_code', 'parcel_code', 'type', 'real_weight', 'weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'services', 'total_service', 'time_input', 'time_receive', 'receiver', 'receiver_tel', 'receiver_company', 'value_declare', 'provincial', 'district', 'ward', 'address', 'price', 'cod', 'vat', 'price_vat', 'refund', 'forward', 'support_gas', 'support_remote', 'total', 'status', 'note', 'agency'
     ];
+
+    public function failed()
+    {
+        return $this->hasMany('App\Models\Fail', 'parcel_id', 'id');
+    }
 
     public function transfered()
     {
@@ -132,10 +141,21 @@ class Parcel extends BaseModel
         return $this->receiverSignature . '<br><b>' . trans('label.receive_on') . ':</b><br>' . $this->receiverTime;
     }
 
-    public function getCancelInfoAttribute()
+    public function getFailInfoAttribute()
     {
-        // @TODO access to cancel tbl to get reason cancel
-        return '';
+        $failed = $this->failed()->first();
+        $reason = data_get($failed, 'reason');
+        $note   = data_get($failed, 'fail_note');
+        $time   = data_get($failed, 'fail_time');
+        if (empty($reason) || empty($time)) {
+            return '';
+        }
+        $reason = data_get(Fail::$fails, $reason);
+        $text = "<b>". $reason . ' lúc:</b><br>'. $time;
+        if (!empty($note)) {
+            $text .= "<br>Ghi chú: ".$note;
+        }
+        return $text;
     }
 
     public function getCompanyNameAttribute()

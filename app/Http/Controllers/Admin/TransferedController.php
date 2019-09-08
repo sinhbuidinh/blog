@@ -8,6 +8,7 @@ use App\Services\ParcelService;
 use App\Request\Admin\CreateParcel;
 use App\Models\Parcel;
 use App\Request\Admin\CompleteTransfer;
+use App\Request\Admin\FailInfo;
 
 class TransferedController extends Controller
 {
@@ -25,6 +26,7 @@ class TransferedController extends Controller
                 Parcel::STATUS_TRANSFER,
                 Parcel::STATUS_REFUND,
                 Parcel::STATUS_FORWARD,
+                Parcel::STATUS_FAIL,
             ];
         }
         $search = [
@@ -45,9 +47,8 @@ class TransferedController extends Controller
 
     public function transfered(Request $request, $id)
     {
-        $parcel = $this->parcelService->findById($id);
         $data = [
-            'parcel' => $parcel,
+            'parcel' => $this->parcelService->findById($id),
         ];
         return view('admin.transfered.transfer', $data);
     }
@@ -62,5 +63,26 @@ class TransferedController extends Controller
         }
         session()->flash('error', $message);
         return redirect()->route('transfer', $id)->withInput();
+    }
+
+    public function fail(Request $request, $id)
+    {
+        $data = [
+            'reasons' => $this->parcelService->allReason(),
+            'parcel' => $this->parcelService->findById($id),
+        ];
+        return view('admin.transfered.fail', $data);
+    }
+
+    public function failInfo(FailInfo $request, $id)
+    {
+        $data = $request->only(['reason', 'fail_time', 'fail_note']);
+        list($result, $message) = $this->parcelService->failTransfered($data, $id);
+        if ($result !== false) {
+            session()->flash('success', trans('message.parcel_updated_fail'));
+            return redirect()->route('transfereds');
+        }
+        session()->flash('error', $message);
+        return redirect()->route('fail', $id)->withInput();
     }
 }

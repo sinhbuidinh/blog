@@ -125,4 +125,10 @@ return [
     'from' => 'Từ',
     'to' => 'Đến',
     'total_parcels' => 'Tổng số vận đơn',
+    'fail_transfer' => 'Phát lỗi',
+    'fail_info' => 'Thông tin phát lỗi',
+    'please_choose_reason' => 'Nguyên nhân phát lỗi',
+    'reason' => 'Lý do',
+    'fail_time' => 'Thời gian xác nhận phát lỗi',
+    'fail_note' => 'Ghi chú phát lỗi',
 ];

@@ -145,8 +145,9 @@
                         <td class="table_text">
                             @if($parcel->readyComplete)
                             <button type="button" data-url="{{ route('transfer', $parcel->id) }}" class="btn btn-primary confirm_complete">{{ trans('label.already_transfer') }}</button>
+                            <button type="button" data-url="{{ route('fail', $parcel->id) }}" class="btn btn-danger fail_transfer">{{ trans('label.fail_transfer') }}</button>
                             @else
-                            <p>{{ $parcel->statusName }}</p>
+                            {!! $parcel->failInfo !!}
                             @endif
                         </td>
                         <td class="table_text">
@@ -187,6 +188,9 @@
 <script type="text/javascript">
     $(function(){
         $(document).on('click', '.confirm_complete', function(){
+            window.location.href = $(this).data('url');
+        });
+        $(document).on('click', '.fail_transfer', function(){
             window.location.href = $(this).data('url');
         });
         $('table.scroll-table').on('scroll', function() {
