@@ -25,10 +25,11 @@ class DebtController extends Controller
         $guest = $this->parcelService->getLastGuest();
         $guest_id = $request->has('guest_id') ? $request->guest_id : data_get($guest, 'id', -999);
         $dates = $request->has('dates') ? $request->dates : getThisMonthDatepicker();
+        $statuses = array_keys($this->parcelService->getStatusesDebt());
         $search = [
             'guest_id' => $guest_id,
             'dates'    => $dates,
-            'status'   => Parcel::STATUS_COMPLETE,
+            'status'   => $statuses,
         ];
         $parcels = [];
         $amount = 0;

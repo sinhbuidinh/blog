@@ -37,7 +37,6 @@ class Parcel extends BaseModel
         self::STATUS_REFUND    => self::STATUS_REFUND_NAME,
         self::STATUS_FORWARD   => self::STATUS_FORWARD_NAME,
         self::STATUS_COMPLETE  => self::STATUS_COMPLETE_NAME,
-        self::STATUS_COMPLETE  => self::STATUS_COMPLETE_NAME,
         self::STATUS_FAIL      => self::STATUS_FAIL_NAME,
     ];
 

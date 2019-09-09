@@ -444,4 +444,13 @@ class ParcelService
         unset($statuses[Parcel::STATUS_COMPLETE]);
         return $statuses;
     }
+
+    public function getStatusesDebt()
+    {
+        $statuses = Parcel::$statusNames;
+        unset($statuses[Parcel::STATUS_DELETED]);
+        unset($statuses[Parcel::STATUS_INIT]);
+        unset($statuses[Parcel::STATUS_INPACKAGE]);
+        return $statuses;
+    }
 }
