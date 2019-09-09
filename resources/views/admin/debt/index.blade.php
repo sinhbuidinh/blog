@@ -47,11 +47,13 @@
         padding: 12px !important;
         text-align: center;
     }
-    img#download {
+    #download {
         cursor: pointer;
+        background: transparent;
+    }
+    #download img {
         width: 40px;
         height: 40px;
-        background: transparent;
     }
 </style>
 @endsection
@@ -92,8 +94,9 @@
                             <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
                         </button>
                     </div>
-                    <div class="col-sm-1">
-                        <img id="download" data-url="{{ route('debt.export') }}" src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}">
+                    <div class="col-sm-2">
+                        <p id="download" data-url="{{ route('debt.export') }}" style="display: inline-block">
+                            <img src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}" />Export</p>
                     </div>
                 </div>
             </div>

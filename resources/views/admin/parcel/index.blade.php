@@ -114,9 +114,8 @@
                             <img src="{{ asset('images/search_white.png?v=1.0.1') }}" />
                         </button>
                         <p id="download" style="display: inline-block">
-                            <img style="width: 40px;" src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}" />Export
-                            <input type="hidden" id="parcel_download" value="{{ route('parcel.export') }}">
-                        </button>
+                            <img style="width: 40px;" src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}" />Export<input type="hidden" id="parcel_download" value="{{ route('parcel.export') }}">
+                        </p>
                     </div>
                 </div>
             </div>

@@ -73,7 +73,7 @@
         @foreach ($parcels as $k => $parcel)
         <tr>
             <td style="{{ $border }}" class="{{ $parcel->id }}">{{ $k + 1 }}</td>
-            <td style="{{ $border }}">{{ $parcel->bill_code }}</td>
+            <td data-format="0" style="text-align: right;{{ $border }}">{{ $parcel->bill_code }}</td>
             <td style="{{ $border }}">{{ $parcel->receiveDate }}</td>
             <td style="{{ $border }}">{{ $parcel->transferName }}</td>
             <td style="{{ $border }}">{{ $parcel->provinceName }}</td>
@@ -82,8 +82,8 @@
             <td style="{{ $border }}">{{ $parcel->statusName }}</td>
             <td style="{{ $border }}">{!! $parcel->receiverParcelExport !!}</td>
             <td style="{{ $border }}">{{ $parcel->weight }}</td>
-            <td style="{{ $border }}">{{ removeFormatPrice($parcel->total) }}</td>
-            <td style="{{ $border }}">{{ $parcel->failInfo }}</td>
+            <td data-format="0,0.00" style="{{ $border }}">{{ removeFormatPrice($parcel->total) }}</td>
+            <td style="{{ $border }}">{!! $parcel->failInfo !!}</td>
         </tr>
         @endforeach
         <tr>
@@ -98,7 +98,7 @@
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td style="font-weight: bold;{{ $border }}">{{ trans('label.amounts') }}</td>
-            <td style="{{ $border }}">{{ removeFormatPrice($amounts) }}</td>
+            <td data-format="0,0.00" style="{{ $border }}">{{ removeFormatPrice($amounts) }}</td>
         </tr>
     </tbody>
     @endif

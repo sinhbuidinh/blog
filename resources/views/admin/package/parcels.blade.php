@@ -32,11 +32,13 @@
         padding: 12px !important;
         text-align: center;
     }
-    img#download {
+    #download {
         cursor: pointer;
+        background: transparent;
+    }
+    #download img {
         width: 40px;
         height: 40px;
-        background: transparent;
     }
 </style>
 @endsection
@@ -47,8 +49,9 @@
     </div>
     <div class="search_form">
         <div class="list_search list_search_with_button">
-            <div class="col-sm-1">
-                <img id="download" data-url="{{ route('package.export', $package->id) }}" src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}">
+            <div class="col-sm-2">
+                <p data-url="{{ route('package.export', $package->id) }}" id="download" style="display: inline-block">
+                    <img style="width: 40px;" src="{{ asset('images/admin/sidebar/excel_download.png?v=1.0.1') }}" />Export</p>
             </div>
         </div>
     </div>

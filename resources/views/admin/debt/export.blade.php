@@ -82,12 +82,12 @@
         <td style="{{ $border }}">{{ $parcel->transferName }}</td>
         <td style="{{ $border }}">{{ $parcel->provinceName }}</td>
         <td style="{{ $border }}">{{ $parcel->weight }}</td>
-        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->price) : $parcel->price }}</td>
-        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->forwardAndRefund()) : $parcel->forwardAndRefund() }}</td>
-        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->totalServicePrice()) : $parcel->totalServicePrice() }}</td>
-        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->remoteAndOther()) : $parcel->remoteAndOther() }}</td>
-        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->gasAndVat()) : $parcel->gasAndVat() }}</td>
-        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->total) : $parcel->total }}</td>
+        <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->price) : $parcel->price }}</td>
+        <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->forwardAndRefund()) : $parcel->forwardAndRefund() }}</td>
+        <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->totalServicePrice()) : $parcel->totalServicePrice() }}</td>
+        <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->remoteAndOther()) : $parcel->remoteAndOther() }}</td>
+        <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->gasAndVat()) : $parcel->gasAndVat() }}</td>
+        <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->total) : $parcel->total }}</td>
     </tr>
     @endforeach
     <tr>

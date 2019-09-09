@@ -41,7 +41,7 @@
             <td style="{{ $bold }}">{{ trans('label.note') }}</td>
             <td colspan="5">{{ data_get($package, 'note') }}</td>
             <td style="{{ $bold }}">{{ trans('label.amounts') }}</td>
-            <td colspan="5">{{ $amounts ?? 0 }}</td>
+            <td data-format="0,0.00" colspan="5">{{ !empty($export) ? removeFormatPrice($amounts ?? 0) : ($amounts ?? 0) }}</td>
         </tr>
         <tr>
             <td colspan="12" style="text-align: center;{{ $bold }}">CÁC BƯU PHẨM GỬI ĐI</td>
