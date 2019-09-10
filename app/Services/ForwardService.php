@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\ParcelRepository;
 use App\Models\Parcel;
 use App\Models\Forward;
+use App\Models\ParcelHistory;
 use DB;
 use Log;
 use Exception;
@@ -44,17 +45,15 @@ class ForwardService
                 throw new Exception('Không có địa chỉ chuyển tiếp');
             }
             $parcelId = data_get($parcel, 'id');
-            if ($parcel->status != Parcel::STATUS_FORWARD) {
-                //insert history
-                $history = [
-                    'parcel_id' => $parcelId,
-                    'date_time' => now()->format('Y/m/d H:m:s'),
-                    'location'  => 'Đang chuyển tiếp tới: '.data_get($input, 'address'),
-                    'status'    => Parcel::STATUS_FORWARD,
-                    'note'      => data_get($input, 'note'),
-                ];
-                ParcelHistory::create($history);
-            }
+            //insert history
+            $history = [
+                'parcel_id' => $parcelId,
+                'date_time' => now()->format('Y/m/d H:m:s'),
+                'location'  => 'Đang chuyển tiếp tới: '.data_get($input, 'address'),
+                'status'    => Parcel::STATUS_FORWARD,
+                'note'      => data_get($input, 'note'),
+            ];
+            ParcelHistory::create($history);
             //format data before update
             list($parcel_update, $forward) = self::formatDataForward($input, $parcelId);
             Forward::create($forward);
@@ -67,6 +66,11 @@ class ForwardService
             DB::rollBack();
             return [false, $error];
         }
+    }
+
+    public function findById($id)
+    {
+        return $this->repo->find($id);
     }
 
     private function formatDataForward($input, $parcelId)
@@ -94,6 +98,6 @@ class ForwardService
             'total'          => data_get($input, 'total'),
             'status'         => Parcel::STATUS_FORWARD,
         ];
-        return [$forward, $parcel];
+        return [$parcel, $forward];
     }
 }

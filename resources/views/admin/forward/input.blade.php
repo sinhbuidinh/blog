@@ -69,6 +69,9 @@
                             data-total="{{ data_get($parcel, 'total') }}"
                             data-total_service="{{ data_get($parcel, 'total_service') }}"
                             data-services="{{ data_get($parcel, 'services') }}"
+                            @if(data_get($parcel, 'id') == old('parcel'))
+                                selected="selected"
+                            @endif
                             value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'bill_code') }}</option>
                             @endforeach
                             @endif

@@ -28,6 +28,7 @@ class CreateForward extends FormRequest
             'province'     => 'required',
             'district'     => 'required',
             'ward'         => 'required',
+            'address'      => 'required',
             'forward_name' => 'required',
             'forward_tel'  => 'required',
         ];
@@ -40,6 +41,7 @@ class CreateForward extends FormRequest
             'province'     => trans('label.provincial'),
             'district'     => trans('label.district'),
             'ward'         => trans('label.ward'),
+            'address'      => trans('label.address'),
             'forward_name' => trans('label.forward_name'),
             'forward_tel'  => trans('label.forward_tel'),
         ];
