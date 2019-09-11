@@ -43,8 +43,12 @@ class PackageRepository extends BaseRepository
     public function getParcelsInPackage($id)
     {
         return $this->model->select('parcels.*')
-            ->join('package_items', 'packages.id', '=', 'package_items.package_id')
-            ->join('parcels', 'parcels.id', '=', 'package_items.parcel_id')
-            ->where('packages.id', $id)->get();
+            ->join('package_items', function ($join) {
+                $join->on('packages.id', '=', 'package_items.package_id')
+                    ->whereNull('package_items.deleted_at');
+            })->join('parcels', function ($join) {
+                $join->on('parcels.id', '=', 'package_items.parcel_id')
+                    ->whereNull('parcels.deleted_at');
+            })->where('packages.id', $id)->get();
     }
 }

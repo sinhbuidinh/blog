@@ -73,7 +73,7 @@ class DebtController extends Controller
         $search = [
             'guest_id' => $guestId,
             'dates'    => $dates,
-            'status'   => Parcel::STATUS_COMPLETE,
+            'status'   => array_keys($this->parcelService->getStatusesDebt()),
         ];
         $parcels = $this->parcelService->getList($search, true);
         $amount = self::calTotalAmount($parcels);

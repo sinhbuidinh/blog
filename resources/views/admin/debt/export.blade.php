@@ -70,6 +70,7 @@
         <th style="{{ $thead }}">{{ trans('label.remote_other') }}</th>
         <th style="{{ $thead }}">{{ trans('label.gas_vat') }}</th>
         <th style="{{ $thead }}">{{ trans('label.total') }}</th>
+        <th style="{{ $thead }}">{{ trans('label.note') }}</th>
     </tr>
     </thead>
     @if($parcels)
@@ -77,7 +78,7 @@
     @foreach ($parcels as $k => $parcel)
     <tr>
         <td style="{{ $border }}" class="{{ $parcel->id }}">{{ $k + 1 }}</td>
-        <td style="{{ $border }}">{{ $parcel->bill_code }}</td>
+        <td data-format="0" style="{{ $border }}">{{ $parcel->bill_code }}</td>
         <td style="{{ $border }}">{{ $parcel->receiveDate }}</td>
         <td style="{{ $border }}">{{ $parcel->transferName }}</td>
         <td style="{{ $border }}">{{ $parcel->provinceName }}</td>
@@ -88,6 +89,7 @@
         <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->remoteAndOther()) : $parcel->remoteAndOther() }}</td>
         <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->gasAndVat()) : $parcel->gasAndVat() }}</td>
         <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($parcel->total) : $parcel->total }}</td>
+        <td style="{{ $border }}">{{ $parcel->note }}</td>
     </tr>
     @endforeach
     <tr>
@@ -102,7 +104,7 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td style="{{ $border }}font-weight: bold">{{ trans('label.amounts') }}</td>
-        <td style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($amount) : $amount }}</td>
+        <td data-format="0,0.00" style="{{ $border }}">{{ !empty($export) ? removeFormatPrice($amount) : $amount }}</td>
     </tr>
     </tbody>
     @endif
