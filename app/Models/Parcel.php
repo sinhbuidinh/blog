@@ -137,7 +137,24 @@ class Parcel extends BaseModel
         if (empty($this->receiverSignature) || empty($this->receiverTime)) {
             return '';
         }
-        return $this->receiverSignature . '<br><b>' . trans('label.receive_on') . ':</b><br>' . $this->receiverTime;
+        return "Người nhận: " .$this->receiverSignature . '<br>' . trans('label.receive_on') . ':<br>' . $this->receiverTime;
+    }
+
+    public function getBeginReceiveAttribute()
+    {
+        $output = "";
+        if (!empty($this->receiver_company)) {
+            $output .= "CTY: " . $this->receiver_company;
+        }
+        if (!empty($this->receiver)) {
+            $prefix = !empty($output) ? "<br>" : '';
+            $output .= $prefix. "Người nhận: " . $this->receiver;
+        }
+        if (!empty($this->receiver_tel)) {
+            $prefix = !empty($output) ? "<br>" : '';
+            $output .= $prefix. "SDT Người nhận: " . $this->receiver_tel;
+        }
+        return $output;
     }
 
     public function getFailInfoAttribute()

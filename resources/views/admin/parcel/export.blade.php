@@ -77,7 +77,7 @@
             <td style="{{ $border }}">{{ $parcel->receiveDate }}</td>
             <td style="{{ $border }}">{{ $parcel->transferName }}</td>
             <td style="{{ $border }}">{{ $parcel->provinceName }}</td>
-            <td style="{{ $border }}">{{ $parcel->beginReceive }}</td>
+            <td style="{{ $border }}">{!! $parcel->beginReceive !!}</td>
             <td style="{{ $border }}">{{ $parcel->address }}</td>
             <td style="{{ $border }}">{{ $parcel->statusName }}</td>
             <td style="{{ $border }}">{!! $parcel->receiverParcelExport !!}</td>
