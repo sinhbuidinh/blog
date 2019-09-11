@@ -17,13 +17,13 @@ class ParcelRepository extends BaseRepository
             $query->where('bill_code', 'like', '%' . $keyword . '%')
                 ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
         })->when($getPackage, function($query) {
-            $query->join('packages', function ($join) {
-                $join->on('packages.id', '=', 'package_items.package_id')
-                    ->whereNull('packages.deleted_at');
-            })->join('package_items', function ($join) {
+            $query->join('package_items', function ($join) {
                 $join->on('package_items.parcel_id', '=', 'parcels.id')
                     ->whereNull('package_items.deleted_at');
-            })->addSelect('packages.package_code', 'package_items.parcel_id');
+            })->join('packages', function ($join) {
+                $join->on('packages.id', '=', 'package_items.package_id')
+                    ->whereNull('packages.deleted_at');
+            })->addSelect('packages.package_code', 'package_items.parcel_id', 'package_items.package_id');
         })->when(data_get($wheres, 'parcel_id'), function($query, $parcelId){
             $query->where('parcels.id', $parcelId);
         })->when(data_get($wheres, 'package_id'), function($query, $packageId){
