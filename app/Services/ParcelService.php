@@ -130,6 +130,8 @@ class ParcelService
             if (!data_get($parcel, 'id')) {
                 throw new Exception('Not found');
             }
+            //format data before update
+            $info = self::formatDataParcel($input);
             $new_status = data_get($input, 'status');
             if (!is_null($new_status) && $new_status != $parcel->status) {
                 //insert history
@@ -137,13 +139,16 @@ class ParcelService
                     'parcel_id' => data_get($parcel, 'id'),
                     'date_time' => now()->format('Y/m/d H:m:s'),
                     'location' => data_get($input, 'location', config('setting.company_transfer_location')),
-                    'status' => data_get($input, 'status'),
+                    'status' => $new_status,
                     'note' => data_get($input, 'note'),
                 ];
                 ParcelHistory::create($history);
+                $info['status'] = $new_status;
+            } else {
+                if (isset($info['status'])) {
+                    unset($info['status']);
+                }
             }
-            //format data before update
-            $info = self::formatDataParcel($input);
             $parcel->update($info);
             DB::commit();
             return [$parcel, $error];
