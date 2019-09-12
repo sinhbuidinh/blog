@@ -214,11 +214,56 @@ ul.checklist-tracking li p {
 .site-logo img {
     width: 160px;
 }
+.mb-6, .my-6 {
+    margin-bottom: 4.5rem !important;
+}
+.text-center {
+    text-align: center; 
+    display: block;
+}
+#carousel_slider,
+.content,
+.header,
+#body {
+    margin-left: 5px;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+#body {
+    padding-right: 10px;
+}
 .carousel-item img {
     height: 320px;
+}
+.header {
+    height: 60px;
+}
+.header .menu {
+    padding-right: 0;
+}
+.header .logo {
+    cursor: pointer;
+    padding-right: 0;
+}
+.header .logo img {
+    width: 60px;
+}
+.header .menu #header_menu_dropdown {
+    z-index: 20;
+    background-color: #deedf8 !important;
+}
+#header_menu_dropdown .nav-item:hover {
+    cursor: pointer;
+    background-color: #d87611;
 }
 @media only screen and (max-width: 600px) {
     .carousel-item img {
         height: 160px;
+    }
+    .header .logo,
+    .header .menu {
+        padding-left: 0;
+        padding-right: 0;
     }
 }

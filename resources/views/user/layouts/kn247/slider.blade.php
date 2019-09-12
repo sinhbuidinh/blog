@@ -1,8 +1,8 @@
 @if(count($sliders) > 0)
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+<div id="carousel_slider" class="carousel slide row col-sm-12" data-ride="carousel">
     <ol class="carousel-indicators">
         @foreach($sliders as $k => $info)
-        <li data-target="#carouselExampleIndicators" data-slide-to="{{ $k }}"></li>
+        <li data-target="#carousel_slider" data-slide-to="{{ $k }}"></li>
         @endforeach
     </ol>
     <div class="carousel-inner">
@@ -19,11 +19,11 @@
         </div>
         @endforeach
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <a class="carousel-control-prev" href="#carousel_slider" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <a class="carousel-control-next" href="#carousel_slider" role="button" data-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>

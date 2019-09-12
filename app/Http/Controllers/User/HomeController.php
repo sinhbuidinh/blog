@@ -84,16 +84,16 @@ class HomeController extends Controller
 
     public function locate(Request $request, $code = null)
     {
-        $parcel = $histories = [];
+        $parcel = $histories = $tracks = [];
         if (!empty($code)) {
             list($parcel, $histories, $tracks) = $this->parcelService->locateInfo($code);
         }
         $data = [
-            'headers' => self::getSlider(),
-            'code'   => $code,
-            'parcel' => $parcel,
+            'headers'   => self::getSlider(),
+            'code'      => $code,
+            'parcel'    => $parcel,
             'histories' => $histories,
-            'tracks' => $tracks,
+            'tracks'    => $tracks,
         ];
         return view('user.home.locate', $data);
     }
