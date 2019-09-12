@@ -1,37 +1,31 @@
-<section class="site-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="owl-carousel owl-theme home-slider">
-                    @foreach($footer_latest as $post)
-                    <div>
-                        <a href="{{ '#'.data_get($post, 'id') }}" 
-                            class="a-block d-flex align-items-center height-lg" 
-                            style="background-image: url({{ asset('images/'.data_get($post, 'image_name')) }}); ">
-                        <div class="text half-to-full">
-                            <div class="post-meta">
-                                <span class="category">{{ data_get($post, 'category') }}</span>
-                                <span class="mr-2">{{ data_get($post, 'create_from') }} </span> &bullet;
-                                <span class="ml-2">
-                                    <span class="fa fa-comments"></span>
-                                    <span>{{ data_get($post, 'comments') }}</span>
-                                </span>
-                            </div>
-                            <h3>{{ data_get($post, 'title') }}</h3>
-                            <p>{{ data_get($post, 'short_body') }}</p>
-                        </div>
-                        </a>
-                    </div>
-                    @endforeach
-                </div>
+@if(count($sliders) > 0)
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        @foreach($sliders as $k => $info)
+        <li data-target="#carouselExampleIndicators" data-slide-to="{{ $k }}"></li>
+        @endforeach
+    </ol>
+    <div class="carousel-inner">
+        @foreach($sliders as $k => $info)
+        @php
+            $active = (($k == 0) ? ' active' : '');
+        @endphp
+        <div class="carousel-item{{ $active }}">
+            <img class="d-block w-100" src="{{ asset('images/'.data_get($info, 'img')) }}" alt="{{ data_get($info, 'alt') }}">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>{{ data_get($info, 'title') }}</h5>
+                <p>{{ data_get($info, 'caption') }}</p>
             </div>
         </div>
-        @if($have_suggest)
-        <div class="row">
-            @include('user.layouts.post.suggest', [
-                'suggest_post' => $footer_latest ?? []
-            ])
-        </div>
-        @endif
+        @endforeach
     </div>
-</section>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+@endif

@@ -18,6 +18,7 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
     <div class="container">
         <div class="row blog-entries">
             <div class="col-md-12">
+                @include('user.layouts.kn247.parcel-find')
                 <div class="row">
                     <div class="col-md-12 title-locate">
                         <h1 class="mb-4">ĐỊNH VỊ BƯU PHẨM</h1>

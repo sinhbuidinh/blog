@@ -42,4 +42,5 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/fonts/flaticon/font/flaticon.scss', 'public/fonts/flaticon')
    .sass('resources/sass/app.scss', 'public/css')
    .copy('resources/sass/select2.min.css', 'public/css/select2.min.css')
+   .sass('resources/sass/kn247/search.scss', 'public/css/kn247')
    .sass('resources/sass/kn247/style.scss', 'public/css/kn247');
