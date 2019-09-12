@@ -93,7 +93,7 @@ class ParcelService
         try {
             DB::beginTransaction();
             $guest_code = data_get($input, 'guest_code');
-            $info = self::formatDataParcel($input);
+            $info = self::formatDataParcel($input, true);
             $parcel = Parcel::create($info);
             $parcel_id = data_get($parcel, 'id');
             if (!$parcel_id) {
@@ -144,10 +144,6 @@ class ParcelService
                 ];
                 ParcelHistory::create($history);
                 $info['status'] = $new_status;
-            } else {
-                if (isset($info['status'])) {
-                    unset($info['status']);
-                }
             }
             $parcel->update($info);
             DB::commit();
@@ -333,42 +329,47 @@ class ParcelService
         return [$parcel, $histories, $tracks];
     }
 
-    private function formatDataParcel($input)
+    private function formatDataParcel($input, $is_new = false)
     {
-        return [
-            'guest_id'       => data_get($input, 'guest_id'),
-            'guest_code'     => data_get($input, 'guest_code'),
-            'bill_code'      => data_get($input, 'bill_code'),
-            'type'           => data_get($input, 'type'),
-            'real_weight'    => data_get($input, 'real_weight'),
-            'weight'         => data_get($input, 'weight'),
-            'long'           => data_get($input, 'long'),
-            'wide'           => data_get($input, 'wide'),
-            'height'         => data_get($input, 'height'),
-            'num_package'    => data_get($input, 'num_package'),
-            'type_transfer'  => data_get($input, 'type_transfer'),
-            'services'       => data_get($input, 'services'),
-            'total_service'  => data_get($input, 'total_service'),
-            'time_input'     => now()->format('Y-m-d H:m:s'),
-            'time_receive'   => data_get($input, 'time_receive'),
-            'receiver'       => data_get($input, 'receiver'),
-            'receiver_tel'   => data_get($input, 'receiver_tel'),
-            'provincial'     => data_get($input, 'province'),
-            'district'       => data_get($input, 'district'),
-            'ward'           => data_get($input, 'ward'),
-            'address'        => data_get($input, 'address'),
-            'price'          => data_get($input, 'price'),
-            'cod'            => data_get($input, 'cod'),
-            'vat'            => data_get($input, 'vat'),
-            'price_vat'      => data_get($input, 'price_vat'),
-            'refund'         => data_get($input, 'refund'),
-            'forward'        => data_get($input, 'forward'),
-            'support_gas'    => data_get($input, 'support_gas'),
-            'support_remote' => data_get($input, 'support_remote'),
-            'total'          => data_get($input, 'total', 0),
-            'note'           => data_get($input, 'note', 0),
-            'status'         => Parcel::STATUS_INIT,
+        $params = [
+            'guest_id'         => data_get($input, 'guest_id'),
+            'guest_code'       => data_get($input, 'guest_code'),
+            'bill_code'        => data_get($input, 'bill_code'),
+            'type'             => data_get($input, 'type'),
+            'real_weight'      => data_get($input, 'real_weight'),
+            'weight'           => data_get($input, 'weight'),
+            'long'             => data_get($input, 'long'),
+            'wide'             => data_get($input, 'wide'),
+            'height'           => data_get($input, 'height'),
+            'num_package'      => data_get($input, 'num_package'),
+            'type_transfer'    => data_get($input, 'type_transfer'),
+            'services'         => data_get($input, 'services'),
+            'total_service'    => data_get($input, 'total_service'),
+            'time_input'       => now()->format('Y-m-d H:m:s'),
+            'time_receive'     => data_get($input, 'time_receive'),
+            'receiver_company' => data_get($input, 'receiver_company'),
+            'receiver'         => data_get($input, 'receiver'),
+            'receiver_tel'     => data_get($input, 'receiver_tel'),
+            'provincial'       => data_get($input, 'province'),
+            'district'         => data_get($input, 'district'),
+            'ward'             => data_get($input, 'ward'),
+            'address'          => data_get($input, 'address'),
+            'price'            => data_get($input, 'price'),
+            'cod'              => data_get($input, 'cod'),
+            'vat'              => data_get($input, 'vat'),
+            'price_vat'        => data_get($input, 'price_vat'),
+            'refund'           => data_get($input, 'refund'),
+            'forward'          => data_get($input, 'forward'),
+            'support_gas'      => data_get($input, 'support_gas'),
+            'support_remote'   => data_get($input, 'support_remote'),
+            'total'            => data_get($input, 'total', 0),
+            'note'             => data_get($input, 'note', 0),
+            'status'           => Parcel::STATUS_INIT,
         ];
+        if ($is_new === false) {
+            unset($params['status']);
+        }
+        return $params;
     }
 
     public function getProvincials()
