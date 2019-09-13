@@ -8,7 +8,7 @@ Contact Page
     <div class="container">
         <div class="row mb-4">
             <div class="col-md-6">
-                <h1>Contact</h1>
+                <h1>Để lại thắc mắc bên dưới</h1>
             </div>
         </div>
         <div class="row blog-entries">
@@ -42,7 +42,6 @@ Contact Page
                 </form>
             </div>
             <!-- END main-content -->
-            @include('user.layouts.kn247.sidebar')
         </div>
     </div>
 </section>

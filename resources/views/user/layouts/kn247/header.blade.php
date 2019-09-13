@@ -11,20 +11,20 @@
             <div class="navbar-collapse collapse" id="header_menu_dropdown" aria-labelledby="header_menu_dropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="{{ route('user.index') }}">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="{{ route('user.about') }}">Giới thiệu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" href="{{ route('user.contact') }}">Liên hệ</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown link</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="transfer-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Loại chuyển phát</a>
+                        <div class="dropdown-menu" aria-labelledby="transfer-dropdown">
+                            <a class="dropdown-item" href="#">Chuyển Phát Nhanh(CPN)</a>
+                            <a class="dropdown-item" href="#">Hỏa tốc(HT)</a>
+                            <a class="dropdown-item" href="#">Vận tải(VT)</a>
                         </div>
                     </li>
                 </ul>

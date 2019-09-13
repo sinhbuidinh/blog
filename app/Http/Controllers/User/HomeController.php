@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ParcelService;
+use View;
 
 class HomeController extends Controller
 {
@@ -12,6 +13,7 @@ class HomeController extends Controller
     public function __construct(ParcelService $parcelService)
     {
         $this->parcelService = $parcelService;
+        View::share('headers', self::getSlider());
     }
 
     public function getCategories()
@@ -52,7 +54,6 @@ class HomeController extends Controller
     {
         $data = [
             'categories' => $this->getCategories(),
-            'headers' => self::getSlider(),
             'popular_post'  => $this->getPopularPost(),
         ];
         return view('user.home.index', $data);
@@ -64,20 +65,20 @@ class HomeController extends Controller
             [
                 'img' => 'user/slider1.jpg',
                 'alt' => 'slider1 kn247',
-                'title' => 'Tiêu chí',
+                'title' => 'KN247',
                 'caption' => 'Tin cậy như bạn tự tay chuyển phát',
             ],
             [
                 'img' => 'user/slider2.jpg',
                 'alt' => 'slider2 kn247',
-                'title' => 'Tiêu chí 2',
-                'caption' => '22222222222 Tin cậy như bạn tự tay chuyển phát',
+                'title' => 'KN247',
+                'caption' => 'Nhanh chóng, tiện lợi',
             ],
             [
                 'img' => 'user/slider3.jpg',
                 'alt' => 'slider3 kn247',
-                'title' => 'Tiêu chí 3',
-                'caption' => '33333333 Tin cậy như bạn tự tay chuyển phát',
+                'title' => 'KN247',
+                'caption' => 'Thân thiện, gần gũi',
             ],
         ];
     }
@@ -89,7 +90,6 @@ class HomeController extends Controller
             list($parcel, $histories, $tracks) = $this->parcelService->locateInfo($code);
         }
         $data = [
-            'headers'   => self::getSlider(),
             'code'      => $code,
             'parcel'    => $parcel,
             'histories' => $histories,

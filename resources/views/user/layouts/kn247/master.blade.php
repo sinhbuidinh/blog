@@ -14,9 +14,8 @@
     <link rel="stylesheet" href="/fonts/fontawesome/font-awesome.min.css">
     <link rel="stylesheet" href="/fonts/flaticon/flaticon.css">
     <!-- Theme Style -->
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/kn247/style.css">
     <link rel="stylesheet" href="{{ asset('css/kn247/search.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kn247/style.css') }}">
     @yield('style')
 </head>
 <body id="body">

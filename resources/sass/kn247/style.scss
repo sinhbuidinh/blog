@@ -239,6 +239,11 @@ ul.checklist-tracking li p {
 .header .menu {
     padding-right: 0;
 }
+.header .menu .navbar {
+    background-color: #deedf8 !important;
+    padding: 0;
+    height: 100%;
+}
 .header .logo {
     cursor: pointer;
     padding-right: 0;
@@ -249,14 +254,39 @@ ul.checklist-tracking li p {
 }
 .header .menu #header_menu_dropdown {
     z-index: 20;
-    background-color: #deedf8 !important;
+    height: 100%;
+}
+#header_menu_dropdown .nav-item {
+    min-width: 120px;
 }
 #header_menu_dropdown .nav-item:hover {
     cursor: pointer;
     background-color: #d87611;
 }
+.navbar-nav {
+    width: 100%;
+    height: 100%;
+}
+.navbar-nav .nav-link {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dropdown-menu .dropdown-item:hover {
+    background-color: #d87611;
+}
 .header .menu .note-title {
     display: none;
+}
+.carousel-caption h5 {
+    color: #d87611;
+}
+.carousel-caption p {
+    color: #03ffe8;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 @media only screen and (max-width: 600px) {
     .carousel-item img {
