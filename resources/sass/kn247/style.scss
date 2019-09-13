@@ -221,6 +221,11 @@ ul.checklist-tracking li p {
     text-align: center; 
     display: block;
 }
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #carousel_slider,
 .content,
 .header,
@@ -233,7 +238,7 @@ ul.checklist-tracking li p {
 #body {
     padding-right: 10px;
 }
-.carousel-item img {
+#carousel_slider .carousel-item img {
     height: 320px;
 }
 .header .menu {
@@ -289,7 +294,7 @@ ul.checklist-tracking li p {
     text-transform: uppercase;
 }
 @media only screen and (max-width: 600px) {
-    .carousel-item img {
+    #carousel_slider .carousel-item img {
         height: 160px;
     }
     .header .menu .note-title {
