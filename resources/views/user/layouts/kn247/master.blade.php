@@ -26,6 +26,7 @@
         'sliders' => $headers
     ])
     @yield('content')
+    @include('user.layouts.kn247.footer')
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
     <script src="{{ mix('js/user/index.js') }}" type="text/javascript"></script>
     @yield('script')

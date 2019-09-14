@@ -8,8 +8,10 @@ $(function(){
     });
     $('.check').on('click', function(){
         var search = $('#search_keyword').val();
-        if (typeof search !== undefined) {
-            window.location.href = $('#url_search').val() + '/' + $(this).val();
+        if (typeof search !== 'undefined' && search.length > 0) {
+            window.location.href = $('#url_search').val() + '/' + search;
+        } else {
+            alert('Vui lòng nhập mã vận đơn');
         }
     });
     $('.header .logo').on('click', function(){

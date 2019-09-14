@@ -2,6 +2,12 @@
     background: #274da1;
     padding: 10px 0;
 }
+.rm-df-align {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
 body {
     margin: 0;
     font-size: 14px;
@@ -245,7 +251,6 @@ ul.checklist-tracking li p {
     padding-right: 0;
 }
 .header .menu .navbar {
-    background-color: #deedf8 !important;
     padding: 0;
     height: 100%;
 }
@@ -292,6 +297,14 @@ ul.checklist-tracking li p {
     color: #03ffe8;
     font-weight: bold;
     text-transform: uppercase;
+}
+.site-footer {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 2em 0;
+    background: #022f40;
+    color: #fff;
 }
 @media only screen and (max-width: 600px) {
     #carousel_slider .carousel-item img {

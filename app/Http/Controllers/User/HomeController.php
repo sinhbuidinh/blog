@@ -16,40 +16,6 @@ class HomeController extends Controller
         View::share('headers', self::getSlider());
     }
 
-    public function getCategories()
-    {
-        return [
-            'code' => [
-                'route_name' => 'user.category',
-                'route_params' => ['type' => 'code'],
-                'route'  => route('user.category', ['type' => 'code']),
-                'name'   => 'Coding',
-                'count' => 12,
-            ],
-            'food' => [
-                'route_name' => 'user.category',
-                'route_params' => ['type' => 'food'],
-                'route'  => route('user.category', ['type' => 'food']),
-                'name'   => 'Food',
-                'count' => 21,
-            ],
-            'travel' => [
-                'route_name' => 'user.category',
-                'route_params' => ['type' => 'travel'],
-                'route'  => route('user.category', ['type' => 'travel']),
-                'name'   => 'Travel',
-                'count' => 7,
-            ],
-            'life' => [
-                'route_name' => 'user.category',
-                'route_params' => ['type' => 'life'],
-                'route'  => route('user.category', ['type' => 'life']),
-                'name'   => 'Lifestyle',
-                'count' => 15,
-            ],
-        ];
-    }
-
     public function index(Request $request)
     {
         $data = [
@@ -57,30 +23,6 @@ class HomeController extends Controller
             'popular_post'  => $this->getPopularPost(),
         ];
         return view('user.home.index', $data);
-    }
-
-    private function getSlider()
-    {
-        return [
-            [
-                'img' => 'user/slider1.jpg',
-                'alt' => 'slider1 kn247',
-                'title' => 'KN247',
-                'caption' => 'Tin cậy như bạn tự tay chuyển phát',
-            ],
-            [
-                'img' => 'user/slider2.jpg',
-                'alt' => 'slider2 kn247',
-                'title' => 'KN247',
-                'caption' => 'Nhanh chóng, tiện lợi',
-            ],
-            [
-                'img' => 'user/slider3.jpg',
-                'alt' => 'slider3 kn247',
-                'title' => 'KN247',
-                'caption' => 'Thân thiện, gần gũi',
-            ],
-        ];
     }
 
     public function locate(Request $request, $code = null)
@@ -106,6 +48,56 @@ class HomeController extends Controller
         $all_latest_post = $this->getLatestPost();
         $footer_latest = array_slice($all_latest_post, 0, 3);
         return view('user.home.about', compact('categories', 'without_slider', 'without_sidebar', 'all_latest_post', 'footer_latest'));
+    }
+
+    public function contact(Request $request)
+    {
+        $categories = $this->getCategories();
+        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
+        $popular_post = $this->getPopularPost();
+        $have_suggest = true;
+        return view('user.home.contact', compact('categories', 'footer_latest', 'popular_post', 'have_suggest'));
+    }
+
+    public function category(Request $request, string $type = null)
+    {
+        $categories = $this->getCategories();
+        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
+        $popular_post = $this->getPopularPost();
+        $category_posts = $this->getCategoriesPost();
+        return view('user.home.category', compact('categories', 'type', 'footer_latest', 'popular_post', 'category_posts'));
+    }
+
+    public function blog(Request $request)
+    {
+        $categories = $this->getCategories();
+        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
+        $popular_post = $this->getPopularPost();
+        return view('user.home.blog-single', compact('categories', 'footer_latest', 'popular_post'));
+    }
+
+    private function getSlider()
+    {
+        return [
+            [
+                'img' => 'user/slider1.jpg',
+                'alt' => 'slider1 kn247',
+                'title' => 'KN247',
+                'caption' => 'Tin cậy như bạn tự tay chuyển phát',
+            ],
+            [
+                'img' => 'user/slider2.jpg',
+                'alt' => 'slider2 kn247',
+                'title' => 'KN247',
+                'caption' => 'Nhanh chóng, tiện lợi',
+            ],
+            [
+                'img' => 'user/slider3.jpg',
+                'alt' => 'slider3 kn247',
+                'title' => 'KN247',
+                'caption' => 'Thân thiện, gần gũi',
+            ],
+        ];
     }
 
     private function getLatestPost()
@@ -298,29 +290,37 @@ class HomeController extends Controller
         ];
     }
 
-    public function contact(Request $request)
+    public function getCategories()
     {
-        $categories = $this->getCategories();
-        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        $popular_post = $this->getPopularPost();
-        $have_suggest = true;
-        return view('user.home.contact', compact('categories', 'footer_latest', 'popular_post', 'have_suggest'));
-    }
-
-    public function category(Request $request, string $type = null)
-    {
-        $categories = $this->getCategories();
-        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        $popular_post = $this->getPopularPost();
-        $category_posts = $this->getCategoriesPost();
-        return view('user.home.category', compact('categories', 'type', 'footer_latest', 'popular_post', 'category_posts'));
-    }
-
-    public function blog(Request $request)
-    {
-        $categories = $this->getCategories();
-        $footer_latest = array_slice($this->getLatestPost(), 0, 3);
-        $popular_post = $this->getPopularPost();
-        return view('user.home.blog-single', compact('categories', 'footer_latest', 'popular_post'));
+        return [
+            'code' => [
+                'route_name' => 'user.category',
+                'route_params' => ['type' => 'code'],
+                'route'  => route('user.category', ['type' => 'code']),
+                'name'   => 'Coding',
+                'count' => 12,
+            ],
+            'food' => [
+                'route_name' => 'user.category',
+                'route_params' => ['type' => 'food'],
+                'route'  => route('user.category', ['type' => 'food']),
+                'name'   => 'Food',
+                'count' => 21,
+            ],
+            'travel' => [
+                'route_name' => 'user.category',
+                'route_params' => ['type' => 'travel'],
+                'route'  => route('user.category', ['type' => 'travel']),
+                'name'   => 'Travel',
+                'count' => 7,
+            ],
+            'life' => [
+                'route_name' => 'user.category',
+                'route_params' => ['type' => 'life'],
+                'route'  => route('user.category', ['type' => 'life']),
+                'name'   => 'Lifestyle',
+                'count' => 15,
+            ],
+        ];
     }
 }
