@@ -281,9 +281,13 @@ class ParcelController extends Controller
         }
 
         $total_over = 0;
+        $run = 0;
         $over_history = [];
-        $over_level = 0;
+        $over_level = self::calOverLevel($over, $ranges);
         foreach ($ranges as $weight_range => $overs) {
+            if ($run == $over_level) {
+                break;
+            }
             list($floor, $ceil) = explode('-', $weight_range);
             if ($ceil == '~') {
                 $ceil = '9999999999';
@@ -299,12 +303,11 @@ class ParcelController extends Controller
             if ($over >= $floor && $over <= $ceil) {
                 $over_weight = $over - $floor;
             } else {
-                $over_level++;
-                continue;
+                $over_weight = $ceil - $floor;
             }
-            // time over for apply price of range
             $times_over = ceil($over_weight/$every);
-            $total_over = ($times_over * $over_price);
+            $total_over += ($times_over * $over_price);
+            $run++;
         }
         $total_amount = $price + $total_over;
         return [
@@ -316,13 +319,29 @@ class ParcelController extends Controller
                 'base' => formatPrice($price),
                 'over' => formatPrice($total_over),
             ],
-            'total_base' => $total_amount,
+            'total_base'   => $total_amount,
             'total_format' => formatPrice($total_amount),
             'over_history' => $over_history,
-            'times_over'   => $times_over,
             'total_over'   => $total_over,
             'over_level'   => $over_level,
+            'km_type'      => $km_type,
         ];
+    }
+
+    private function calOverLevel($over, $ranges)
+    {
+        $over_level = 1;
+        foreach ($ranges as $weight_range => $overs) {
+            list($floor, $ceil) = explode('-', $weight_range);
+            if ($ceil == '~') {
+                $ceil = '9999999999';
+            }
+            if ($over >= $floor && $over <= $ceil) {
+                break;
+            }
+            $over_level++;
+        }
+        return $over_level;
     }
 
     private function getPriceKmDefine($province, array $define, $parcel_id = null)
