@@ -69,12 +69,19 @@ function parseClassByMsgType($msg_type)
     }
     return $class;
 }
-function isActiveClass($route_name, $parameters = [])
+function isActiveClass($routeName, $parameters = [])
 {
-    $path_name_of_route = route($route_name, $parameters, null);
-    $path_request = '/'.request()->path();
-    if (strtolower($path_name_of_route) == strtolower($path_request)) {
-        return 'active';
+    $pathCheck = route($routeName, $parameters, false);
+    if ($pathCheck === '/') {
+        $path = $pathCheck;
+    } else {
+        $ex = explode('/', $pathCheck);
+        array_shift($ex);
+        $path = implode('/', $ex);
+    }
+    // $routeName == 'user.index' ? dd('helper', $path, request()->path(), request()->is($path)) : '';
+    if(request()->is($path)){
+        return ' active';
     }
     return '';
 }

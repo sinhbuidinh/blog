@@ -206,16 +206,23 @@ ul.checklist-tracking li p {
     text-align: center;
 }
 .navbar-nav li:hover {
-    background-color: #acc4f9;
-    color: black;
+    background-color: #ff8100;
+    color: #0007ff;
 }
 .navbar-light .navbar-nav .nav-link {
     font-weight: 600;
     font-size: 18px;
 }
 .navbar-light .navbar-nav .nav-link:hover {
-  color: #6e89bb;
-  background-color: #ffffffa3 !important;
+  color: #0007ff;
+}
+.navbar-nav .active {
+    background-color: #0007ff;
+    color: #fff;
+}
+.navbar-light .navbar-nav .active > .nav-link {
+    background-color: unset;
+    color: unset;
 }
 .site-logo img {
     width: 160px;
@@ -271,7 +278,7 @@ ul.checklist-tracking li p {
 }
 #header_menu_dropdown .nav-item:hover {
     cursor: pointer;
-    background-color: #d87611;
+    background-color: #ff8100;
 }
 .navbar-nav {
     width: 100%;
@@ -285,13 +292,13 @@ ul.checklist-tracking li p {
     align-items: center;
 }
 .dropdown-menu .dropdown-item:hover {
-    background-color: #d87611;
+    background-color: #ff8100;
 }
 .header .menu .note-title {
     display: none;
 }
 .carousel-caption h5 {
-    color: #d87611;
+    color: #ff8100;
 }
 .carousel-caption p {
     color: #03ffe8;
@@ -306,7 +313,38 @@ ul.checklist-tracking li p {
     background: #022f40;
     color: #fff;
 }
+.title-org {
+    color: #ff8200;
+}
+.carousel-control-next, .carousel-control-prev {
+    width: 20px;
+}
+.carousel-control-next {
+    right: 2%;
+}
+.carousel-control-prev {
+    left: 2%;
+}
+.center-page {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.services .item {
+    margin-right: 0;
+    margin-left: 0;
+}
+.require:after {
+    content: "(*)";
+    padding: 2px;
+    color: red;
+}
 @media only screen and (max-width: 600px) {
+    .header .navbar-brand {
+        padding-left: 10px;
+        margin: 0;
+    }
     #carousel_slider .carousel-item img {
         height: 160px;
     }
@@ -317,5 +355,22 @@ ul.checklist-tracking li p {
     .header .menu {
         padding-left: 0;
         padding-right: 0;
+    }
+    .navbar-light .navbar-nav .nav-link {
+        height: 32px;
+    }
+    .header .logo img {
+        width: 100%;
+        height: 40px;
+    }
+    .img-fluid {
+        height: 80px;
+    }
+    .services .item,
+    .services .item * {
+        padding-right: 0;
+        padding-left: 0;
+        margin-right: 0;
+        margin-left: 0;
     }
 }

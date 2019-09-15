@@ -2,16 +2,16 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-4 footer-left">
-                <h3>TÊN CÔNG TY</h3>
-                <p>Công Ty TNHH MTV Kết Nối 247</p>
-                <br>
-                <h3>TRỤ SỞ CHÍNH</h3>
-                <p>217 Lãnh Bình Thăng, Phường 12, Quận 11, TP HCM</p>
-                <p>SDT: 0909.317.297</p>
+                <h3 class="title-org">THÔNG TIN</h3>
+                <p><b class="title-org">Tên công ty: </b>CÔNG TY TNHH MTV KẾT NỐI 247</p>
+                <p><b class="title-org">Mã số thuế: </b>0315785714</p>
+                <p><b class="title-org">Địa chỉ: </b>217 Lãnh Binh Thăng, Phường 12, Quận 11, Thành phố Hồ Chí Minh</p>
+                <p><b class="title-org">Điện thoại: </b>(028)66.858.247 -  0979.968.247</p>
             </div>
             <div class="col-md-7 footer-right">
-                <div class="row">
-                </div>
+                <h3 class="title-org">TRỤ SỞ CHÍNH</h3>
+                <p><b class="title-org">Địa chỉ: </b>217 Lãnh Bình Thăng, Phường 12, Quận 11, TP HCM</p>
+                <p><b class="title-org">SDT: </b>0979.968.247</p>
             </div>
         </div>
         <div class="row">

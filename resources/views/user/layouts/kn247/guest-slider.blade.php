@@ -1,6 +1,6 @@
-<div class="container-fluid guest-slider">
-    <div id="carousel-guest" class="carousel slide" data-ride="carousel" data-interval="9000">
-        <div class="carousel-inner row w-10 mxauto" role="listbox">
+<div class="container-fluid guest-slider rm-df-align">
+    <div id="carousel-guest" class="carousel slide rm-df-align" data-ride="carousel" data-interval="9000">
+        <div class="carousel-inner row w-10 mxauto rm-df-align" role="listbox">
             <div class="carousel-item col-md-4 active">
                 <img class="img-fluid mx-auto d-block" src="{{ asset('images/user/guest/simba.png') }}" alt="simba">
             </div>
@@ -18,9 +18,6 @@
             </div>
             <div class="carousel-item col-md-4">
                 <img class="img-fluid mx-auto d-block" src="{{ asset('images/user/guest/congichq8.jpg') }}" alt="cong-ich-q8">
-            </div>
-            <div class="carousel-item col-md-4">
-                <img class="img-fluid mx-auto d-block" src="{{ asset('images/user/guest/simba.png') }}" alt="simba">
             </div>
             <div class="carousel-item col-md-4">
                 <img class="img-fluid mx-auto d-block" src="{{ asset('images/user/guest/vinhthinh.png') }}" alt="vinh-thinh">

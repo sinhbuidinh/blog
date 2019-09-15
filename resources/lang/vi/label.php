@@ -131,4 +131,7 @@ return [
     'reason' => 'Lý do',
     'fail_time' => 'Thời gian xác nhận phát lỗi',
     'fail_note' => 'Ghi chú phát lỗi',
+    'cpn' => 'Chuyển phát nhanh',
+    'quick' => 'Hỏa tốc',
+    'transport' => 'Dịch vụ vận tải',
 ];

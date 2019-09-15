@@ -1,5 +1,5 @@
 <!-- form search parcel -->
-<div class="row col-md-12 row-search">
+<div class="row col-md-12 row-search rm-df-align">
     <div class="row prefix"></div>
     <div class="row search mb-4">
         <div class="label">TRA CỨU<br>VẬN ĐƠN</div>

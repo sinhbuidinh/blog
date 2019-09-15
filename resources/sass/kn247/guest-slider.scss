@@ -69,9 +69,10 @@ Attribution required
         margin: 10px auto;
     }
 
-    .guest-slider .carousel-item,
+    .guest-slider .carousel-item {
+        height: 120px;
+    }
     .guest-slider .carousel-item img {
-        min-height: 60px;
-        max-height: 120px;
+        height: 100px;
     }
 }

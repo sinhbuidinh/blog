@@ -59,6 +59,33 @@ class HomeController extends Controller
         return view('user.home.contact', compact('categories', 'footer_latest', 'popular_post', 'have_suggest'));
     }
 
+    public function cpnService(Request $request)
+    {
+        $data = [
+            'title' => trans('label.cpn'),
+            'content' => trans('message.cpn_define'),
+        ];
+        return view('user.home.service', $data);
+    }
+
+    public function quickService(Request $request)
+    {
+        $data = [
+            'title' => trans('label.quick'),
+            'content' => trans('message.quick_define'),
+        ];
+        return view('user.home.service', $data);
+    }
+
+    public function transportService(Request $request)
+    {
+        $data = [
+            'title' => trans('label.transport'),
+            'content' => trans('message.transport_define'),
+        ];
+        return view('user.home.service', $data);
+    }
+
     public function category(Request $request, string $type = null)
     {
         $categories = $this->getCategories();

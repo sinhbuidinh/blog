@@ -32,9 +32,15 @@ Route::namespace('User')->group(function(){
     Route::get('/', 'HomeController@index')->name('user.index');
     Route::get('/dinh-vi-buu-pham/{van_don_code?}', 'HomeController@locate')->name('user.locate');
     Route::get('/category/{type?}', 'HomeController@category')->name('user.category');
-    Route::get('/about', 'HomeController@about')->name('user.about');
-    Route::get('/contact', 'HomeController@contact')->name('user.contact');
+    Route::get('/gioi-thieu', 'HomeController@about')->name('user.about');
+    Route::get('/lien-he', 'HomeController@contact')->name('user.contact');
     Route::get('/blog/{blog_id?}', 'HomeController@blog')->name('user.blog');
+
+    Route::prefix('dich-vu')->group(function () {
+        Route::get('/chuyen-phat-nhanh', 'HomeController@cpnService')->name('user.service.cpn');
+        Route::get('/hoa-toc', 'HomeController@quickService')->name('user.service.quick');
+        Route::get('/van-tai', 'HomeController@transportService')->name('user.service.transport');
+    });
 });
 
 
