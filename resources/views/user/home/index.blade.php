@@ -3,8 +3,8 @@
 Trang chủ | KN247Express
 @endsection
 @section('style')
-    <link rel="stylesheet" href="{{ asset('css/kn247/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/kn247/guest-slider.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kn247/index.css?v=1.02') }}">
+    <link rel="stylesheet" href="{{ asset('css/kn247/guest-slider.css?v=1.02') }}">
 @endsection
 @section('content')
 <hr/>
@@ -102,5 +102,5 @@ Trang chủ | KN247Express
 </div>
 @endsection
 @section('script')
-    <script src="{{ asset('js/user/guest-slider.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/user/guest-slider.js?v=1.02') }}" type="text/javascript"></script>
 @endsection

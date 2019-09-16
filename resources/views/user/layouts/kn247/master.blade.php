@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="/fonts/fontawesome/font-awesome.min.css">
     <link rel="stylesheet" href="/fonts/flaticon/flaticon.css">
     <!-- Theme Style -->
-    <link rel="stylesheet" href="{{ asset('css/kn247/search.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/kn247/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/kn247/search.css?v=1.02') }}">
+    <link rel="stylesheet" href="{{ asset('css/kn247/style.css?v=1.02') }}">
     @yield('style')
 </head>
 <body id="body">
@@ -27,8 +27,8 @@
     ])
     @yield('content')
     @include('user.layouts.kn247.footer')
-    <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/user/index.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/app.js?v=1.02') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/user/index.js?v=1.02') }}" type="text/javascript"></script>
     @yield('script')
 </body>
 </html>
