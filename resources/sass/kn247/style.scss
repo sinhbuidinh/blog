@@ -205,7 +205,7 @@ ul.checklist-tracking li p {
     border-top: none;
     text-align: center;
 }
-.navbar-nav li:hover {
+.navbar-nav li:hover:not(.active) {
     background-color: #ff8100;
     color: #0007ff;
 }
@@ -213,8 +213,14 @@ ul.checklist-tracking li p {
     font-weight: 600;
     font-size: 18px;
 }
-.navbar-light .navbar-nav .nav-link:hover {
-  color: #0007ff;
+.navbar-light .navbar-nav .nav-item.active .nav-link:hover {
+    color: #ff7400;
+}
+.navbar-light .navbar-nav .nav-link:hover:not(.active) {
+    color: #0007ff;
+}
+.navbar-light .navbar-nav .nav-link, .dropdown-item {
+    color: #0d2aee;
 }
 .navbar-nav .active {
     background-color: #0007ff;
@@ -276,7 +282,7 @@ ul.checklist-tracking li p {
 #header_menu_dropdown .nav-item {
     min-width: 120px;
 }
-#header_menu_dropdown .nav-item:hover {
+#header_menu_dropdown .nav-item:hover:not(.active) {
     cursor: pointer;
     background-color: #ff8100;
 }

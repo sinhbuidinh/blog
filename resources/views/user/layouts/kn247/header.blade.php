@@ -28,7 +28,17 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="support-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hỗ trợ</a>
+                        @php
+                            $sp_active = '';
+                            if (isActiveClass('user.support.full-time')
+                                || isActiveClass('user.support.price-tbl')
+                                || isActiveClass('user.support.gas-exchange')
+                                || isActiveClass('user.support.gtgt')
+                            ) {
+                                $sp_active = ' active';
+                            }
+                        @endphp
+                        <a class="nav-link dropdown-toggle{{ $sp_active }}" href="#" id="support-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hỗ trợ</a>
                         <div class="dropdown-menu" aria-labelledby="support-dropdown">
                             <a class="dropdown-item{{ isActiveClass('user.support.full-time') }}" href="{{ route('user.support.full-time') }}">Thời gian toàn trình</a>
                             <a class="dropdown-item{{ isActiveClass('user.support.price-tbl') }}" href="{{ route('user.support.price-tbl') }}">Bảng giá</a>
