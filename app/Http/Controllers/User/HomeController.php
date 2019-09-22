@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Services\ParcelService;
-use View;
 
-class HomeController extends Controller
+class HomeController extends UserController
 {
     private $parcelService;
     public function __construct(ParcelService $parcelService)
     {
+        parent::__construct();
         $this->parcelService = $parcelService;
-        View::share('headers', self::getSlider());
     }
 
     public function index(Request $request)
@@ -101,30 +99,6 @@ class HomeController extends Controller
         $footer_latest = array_slice($this->getLatestPost(), 0, 3);
         $popular_post = $this->getPopularPost();
         return view('user.home.blog-single', compact('categories', 'footer_latest', 'popular_post'));
-    }
-
-    private function getSlider()
-    {
-        return [
-            [
-                'img' => 'user/slider1.jpg',
-                'alt' => 'slider1 kn247',
-                'title' => 'KN247',
-                'caption' => 'Tin cậy như bạn tự tay chuyển phát',
-            ],
-            [
-                'img' => 'user/slider2.jpg',
-                'alt' => 'slider2 kn247',
-                'title' => 'KN247',
-                'caption' => 'Nhanh chóng, tiện lợi',
-            ],
-            [
-                'img' => 'user/slider3.jpg',
-                'alt' => 'slider3 kn247',
-                'title' => 'KN247',
-                'caption' => 'Thân thiện, gần gũi',
-            ],
-        ];
     }
 
     private function getLatestPost()

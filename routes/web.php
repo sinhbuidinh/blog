@@ -41,6 +41,13 @@ Route::namespace('User')->group(function(){
         Route::get('/hoa-toc', 'HomeController@quickService')->name('user.service.quick');
         Route::get('/van-tai', 'HomeController@transportService')->name('user.service.transport');
     });
+
+    Route::prefix('ho-tro')->group(function () {
+        Route::get('/thoi-gian-toan-trinh', 'SupportController@fullTimeCourse')->name('user.support.full-time');
+        Route::get('/bang-gia', 'SupportController@priceTbl')->name('user.support.price-tbl');
+        Route::get('/phu-phi-nhien-lieu-va-ti-gia', 'SupportController@gasAndExchange')->name('user.support.gas-exchange');
+        Route::get('/dich-vu-gtgt', 'SupportController@gtgt')->name('user.support.gtgt');
+    });
 });
 
 

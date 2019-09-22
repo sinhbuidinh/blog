@@ -30,10 +30,10 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="support-dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hỗ trợ</a>
                         <div class="dropdown-menu" aria-labelledby="support-dropdown">
-                            <a class="dropdown-item" href="#">Thời gian toàn trình</a>
-                            <a class="dropdown-item" href="#">Bảng giá</a>
-                            <a class="dropdown-item" href="#">Phụ phí nhiên liệu & tỉ giá</a>
-                            <a class="dropdown-item" href="#">Dịch vụ GTGT</a>
+                            <a class="dropdown-item{{ isActiveClass('user.support.full-time') }}" href="{{ route('user.support.full-time') }}">Thời gian toàn trình</a>
+                            <a class="dropdown-item{{ isActiveClass('user.support.price-tbl') }}" href="{{ route('user.support.price-tbl') }}">Bảng giá</a>
+                            <a class="dropdown-item{{ isActiveClass('user.support.gas-exchange') }}" href="{{ route('user.support.gas-exchange') }}">Phụ phí nhiên liệu & tỉ giá</a>
+                            <a class="dropdown-item{{ isActiveClass('user.support.gtgt') }}" href="{{ route('user.support.gtgt') }}">Dịch vụ GTGT</a>
                         </div>
                     </li>
                 </ul>
