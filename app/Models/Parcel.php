@@ -126,6 +126,12 @@ class Parcel extends BaseModel
         return data_get($this->transfered()->first(), 'complete_receiver');
     }
 
+    public function getPictureConfirmAttribute()
+    {
+        //transfered -> complete_receiverd
+        return data_get($this->transfered()->first(), 'picture_confirm');
+    }
+
     public function getReceiverTimeAttribute()
     {
         //transfered -> complete_receive_time

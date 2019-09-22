@@ -156,7 +156,7 @@ class ParcelService
         }
     }
 
-    public function completeTransfered($input, $id)
+    public function completeTransfered($input, $id, $request)
     {
         $error = null;
         $parcel = [];
@@ -167,20 +167,26 @@ class ParcelService
                 throw new Exception('Not found');
             }
             $parcelId = data_get($parcel, 'id');
+            $saving_path = 'images/picture_confirms/'.$parcel->guest_code;
+            //insert picture
+            $file = $request->picture_confirm;
+            $path = $file->move($saving_path, $parcelId .'.'. $file->getClientOriginalExtension());
             //insert Transfered
             Transfered::create([
-                'parcel_id' => $parcelId,
-                'complete_receiver' => data_get($input, 'complete_receiver'),
+                'parcel_id'             => $parcelId,
+                'complete_receiver'     => data_get($input, 'complete_receiver'),
+                'picture_confirm'       => $path,
+                'complete_receiver_tel' => data_get($input, 'complete_receiver_tel'),
                 'complete_receive_time' => data_get($input, 'complete_receive_time'),
-                'complete_note' => data_get($input, 'complete_note'),
+                'complete_note'         => data_get($input, 'complete_note'),
             ]);
             //insert history
             $history = [
                 'parcel_id' => $parcelId,
                 'date_time' => data_get($input, 'complete_receive_time', now()->format('Y-m-d H:m:s')),
-                'location' => self::lastAddressWhenComplete($parcel),
-                'status' => Parcel::STATUS_COMPLETE,
-                'note' => data_get($input, 'complete_note'),
+                'location'  => self::lastAddressWhenComplete($parcel),
+                'status'    => Parcel::STATUS_COMPLETE,
+                'note'      => data_get($input, 'complete_note'),
             ];
             ParcelHistory::create($history);
             //update package have parcel
@@ -190,14 +196,10 @@ class ParcelService
             }
             if (empty($not_completed)) {
                 //update package
-                Package::where('id', $packageId)->update([
-                    'status' => Package::STATUS_COMPLETE
-                ]);
+                Package::where('id', $packageId)->update(['status' => Package::STATUS_COMPLETE]);
             }
             //format data before update
-            $parcel->update([
-                'status' => Parcel::STATUS_COMPLETE
-            ]);
+            $parcel->update(['status' => Parcel::STATUS_COMPLETE]);
             DB::commit();
             return [$parcel, $error];
         } catch (Exception $e) {
@@ -205,6 +207,9 @@ class ParcelService
             $error = $e->getMessage();
             Log::error(generateTraceMessage($e));
             DB::rollBack();
+            if (!empty($path)) {
+                unlink($path);
+            }
             return [false, $error];
         }
     }

@@ -135,6 +135,7 @@ class ParcelController extends Controller
     {
         list($services, $services_display) = $this->parcelService->getServiceList();
         $parcel = $this->parcelService->findById($id);
+        $transfered = $parcel->transfered->first();
         if (old('province') && old('district')) {
             $cal_remote = Parcel::isCalRemote(old('province'), old('district'));
         } else {
@@ -143,6 +144,7 @@ class ParcelController extends Controller
         $data = [
             'cal_remote'       => $cal_remote,
             'parcel'           => $parcel,
+            'transfered'       => $transfered,
             'guests'           => $this->parcelService->guestList(),
             'services'         => $services,
             'services_display' => $services_display,

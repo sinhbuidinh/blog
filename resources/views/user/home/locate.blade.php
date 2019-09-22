@@ -72,10 +72,10 @@ Tra cứu vận đơn | KN247Express - nhanh hơn bạn nghĩ
                             </div>
                         </div>
                         <!-- img receiver -->
-                        @if(!empty(data_get($parcel, 'img_receiver')))
+                        @if(!empty(data_get($parcel, 'picture_confirm')))
                         <div class="row">
                             <div class="col-2">
-                                <img src="{{ data_get($parcel, 'img_receiver') }}" style="width: 100%;">
+                                <img src="{{ asset(data_get($parcel, 'picture_confirm')) }}" style="width: 100%;">
                             </div>
                         </div>
                         @endif

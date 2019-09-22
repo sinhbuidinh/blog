@@ -55,8 +55,8 @@ class TransferedController extends Controller
 
     public function completeTransfered(CompleteTransfer $request, $id)
     {
-        $data = $request->only(['complete_receiver', 'complete_receiver_tel', 'complete_receive_time', 'complete_note']);
-        list($result, $message) = $this->parcelService->completeTransfered($data, $id);
+        $data = $request->only(['complete_receiver', 'complete_receiver_tel', 'complete_receive_time', 'complete_note', 'picture_confirm']);
+        list($result, $message) = $this->parcelService->completeTransfered($data, $id, $request);
         if ($result !== false) {
             session()->flash('success', trans('message.parcel_complete_transfered'));
             return redirect()->route('transfereds');

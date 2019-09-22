@@ -103,6 +103,7 @@ return [
     'complete_receiver_tel' => 'SDT ký nhận',
     'complete_receive_time' => 'Thời gian ký nhận',
     'complete_note' => 'Ghi chú lúc ký nhận',
+    'picture_confirm' => 'Hình ảnh xác nhận',
     'update' => 'Cập nhật',
     'create_date' => 'Ngày tạo',
     'pick_date' => 'Chọn ngày',
@@ -134,4 +135,5 @@ return [
     'cpn' => 'Chuyển phát nhanh',
     'quick' => 'Hỏa tốc',
     'transport' => 'Dịch vụ vận tải',
+    'transfered_info' => 'Thông tin nhận thực',
 ];

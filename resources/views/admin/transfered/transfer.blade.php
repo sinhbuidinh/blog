@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title'){{ trans('message.parcel_completed') }}@endsection
+@section('title'){{ trans('label.parcel_completed') }}@endsection
 @section('content')
 <div class="common_main_wrap">
     <div class="list_wrapper">
@@ -8,7 +8,7 @@
         </div>
         @include('admin.layouts.session-message')
         <div class="file_form_wrap">
-            <form class="login_form skip_alert_changes" action="{{ route('complete_transfered', $parcel->id) }}" id="parcel_form" method="post">
+            <form class="login_form skip_alert_changes" action="{{ route('complete_transfered', $parcel->id) }}" id="parcel_form" method="post" enctype="multipart/form-data">
                 <div class="hidden">
                     {{ csrf_field() }}
                 </div>
@@ -49,6 +49,12 @@
                         <div class="col-sm-2">{{ trans('label.complete_note') }}</div>
                         <div class="col-sm-8" style="padding-left: 5px;">
                             <textarea class="full_width form-control" name="complete_note">{{ old('complete_note') }}</textarea>
+                        </div>
+                    </div>
+                    <div class="row col-sm-12">
+                        <div class="col-sm-2">{{ trans('label.picture_confirm') }}</div>
+                        <div class="col-sm-8" style="padding-left: 5px;">
+                            <input type="file" class="full_width form-control" name="picture_confirm">
                         </div>
                     </div>
                 </div>
