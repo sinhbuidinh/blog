@@ -291,9 +291,6 @@ class ParcelController extends Controller
                 break;
             }
             list($floor, $ceil) = explode('-', $weight_range);
-            if ($ceil == '~') {
-                $ceil = '9999999999';
-            }
             $over_price = data_get($overs, $km_type);
             $over_history[] = [
                 'weight_range' => $weight_range,
@@ -302,7 +299,7 @@ class ParcelController extends Controller
                 'ceil'         => $ceil,
             ];
             // find weight apply for price_range
-            if ($over >= $floor && $over <= $ceil) {
+            if ($over >= $floor && ($over <= $ceil || $ceil == '~')) {
                 $over_weight = $over - $floor;
             } else {
                 $over_weight = $ceil - $floor;
