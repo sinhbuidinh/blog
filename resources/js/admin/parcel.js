@@ -79,7 +79,7 @@ $(document).on('paste cut keyup change', '#service_type, #parcel_type, #long, #w
     $('#weight').val(weight);
     $('#real_weight').val(real);
 });
-$(document).on('paste cut keyup change', '#total_service, #value_declare, #price, #refund, #forward, #price_vat, #cod, #support_remote, #support_gas', function(e){
+$(document).on('paste cut keyup change', '#total_service, #value_declare, #price, #refund, #forward, #price_vat, #cod, #support_remote, #support_gas, #package_price', function(e){
     formatNumberObject($(this));
 });
 $(document).on('paste cut keyup change', '#total_service, #value_declare, #price, #refund, #forward, #vat, #price_vat, #cod, #support_remote_rate, #support_remote, #support_gas_rate, #support_gas, #total', function(e){
@@ -226,6 +226,13 @@ function calculateTotal()
 }
 function calService()
 {
+    var list_services = $('#services').val();
+    //check have package_in
+    if (list_services != '') {
+        var pack_in = $('tr.service_id_choose input[name="service_id[]"][data-key="package_in"]').val();
+        pack_in = formatNumber(pack_in);
+        $('#package_price').val(pack_in);
+    }
     var inputs = $('tr.service_id_choose input[name="service_id[]"]:checked');
     var display = [];
     var services = [];
@@ -241,7 +248,7 @@ function calService()
     var weight = $('#weight').val();
     var main_price = $('#price').val() != '' ? removeFormat($('#price').val()) : 0;
     var declare = $('#value_declare').val() != '' ? removeFormat($('#value_declare').val()) : 0;
-    var price_with_percent = price;
+    var price_with_percent = main_price;
     if (!isNotSelected(declare, true)) {
         price_with_percent = declare;
     }
@@ -253,6 +260,12 @@ function calService()
         var range = typeof $(this).data('price_range') != 'undefined' ? $(this).data('price_range') : '';
         var name = $(this).data('name');
         var value = $(this).val();
+        var package_price = 0;
+        if (key == 'package_in') {
+            package_price = $('#package_price').val();
+            service_price = removeFormat(package_price);
+            value = service_price;
+        }
         //append price by math
         var cal_services = {
             "key": key,
@@ -265,9 +278,11 @@ function calService()
             "price_with_percent": price_with_percent,
             "main_price": main_price,
         };
+        if (key != 'package_in') {
+            service_price = getPriceService(weight, cal_services);
+        }
         services.push(cal_services);
         display.push(name);
-        service_price = getPriceService(weight, cal_services);
         total += service_price;
     });
     $('#services_display').val(display.join(', '));
@@ -281,6 +296,7 @@ function getPriceService(weight, define)
     if (!define.hasOwnProperty('math')
         || !define.hasOwnProperty('value')
         || !define.hasOwnProperty('main_price')
+        || !define.hasOwnProperty('price_with_percent')
     ) {
         return 0;
     }

@@ -532,7 +532,7 @@
                                         }
                                     @endphp
                                     <button type="button" name="service_list" id="service_list" class="full_width form-control{{ $services_invalid }}" data-toggle="modal" data-target="#services_list_model">{{ trans('label.services') }}</button>
-                                    <input type="hidden" id="services" name="services" value="{{ old('services') }}">
+                                    <input type="hidden" id="services" name="services" value="{{ old('services', $services) }}">
                                     @if ($errors->has('services'))
                                     <p class="common_form_error">
                                         {{ $errors->first('services') }}
@@ -699,11 +699,11 @@
                                 @endif
                                 data-name="{{ $s['name'] }}"
                                 data-math="{{ data_get($s, 'math', '+') }}"
-                                value="{{ $s['value'] }}">
+                                value="{{ $s['key'] == 'package_in' ? $val_pack_in : $s['value'] }}">
                             </td>
                             <td>{{ $s['name'] }}</td>
                             <td>{{ $s['display'] }}</td>
-                            <td>{{ $s['note'] }}</td>
+                            <td>{!! $s['note'] !!}</td>
                         </tr>
                         @endforeach
                         @else

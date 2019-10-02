@@ -39,4 +39,5 @@ return [
     'cpn_define' => 'Hãy nhấc điện thoại và gọi cho KN 247 khi bạn có nhu cầu gửi thư, quà, vận chuyển hóa đơn, hàng hóa.<br>Dịch vụ của KN247 đáng tin cậy như chính bạn tự tay chuyển phát.<br>Chúng tôi sẽ giúp các bạn chiếm được cảm tình của bạn bè, người thân và các đối tác làm ăn.',
     'quick_define' => 'Là dịch vụ có thời gian nhận vận đơn và phát vận đơn trong cùng một ngày.<br>Phạm vi cung cấp dịch vụ<br>- Địa chỉ nhận tại khu vực mà KN247 có bưu cục, trung tâm.<br>- Địa chỉ phát thuộc địa danh thu phát của KN247',
     'transport_define' => 'Là dịch vụ vận chuyển hàng có trọng lượng lớn, có thời gian vận chuyển dài hơn dịch vụ chuyển phát nhanh (từ 2 đến 7 ngày làm việc), nhưng với chi phí rất hợp lý.',
+    'package_in' => 'Phí tự tính điền vào ô bên cạnh',
 ];

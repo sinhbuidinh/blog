@@ -23,8 +23,7 @@ class CreateParcel extends FormRequest
      */
     public function rules()
     {
-        return [
-            'bill_code'        => 'unique:parcels,bill_code,'.$this->id,
+        $rules = [
             'guest_id'         => 'required',
             'province'         => 'required',
             'district'         => 'required',
@@ -42,6 +41,10 @@ class CreateParcel extends FormRequest
             'support_gas'      => 'required',
             'total'            => 'required',
         ];
+        if (!empty($request->bill_code)) {
+            $rules['bill_code'] = 'unique:parcels,bill_code,'.$this->id;
+        }
+        return $rules;
     }
 
     public function messages()

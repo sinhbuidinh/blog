@@ -96,12 +96,23 @@ class ParcelController extends Controller
         if (old('province') && old('district')) {
             $cal_remote = Parcel::isCalRemote(old('province'), old('district'));
         }
+        $val_pack_in = 0;
+        $old_services = $services;
+        if (!empty(old('services'))) {
+            $old_services = stringify2array(old('services'));
+            $pack_in = array_first(array_where($old_services, function($v, $k){
+                return data_get($v, 'key') == 'package_in';
+            }));
+            $val_pack_in = data_get($pack_in, 'value');
+        }
+
         $last_parcel_guest = $this->parcelService->getLastGuest();
         $data = [
             'cal_remote'       => $cal_remote,
             'last_guest'       => data_get($last_parcel_guest, 'id', -999),
             'guests'           => $this->parcelService->guestList(),
-            'services'         => $services,
+            'services'         => $old_services,
+            'val_pack_in'      => $val_pack_in,
             'services_display' => $services_display,
             'default'          => config('setting.default'),
             'provincials'      => $this->parcelService->getProvincials(),
@@ -141,12 +152,23 @@ class ParcelController extends Controller
         } else {
             $cal_remote = Parcel::isCalRemote($parcel->provincial, $parcel->district);
         }
+        $old_services = $services;
+        $val_pack_in = '';
+        $input_services = !empty(old('services')) ? stringify2array(old('services')) : json_decode($parcel->services, true);
+        if (!empty($input_services)) {
+            $old_services = !empty(old('services')) ? old('services') : $parcel->services;
+            $pack_in = array_first(array_where($input_services, function($v, $k){
+                return data_get($v, 'key') == 'package_in';
+            }));
+            $val_pack_in = data_get($pack_in, 'value');
+        }
         $data = [
             'cal_remote'       => $cal_remote,
             'parcel'           => $parcel,
             'transfered'       => $transfered,
             'guests'           => $this->parcelService->guestList(),
-            'services'         => $services,
+            'services'         => $old_services,
+            'val_pack_in'      => $val_pack_in,
             'services_display' => $services_display,
             'default'          => config('setting.default'),
             'provincials'      => $this->parcelService->getProvincials(),

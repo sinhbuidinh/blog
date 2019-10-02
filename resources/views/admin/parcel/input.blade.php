@@ -655,11 +655,11 @@
                                 @endif
                                 data-name="{{ $s['name'] }}"
                                 data-math="{{ data_get($s, 'math', '+') }}"
-                                value="{{ $s['value'] }}">
+                                value="{{ $s['key'] == 'package_in' ? $val_pack_in : $s['value'] }}">
                             </td>
                             <td>{{ $s['name'] }}</td>
                             <td>{{ $s['display'] }}</td>
-                            <td>{{ $s['note'] }}</td>
+                            <td>{!! $s['note'] !!}</td>
                         </tr>
                         @endforeach
                         @else

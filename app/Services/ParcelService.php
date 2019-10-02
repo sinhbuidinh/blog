@@ -47,21 +47,13 @@ class ParcelService
         $raw = config('division.services.list');
         $timer = config('price.timer_price');
         $raw['super_fast'] = $timer;
+        $raw['package_in'] = config('price.package_price');
         if (empty($raw)) {
             return [$raw, []];
         }
         $result = [];
         foreach ($raw as $key => $service) {
-            if ($key === 'super_fast') {
-                $result[] = [
-                    'name'    => trans('label.superfast'),
-                    'value'   => 0,
-                    'display' => trans('message.price_by_area'),
-                    'math'    => data_get($service, 'math', '+'),
-                    'note'    => trans('message.superfast_display'),
-                    'key'     => 'timer_price',
-                    'price'   => json_encode($timer, true),
-                ];
+            if ($key == 'super_fast' || $key == 'package_in') {
                 continue;
             }
             $append = [
@@ -83,6 +75,24 @@ class ParcelService
             }
             $result[] = $append;
         }
+        array_push($result, [
+            'name'    => trans('label.superfast'),
+            'value'   => 0,
+            'display' => trans('message.price_by_area'),
+            'math'    => data_get($service, 'math', '+'),
+            'note'    => trans('message.superfast_display'),
+            'key'     => 'timer_price',
+            'price'   => json_encode($timer, true),
+        ]);
+        array_push($result, [
+            'name'    => trans('label.package_in'),
+            'value'   => 0,
+            'display' => trans('message.package_in'),
+            'math'    => '+',
+            'note'    => '<input type="text" class="form-control" name="package_price" id="package_price"/>',
+            'key'     => 'package_in',
+            'price'   => json_encode($raw['package_in'], true),
+        ]);
         return [$raw, $result];
     }
 

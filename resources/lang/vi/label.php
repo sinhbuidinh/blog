@@ -136,4 +136,5 @@ return [
     'quick' => 'Hỏa tốc',
     'transport' => 'Dịch vụ vận tải',
     'transfered_info' => 'Thông tin nhận thực',
+    'package_in' => 'Phụ phí đóng thùng',
 ];
