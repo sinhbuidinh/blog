@@ -276,14 +276,15 @@
                             </div>
                         </div>
                         @if($parcel->isTransfered)
+                        <input type="hidden" name="transfered[id]" value="{{ $transfered->id }}">
                         <p class="file_form_top_title">{{ trans('label.transfered_info') }}</p>
                         <div class="row">
                             <div class="col-sm-4">{{ trans('label.complete_receiver') }}</div>
                             <div class="col-sm-8">
                                 @php
-                                    $complete_receiver_invalid = $errors->has('complete_receiver') ? ' is-invalid' : '';
+                                    $complete_receiver_invalid = $errors->has('transfered.complete_receiver') ? ' is-invalid' : '';
                                 @endphp
-                                <input type="text" class="full_width form-control{{ $complete_receiver_invalid }}" disabled="disabled" name="complete_receiver" value="{{ old('complete_receiver', $transfered->complete_receiver) }}">
+                                <input type="text" class="full_width form-control{{ $complete_receiver_invalid }}" name="transfered[complete_receiver]" value="{{ old('transfered.complete_receiver', $transfered->complete_receiver) }}">
                                 @if ($errors->has('complete_receiver'))
                                 <p class="common_form_error">
                                     {{ $errors->first('complete_receiver') }}
@@ -294,19 +295,19 @@
                         <div class="row">
                             <div class="col-sm-4">{{ trans('label.complete_receiver_tel') }}</div>
                             <div class="col-sm-8">
-                                <input disabled="disabled" type="text" class="full_width form-control" name="complete_receiver_tel" value="{{ old('complete_receiver_tel', $transfered->complete_receiver_tel) }}">
+                                <input type="text" class="full_width form-control" name="transfered[complete_receiver_tel]" value="{{ old('transfered.complete_receiver_tel', $transfered->complete_receiver_tel) }}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4">{{ trans('label.complete_receive_time') }}</div>
                             <div class="col-sm-8">
-                                <input disabled="disabled" type="text" class="full_width form-control datepicker" name="complete_receive_time" value="{{ old('complete_receive_time', data_get($transfered, 'complete_receive_time', now()->format('Y-m-d h:m:s'))) }}">
+                                <input type="text" class="full_width form-control datepicker" name="transfered[complete_receive_time]" value="{{ old('transfered.complete_receive_time', data_get($transfered, 'complete_receive_time', now()->format('Y-m-d h:m:s'))) }}">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-4">{{ trans('label.complete_note') }}</div>
                             <div class="col-sm-8" style="padding-left: 5px;">
-                                <textarea disabled="disabled" class="full_width form-control" name="complete_note">{{ old('complete_note', $transfered->complete_note) }}</textarea>
+                                <textarea class="full_width form-control" name="transfered[complete_note]">{{ old('transfered.complete_note', $transfered->complete_note) }}</textarea>
                             </div>
                         </div>
                         @if(!empty($transfered->picture_confirm))

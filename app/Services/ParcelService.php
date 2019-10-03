@@ -140,6 +140,10 @@ class ParcelService
             if (!data_get($parcel, 'id')) {
                 throw new Exception('Not found');
             }
+            if (($transfered = data_get($input, 'transfered')) && ($transfered_id = data_get($transfered, 'id'))) {
+                unset($transfered['id']);
+                $transfered = Transfered::where('id', $transfered_id)->update($transfered);
+            }
             //format data before update
             $info = self::formatDataParcel($input);
             $new_status = data_get($input, 'status');
