@@ -26,7 +26,6 @@ class TransferedController extends Controller
                 Parcel::STATUS_TRANSFER,
                 Parcel::STATUS_REFUND,
                 Parcel::STATUS_FORWARD,
-                Parcel::STATUS_FAIL,
             ];
         }
         $search = [

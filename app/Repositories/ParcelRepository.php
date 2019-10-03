@@ -14,8 +14,10 @@ class ParcelRepository extends BaseRepository
     public function search(array $wheres = [], $getAll = false, $getPackage = false)
     {
         $parcels = $this->model->select('parcels.*')->when(data_get($wheres, 'keyword'), function ($query, $keyword) {
-            $query->where('bill_code', 'like', '%' . $keyword . '%')
-                ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
+            $query->where(function ($query) use ($keyword) {
+                $query->where('bill_code', 'like', '%' . $keyword . '%')
+                    ->orWhere('parcel_code', 'like', '%' . $keyword . '%');
+            });
         })->when($getPackage, function($query) {
             $query->join('package_items', function ($join) {
                 $join->on('package_items.parcel_id', '=', 'parcels.id')

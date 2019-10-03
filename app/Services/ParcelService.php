@@ -463,6 +463,7 @@ class ParcelService
         unset($statuses[Parcel::STATUS_INIT]);
         unset($statuses[Parcel::STATUS_INPACKAGE]);
         unset($statuses[Parcel::STATUS_COMPLETE]);
+        unset($statuses[Parcel::STATUS_FAIL]);
         return $statuses;
     }
 
