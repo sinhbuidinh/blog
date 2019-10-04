@@ -5,7 +5,7 @@
 <table>
     <tbody>
         <tr>
-            <td width="40"><img style="width: 1px;" src="{{ public_path('images/logo.png') }}"></td>
+            <td width="40"><img style="width: 1px;" src="{{ public_path('images/logo_both.png') }}"></td>
             <td>&nbsp;</td>
             <td colspan="7"></td>
         </tr>

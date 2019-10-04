@@ -11,9 +11,9 @@
         <tr>
             <td>
                 @if(empty($export))
-                <img style="width: 100%;" src="{{ asset('images/logo.png') }}">
+                <img style="width: 100%;" src="{{ asset('images/logo_both.png') }}">
                 @else
-                <img style="width: 1px;" src="{{ public_path('images/logo.png') }}">
+                <img style="width: 1px;" src="{{ public_path('images/logo_both.png') }}">
                 @endif
             </td>
             <td></td>
