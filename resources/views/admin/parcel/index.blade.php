@@ -130,11 +130,11 @@
                 <table class="page_table table table-bordered full_width" id="parcels_tbl">
                     <thead>
                         <tr>
-                            <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
-                            <th class="table_title">{{ trans('label.status') }}</th>
                             <th class="table_title">{{ trans('label.receiver_info') }}</th>
-                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
+                            <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
+                            <th class="table_title">{{ trans('label.status') }}</th>
+                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.time_get') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
@@ -150,19 +150,19 @@
                     <tbody>
                     @foreach ($parcels as $parcel)
                     <tr>
-                        <td class="table_text parcel_code">
-                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
-                        </td>
-                        <td class="table_text">
-                            <p class="status_label">{{ $parcel->statusName }}</p>
-                        </td>
                         <td>
                             @if($parcel->isTransfered)
                             <p>{!! $parcel->receiverParcelExport !!}</p>
                             @endif
                         </td>
-                        <td class="table_text parcel_code">{{ $parcel->bill_code }}</td>
+                        <td class="table_text parcel_code">
+                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
+                        </td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>
+                        <td class="table_text">
+                            <p class="status_label">{{ $parcel->statusName }}</p>
+                        </td>
+                        <td class="table_text parcel_code">{{ $parcel->parcel_code }}</td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->time_receive }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>

@@ -79,13 +79,13 @@
                     <thead>
                         <tr>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
-                            <th class="table_title">{{ trans('label.bill_code') }}</th>
-                            <th class="table_title">{{ trans('label.package_code') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
+                            <th class="table_title">{{ trans('label.status') }}</th>
+                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
+                            <th class="table_title">{{ trans('label.package_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
                             <th class="table_title">{{ trans('label.address') }}</th>
-                            <th class="table_title">{{ trans('label.status') }}</th>
                             <th class="table_title">{{ trans('label.total') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
                         </tr>
@@ -95,17 +95,17 @@
                     <tbody>
                     <tr>
                         <td class="table_text parcel_code">
-                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
+                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
                         </td>
-                        <td class="table_text">{{ $parcel->bill_code }}</td>
-                        <td class="table_text">{{ $parcel->package_code }}</td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>
-                        <td class="table_text">{{ $parcel->transferName }}</td>
-                        <td class="table_text">{{ $parcel->typeName }}</td>
-                        <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">
                             <p class="status_label">{{ $parcel->statusName }}</p>
                         </td>
+                        <td class="table_text parcel_code">{{ $parcel->parcel_code }}</td>
+                        <td class="table_text">{{ $parcel->package_code }}</td>
+                        <td class="table_text">{{ $parcel->transferName }}</td>
+                        <td class="table_text">{{ $parcel->typeName }}</td>
+                        <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">{{ $parcel->total }}</td>
                         <td class="table_text">{{ $parcel->note }}</td>
                     </tr>
