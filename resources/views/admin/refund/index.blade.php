@@ -102,7 +102,9 @@
                         <td class="table_text">
                             <p class="status_label">{{ $parcel->statusName }}</p>
                         </td>
-                        <td class="table_text parcel_code">{{ $parcel->parcel_code }}</td>
+                        <td class="table_text parcel_code">
+                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
+                        </td>
                         <td class="table_text">{{ $parcel->package_code }}</td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->time_receive }}</td>

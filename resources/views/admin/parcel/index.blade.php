@@ -8,6 +8,9 @@
     th.parcel_code, td.parcel_code {
         width: 180px !important;
     }
+    th.receiver_info, td.receiver_info {
+        width: 190px !important;
+    }
     .page_list_block .table_text:not(.small) a {
         display: unset;
     }
@@ -40,12 +43,12 @@
     }
     #parcels_tbl td:not(.small),
     #parcels_tbl th:not(.small) {
-        min-width: 180px;
+        min-width: 185px;
+        max-width: 250px;
         height: 25px;
         border: dashed 1px lightblue;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 100px;
     }
     p#download {
         cursor: pointer;
@@ -130,7 +133,7 @@
                 <table class="page_table table table-bordered full_width" id="parcels_tbl">
                     <thead>
                         <tr>
-                            <th class="table_title">{{ trans('label.receiver_info') }}</th>
+                            <th class="table_title receiver_info">{{ trans('label.receiver_info') }}</th>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.status') }}</th>
@@ -150,7 +153,7 @@
                     <tbody>
                     @foreach ($parcels as $parcel)
                     <tr>
-                        <td>
+                        <td class="receiver_info">
                             @if($parcel->isTransfered)
                             <p>{!! $parcel->receiverParcelExport !!}</p>
                             @endif
@@ -162,7 +165,9 @@
                         <td class="table_text">
                             <p class="status_label">{{ $parcel->statusName }}</p>
                         </td>
-                        <td class="table_text parcel_code">{{ $parcel->parcel_code }}</td>
+                        <td class="table_text parcel_code">
+                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
+                        </td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->time_receive }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>

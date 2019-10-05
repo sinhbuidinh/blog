@@ -141,7 +141,9 @@
                         <td class="table_text parcel_code">
                             <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
                         </td>
-                        <td class="table_text parcel_code">{{ $parcel->parcel_code }}</td>
+                        <td class="table_text parcel_code">
+                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
+                        </td>
                         <td class="table_text">
                             @if($parcel->readyComplete)
                             <button type="button" data-url="{{ route('transfer', $parcel->id) }}" class="btn btn-primary confirm_complete">{{ trans('label.already_transfer') }}</button>
