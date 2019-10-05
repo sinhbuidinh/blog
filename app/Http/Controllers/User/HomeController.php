@@ -25,15 +25,17 @@ class HomeController extends UserController
 
     public function locate(Request $request, $code = null)
     {
-        $parcel = $histories = $tracks = [];
+        $parcel = $histories = $tracks = $transfered = [];
         if (!empty($code)) {
             list($parcel, $histories, $tracks) = $this->parcelService->locateInfo($code);
+            $transfered = $parcel->transfered->first();
         }
         $data = [
-            'code'      => $code,
-            'parcel'    => $parcel,
-            'histories' => $histories,
-            'tracks'    => $tracks,
+            'code'       => $code,
+            'parcel'     => $parcel,
+            'transfered' => $transfered,
+            'histories'  => $histories,
+            'tracks'     => $tracks,
         ];
         return view('user.home.locate', $data);
     }

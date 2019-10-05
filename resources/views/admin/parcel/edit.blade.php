@@ -314,7 +314,7 @@
                         <div class="row">
                             <div class="col-sm-4">{{ trans('label.picture_confirm') }}</div>
                             <div class="col-sm-8" style="padding-left: 5px;">
-                                <img style="width: 320px;" src="{{ asset($transfered->picture_confirm) }}">
+                                <img style="width: 320px;" src="{{ $transfered->pictureConfirmPublic }}">
                             </div>
                         </div>
                         @endif

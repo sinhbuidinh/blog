@@ -13,6 +13,7 @@ use App\Request\Admin\FailInfo;
 class TransferedController extends Controller
 {
     private $parcelService;
+
     public function __construct(ParcelService $parcelService)
     {
         $this->parcelService = $parcelService;

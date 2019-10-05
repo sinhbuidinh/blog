@@ -15,16 +15,21 @@ use App\Models\Fail;
 use DB;
 use Log;
 use Exception;
+use Google_Service_Drive;
+use Google_Service_Drive_DriveFile;
+use App\Components\GoogleClient;
 
 class ParcelService
 {
     private $repo;
     private $guestRepo;
+    private $client;
 
-    public function __construct(ParcelRepository $repo, GuestRepository $guestRepo)
+    public function __construct(ParcelRepository $repo, GuestRepository $guestRepo, GoogleClient $client)
     {
         $this->repo      = $repo;
         $this->guestRepo = $guestRepo;
+        $this->client    = $client->getClient();
     }
 
     public function getList($wheres = [], $getAll = false, $getPackage = false)
@@ -181,10 +186,16 @@ class ParcelService
                 throw new Exception('Not found');
             }
             $parcelId = data_get($parcel, 'id');
-            $saving_path = 'images/picture_confirms/'.$parcel->guest_code;
-            //insert picture
-            $file = $request->picture_confirm;
-            $path = $file->move($saving_path, $parcelId .'.'. $file->getClientOriginalExtension());
+
+            //image_id
+            $path = null;
+            if ($request->hasFile('picture_confirm')) {
+                $imageId = self::getImageID($request->file('picture_confirm'));
+                if (is_null($imageId)) {
+                    throw new Exception('Upload image fail');
+                }
+                $path = $imageId;
+            }
             //insert Transfered
             Transfered::create([
                 'parcel_id'             => $parcelId,
@@ -225,6 +236,43 @@ class ParcelService
                 unlink($path);
             }
             return [false, $error];
+        }
+    }
+
+    private function getImageID($image)
+    {
+        $driveService = new Google_Service_Drive($this->client);
+        try {
+            $fileMetadata = new \Google_Service_Drive_DriveFile([
+                'name' => time().'.'.$image->getClientOriginalExtension(),
+            ]);
+            $file = $driveService->files->create($fileMetadata, [
+                'data'       => file_get_contents($image->getRealPath()),
+                'uploadType' => 'multipart',
+                'fields'     => 'id',
+            ]);
+            // bắt đầu phân quyền
+            $driveService->getClient()->setUseBatch(true);
+            try {
+                $batch = $driveService->createBatch();
+                $permission = new \Google_Service_Drive_Permission([
+                    'type' => 'anyone', // user | group | domain | anyone
+                    'role' => 'reader', // organizer | owner | writer | commenter | reader
+                ]);
+                $request = $driveService->permissions->create($file->id, $permission, ['fields' => 'id']);
+                $batch->add($request, 'user');
+                $results = $batch->execute();
+            } catch (\Exception $e) {
+                $error = $e->getMessage();
+                Log::error($error);
+            } finally {
+                $driveService->getClient()->setUseBatch(false);
+            }
+            return $file->id;
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+            Log::error($error);
+            return null;
         }
     }
 
