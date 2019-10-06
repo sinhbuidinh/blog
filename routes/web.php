@@ -26,6 +26,11 @@ Route::prefix('artisan')->group(function () {
         \Artisan::call('migrate');
         return 'migrate done';
     });
+
+    Route::get('/google-get-token', function() {
+        \Artisan::call('google:get-token');
+        return 'get-token done';
+    });
 });
 
 Route::namespace('User')->group(function(){
