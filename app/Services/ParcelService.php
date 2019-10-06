@@ -233,16 +233,28 @@ class ParcelService
             Log::error(generateTraceMessage($e));
             DB::rollBack();
             if (!empty($path)) {
-                unlink($path);
+                self::removeImageID($path);
             }
             return [false, $error];
         }
     }
 
+    private function removeImageID($id)
+    {
+        try {
+            $driveService = new Google_Service_Drive($this->client);
+            $file = $driveService->files->delete($id);
+            return true;
+        } catch (Exception $e) {
+            Log::error(generateTraceMessage($e).' with IMG-ID:'.$id);
+            return false;
+        }
+    }
+
     private function getImageID($image)
     {
-        $driveService = new Google_Service_Drive($this->client);
         try {
+            $driveService = new Google_Service_Drive($this->client);
             $fileMetadata = new \Google_Service_Drive_DriveFile([
                 'name' => time().'.'.$image->getClientOriginalExtension(),
             ]);
