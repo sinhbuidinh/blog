@@ -16,25 +16,27 @@ class SupportController extends UserController
 
     public function fullTimeCourse(Request $request)
     {
-        $data = [];
-        return view('user.support.full-time', $data);
+        $file = public_path("/price/toantrinh.xlsx");
+        $headers = array('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document',);
+        return \Response::download($file, 'thoi-gian-toan-trinh.xlsx', $headers);
     }
 
     public function priceTbl(Request $request)
     {
-        $data = [];
-        return view('user.support.price-tbl', $data);
+        $file = public_path("/price/BaoGia_Goc.docx");
+        $headers = array('Content-Type: application/octet-stream',);
+        return \Response::download($file, 'bang-gia.docx', $headers);
     }
 
     public function gasAndExchange(Request $request)
     {
-        $data = [];
-        return view('user.support.gas-exchange', $data);
+        return view('user.support.gas-exchange');
     }
 
     public function vat(Request $request)
     {
-        $data = [];
-        return view('user.support.vat', $data);
+        $file = public_path("/price/GTGT.docx");
+        $headers = array('Content-Type: application/octet-stream',);
+        return \Response::download($file, 'bang-gia-dich-vu.docx', $headers);
     }
 }

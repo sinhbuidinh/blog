@@ -42,7 +42,7 @@
                         <div class="dropdown-menu" aria-labelledby="support-dropdown">
                             <a class="dropdown-item{{ isActiveClass('user.support.full-time') }}" href="{{ route('user.support.full-time') }}">Thời gian toàn trình</a>
                             <a class="dropdown-item{{ isActiveClass('user.support.price-tbl') }}" href="{{ route('user.support.price-tbl') }}">Bảng giá</a>
-                            <a class="dropdown-item{{ isActiveClass('user.support.gas-exchange') }}" href="{{ route('user.support.gas-exchange') }}">Phụ phí nhiên liệu & tỉ giá</a>
+                            <a class="dropdown-item{{ isActiveClass('user.support.gas-exchange') }}" href="{{ route('user.support.gas-exchange') }}">Phụ phí</a>
                             <a class="dropdown-item{{ isActiveClass('user.support.gtgt') }}" href="{{ route('user.support.gtgt') }}">Dịch vụ GTGT</a>
                         </div>
                     </li>
