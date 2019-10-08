@@ -41,7 +41,7 @@ class CreateParcel extends FormRequest
             'support_gas'      => 'required',
             'total'            => 'required',
         ];
-        if (!empty($request->bill_code)) {
+        if (!empty($this->bill_code)) {
             $rules['bill_code'] = 'unique:parcels,bill_code,'.$this->id;
         }
         return $rules;
