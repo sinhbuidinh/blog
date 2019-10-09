@@ -52,6 +52,7 @@ Route::namespace('User')->group(function(){
         Route::get('/bang-gia', 'SupportController@priceTbl')->name('user.support.price-tbl');
         Route::get('/phu-phi-nhien-lieu-va-ti-gia', 'SupportController@gasAndExchange')->name('user.support.gas-exchange');
         Route::get('/dich-vu-gtgt', 'SupportController@vat')->name('user.support.gtgt');
+        Route::get('/bang-gia-van-tai', 'SupportController@transport')->name('user.support.transport');
     });
 });
 

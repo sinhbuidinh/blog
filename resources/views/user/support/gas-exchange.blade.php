@@ -5,7 +5,7 @@ Phụ phí
 
 @section('content')
 <div class="container mt-4 mb-4">
-    <h3>Phụ phí nhiên liệu & tỉ giá</h3>
+    <h3>Các loại phụ phí</h3>
     <div class="row col-md-12">
         <ul>
             <li><b>Phụ phí vùng sâu, vùng xa:</b> 20% cước chính</li>

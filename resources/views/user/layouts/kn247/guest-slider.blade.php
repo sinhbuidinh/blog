@@ -25,6 +25,9 @@
             <div class="carousel-item col-md-4">
                 <img class="img-fluid mx-auto d-block" src="{{ asset('images/user/guest/kimlong.jpg') }}" alt="kim-long">
             </div>
+            <div class="carousel-item col-md-4">
+                <img class="img-fluid mx-auto d-block" src="{{ asset('images/user/guest/rangdong.png') }}" alt="CÔNG TY CỔ PHẦN NHỰA RẠNG ĐÔNG">
+            </div>
         </div>
         <a class="carousel-control-prev" href="#carousel-guest" role="button" data-slide="prev">
             <i class="fa fa-chevron-left fa-lg text-muted"></i>
