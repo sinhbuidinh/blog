@@ -137,4 +137,11 @@ return [
     'transport' => 'Dịch vụ vận tải',
     'transfered_info' => 'Thông tin nhận thực',
     'package_in' => 'Phụ phí đóng thùng',
+    'sidebar_users' => 'QL Tài khoản',
+    'user_list' => 'Danh sách tài khoản',
+    'is_admin' => 'Admin',
+    'is_user' => 'User',
+    'name' => 'Tên',
+    'user_type' => 'Loại tài khoản',
+    'change_pass' => 'Đổi mật khẩu',
 ];

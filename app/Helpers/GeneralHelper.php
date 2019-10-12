@@ -112,3 +112,8 @@ function sqlNumberFormat(string $obj)
 {
     return "FORMAT($obj, 0)";
 }
+function isSuperAdmin()
+{
+    //check role
+    return true;
+}

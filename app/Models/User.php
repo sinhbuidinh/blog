@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getTypeNameAttribute()
+    {
+        return $this->is_admin == 1 ? trans('label.is_admin') : trans('label.is_user');
+    }
 }

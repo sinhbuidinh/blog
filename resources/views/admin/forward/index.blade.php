@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('title'){{ trans('label.forward') }}@endsection
 @section('head')
 <style type="text/css">
     #forwards_tbl thead th:not(.small) {

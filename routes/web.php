@@ -59,8 +59,6 @@ Route::namespace('User')->group(function(){
 
 Route::get('/login', '\App\Http\Controllers\Auth\LoginController@index')->name('login');
 Route::post('/login', '\App\Http\Controllers\Auth\LoginController@authenticate')->name('login');
-Route::get('/register', '\App\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('/register', '\App\Http\Controllers\Auth\RegisterController@register')->name('register');
 Route::post('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('get.logout');
 
@@ -77,6 +75,14 @@ Route::group([
     Route::get('/', 'DashboardController@index');
     Route::prefix('dashboard')->group(function () {
         Route::get('/', 'DashboardController@index')->name('dashboard');
+    });
+    Route::group(['middleware' => 'user_manage', 'prefix' => 'users'], function(){
+        Route::get('/', 'AccountController@index')->name('users');
+        Route::get('/register', 'AccountController@input')->name('register');
+        Route::post('/register', 'AccountController@create')->name('user.create');
+        Route::get('/delete/{id}', 'AccountController@delete')->name('user.delete');
+        Route::get('/change_pass/{id}', 'AccountController@changePass')->name('user.change_pass');
+        Route::post('/update_pass/{id}', 'AccountController@updatePass')->name('user.update_pass');
     });
     Route::prefix('transfered')->group(function () {
         Route::get('/', 'TransferedController@index')->name('transfereds');

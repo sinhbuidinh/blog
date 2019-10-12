@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('title'){{ trans('label.refund') }}@endsection
 @section('head')
 <style type="text/css">
     #refunds_tbl thead th:not(.small) {

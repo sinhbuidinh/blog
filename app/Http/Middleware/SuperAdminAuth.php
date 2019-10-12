@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class RedirectIfAuthenticated
+class SuperAdminAuth
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            if (data_get(auth()->user(), 'is_admin') == 1) {
-                return redirect('/admin/dashboard');
-            }
-            return redirect()->route('get.logout', ['error' => 'Permission denied']);
+        if (Auth::guard($guard)->check() && (data_get(auth()->user(), 'is_admin') != 1 || !isSuperAdmin())) {
+            return redirect()->route('dashboard');
         }
 
         return $next($request);

@@ -332,6 +332,7 @@ class ParcelService
         $error = null;
         $parcel = [];
         try {
+            DB::beginTransaction();
             $parcel = self::findById($id);
             //find parcel_histories, package_items, forwards, transfered delete too
             ParcelHistory::where('parcel_id', $id)->delete();

@@ -31,7 +31,10 @@ class Authenticate extends Middleware
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        if (!Auth::guard($guards)->check() || data_get(auth()->user(), 'is_admin') != 1) {
+        if (!Auth::guard($guards)->check()) {
+            return redirect()->route('get.logout', ['error' => 'Please login first']);
+        }
+        if (data_get(auth()->user(), 'is_admin') != 1) {
             return redirect()->route('get.logout', ['error' => 'Not allow login']);
         }
         return $next($request);

@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="sidebar_contents">
-    <ul>
+    <ul style="overflow-x: hidden; overflow-y: scroll; height: 540px;">
         <li>
             <a href="{{ route('dashboard') }}" class="{{ $controller == 'DashboardController' ? 'active' : ''}}">
                 <img src="{{ asset('images/admin/sidebar/dashboard.png?v=1.0.1') }}">{{ trans('label.sidebar_dashboard') }}
@@ -36,6 +36,13 @@
                 <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">{{ trans('label.sidebar_guest') }}
             </a>
         </li>
+        @if(isSuperAdmin())
+        <li>
+            <a href="{{ route('users') }}" class="{{ $controller == 'AccountController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/account.png?v=1.0.1') }}">{{ trans('label.sidebar_users') }}
+            </a>
+        </li>
+        @endif
         <li>
             <a href="{{ route('debt') }}" class="{{ $controller == 'DebtController' ? 'active' : ''}}">
                 <img src="{{ asset('images/admin/sidebar/debt.png?v=1.0.1') }}">{{ trans('label.sidebar_debt') }}

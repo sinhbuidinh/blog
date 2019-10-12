@@ -1,4 +1,7 @@
 @extends('admin.layouts.master')
+@section('title')
+Danh sách khách hàng
+@endsection
 @section('head')
 <style type="text/css">
     #guests thead th:not(.small) {

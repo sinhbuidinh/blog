@@ -1,4 +1,5 @@
 @extends('admin.layouts.master')
+@section('title')Danh sách bảng kê@endsection
 @section('head')
 <style type="text/css">
     #keyword {
