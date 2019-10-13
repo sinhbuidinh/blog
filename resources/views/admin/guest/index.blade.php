@@ -7,6 +7,12 @@ Danh sách khách hàng
     #guests thead th:not(.small) {
         width: 150px;
     }
+    #guests .guest_code {
+        width: 100px !important;
+    }
+    #guests .guest_code a {
+        width: 100% !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -36,11 +42,12 @@ Danh sách khách hàng
                 <table cellpadding="0" cellspacing="0" border="0" class="table page_table" id="guests">
                     <thead>
                         <tr>
-                            <th class="table_title">{{ trans('label.guest_code') }}</th>
+                            <th class="table_title guest_code">{{ trans('label.guest_code') }}</th>
                             <th class="table_title">{{ trans('label.company_name') }}</th>
                             <th class="table_title">{{ trans('label.address') }}</th>
                             <th class="table_title">{{ trans('label.tel') }}</th>
                             <th class="table_title">{{ trans('label.tax_code') }}</th>
+                            <th class="table_title">{{ trans('label.account') }}</th>
                             <th class="table_title">{{ trans('label.representative') }}</th>
                             <th class="table_title">{{ trans('label.represent_tel') }}</th>
                             <th class="table_title small">{{ trans('label.edit') }}</th>
@@ -51,11 +58,14 @@ Danh sách khách hàng
                     @foreach ($guests as $guest)
                     <tbody>
                     <tr>
-                        <td class="table_text">{{ $guest->guest_code }}</td>
+                        <td class="table_text guest_code">
+                            <a href="{{ route('guest.edit', $guest->id) }}">{{ $guest->guest_code }}</a>
+                        </td>
                         <td class="table_text">{{ $guest->company_name }}</td>
                         <td class="table_text">{{ $guest->address }}</td>
                         <td class="table_text">{{ $guest->tel }}</td>
                         <td class="table_text">{{ $guest->tax_code }}</td>
+                        <td class="table_text">{{ $guest->accountName }}</td>
                         <td class="table_text">{{ $guest->representative }}</td>
                         <td class="table_text">{{ $guest->represent_tel }}</td>
                         <td class="table_text small">

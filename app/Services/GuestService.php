@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\GuestRepository;
+use App\Repositories\UserRepository;
 use App\Models\Guest;
 use DB;
 use Log;
@@ -11,10 +12,12 @@ use Exception;
 class GuestService
 {
     private $repo;
+    private $accRepo;
 
-    public function __construct(GuestRepository $repo)
+    public function __construct(GuestRepository $repo, UserRepository $accRepo)
     {
-        $this->repo = $repo;
+        $this->repo    = $repo;
+        $this->accRepo = $accRepo;
     }
 
     public function getList($wheres = [])
@@ -90,7 +93,16 @@ class GuestService
             'address'         => data_get($input, 'address'),
             'price_table'     => data_get($input, 'price_table', 'init'),
             'discount'        => data_get($input, 'discount', 0),
+            'account_apply'   => data_get($input, 'account_apply', null),
             'status'          => Guest::STATUS_ENABLE,
         ];
+    }
+
+    public function getAccountOptions($wheres = [])
+    {
+        $selects = ['CONCAT(name, " - ", email) AS account_display', 'id'];
+        $accounts = $this->accRepo->search(array_merge($wheres, ['is_admin' => 0]), true, $selects);
+        $result = $accounts->pluck('account_display', 'id');
+        return $result;
     }
 }

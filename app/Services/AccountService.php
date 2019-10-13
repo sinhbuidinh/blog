@@ -19,7 +19,7 @@ class AccountService
 
     public function getList($wheres = [], $getAll = false, $orderBy = 'created_at ASC')
     {
-        return $this->repo->search($wheres, $getAll, $orderBy);
+        return $this->repo->search($wheres, $getAll, [], $orderBy);
     }
 
 }

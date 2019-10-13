@@ -153,7 +153,7 @@
                             @php
                                 $province_invalid = $errors->has('province') ? ' is-invalid' : '';
                             @endphp
-                            <select id="province" class="full_width form-control{{ $province_invalid }}" name="province">
+                            <select id="province" class="full_width search form-control{{ $province_invalid }}" name="province">
                                 <option value="">{{ trans('label.please_choose') }}</option>
                                 @if(!empty($provincials))
                                 @foreach ($provincials as $code => $info)
@@ -180,7 +180,7 @@
                             @php
                                 $district_invalid = $errors->has('district') ? ' is-invalid' : '';
                             @endphp
-                            <select name="district" class="full_width form-control{{ $district_invalid }}" id="district">
+                            <select name="district" class="full_width search form-control{{ $district_invalid }}" id="district">
                                 <option value="">{{ trans('label.please_choose') }}</option>
                                 @if(!empty($districts))
                                 @foreach ($districts as $code => $district)
@@ -211,7 +211,7 @@
                             @php
                                 $ward_invalid = $errors->has('ward') ? ' is-invalid' : '';
                             @endphp
-                            <select name="ward" class="full_width form-control{{ $ward_invalid }}" id="ward">
+                            <select name="ward" class="full_width search form-control{{ $ward_invalid }}" id="ward">
                                 <option value="">{{ trans('label.please_choose') }}</option>
                                 @if(!empty($wards))
                                 @foreach ($wards as $code => $ward)
@@ -242,6 +242,28 @@
                                 $address_invalid = $errors->has('address') ? ' is-invalid' : '';
                             @endphp
                             <input type="text" class="full_width form-control{{ $address_invalid }}" name="address" id="address" value="{{ old('address') }}">
+                            @if ($errors->has('address'))
+                            <p class="common_form_error">
+                                {{ $errors->first('address') }}
+                            </p>
+                            @endif
+                        </div>
+                    </div>
+                    <p class="file_form_top_title">{{ trans('label.account_apply') }}</p>
+                    <div class="row col-sm-12">
+                        <div class="col-sm-3">{{ trans('label.account_apply') }}</div>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="account_apply" id="account_apply">
+                                <option value="">{{ trans('label.please_choose') }}</option>
+                                @if(!empty($accounts))
+                                @foreach($accounts as $id => $name)
+                                @php
+                                    $selected = old('account_apply') == $id ? 'selected="selected"' : '';
+                                @endphp
+                                <option {{ $selected }} value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                                @endif
+                            </select>
                             @if ($errors->has('address'))
                             <p class="common_form_error">
                                 {{ $errors->first('address') }}

@@ -15,8 +15,13 @@ class Guest extends BaseModel
 
     protected $append = ['province_name', 'district_name', 'ward_name'];
     protected $fillable = [
-        'representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'provincial', 'district', 'ward', 'address', 'guest_code', 'price_table', 'discount', 'status'
+        'representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'provincial', 'district', 'ward', 'address', 'guest_code', 'price_table', 'discount', 'status', 'account_apply'
     ];
+
+    public function account()
+    {
+        return $this->hasMany('App\Models\User', 'id', 'account_apply');
+    }
 
     public function getProvinceNameAttribute()
     {
@@ -28,6 +33,12 @@ class Guest extends BaseModel
     {
         $district = getDistrictById($this->provincial, $this->district);
         return data_get($district, 'name_with_type');
+    }
+
+    public function getAccountNameAttribute()
+    {
+        $account_apply = $this->account()->first();
+        return data_get($account_apply, 'email');
     }
 
     public function getWardNameAttribute()

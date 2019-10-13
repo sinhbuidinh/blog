@@ -144,4 +144,6 @@ return [
     'name' => 'Tên',
     'user_type' => 'Loại tài khoản',
     'change_pass' => 'Đổi mật khẩu',
+    'account_apply' => 'Tài khoản khách hàng',
+    'account' => 'Tài khoản',
 ];

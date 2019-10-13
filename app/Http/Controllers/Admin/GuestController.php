@@ -37,13 +37,14 @@ class GuestController extends Controller
             'provincials' => $this->parcelService->getProvincials(),
             'districts'   => $this->parcelService->getDistrictByProvinceId(old('province')),
             'wards'       => $this->parcelService->getWardsByDistrictId(old('district')),
+            'accounts'    => $this->guestService->getAccountOptions(),
         ];
         return view('admin.guest.input', $data);
     }
 
     public function create(CreateGuest $request)
     {
-        $data = $request->only(['representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'province', 'district', 'ward', 'address']);
+        $data = $request->only(['representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'province', 'district', 'ward', 'address', 'account_apply']);
         list($result, $message) = $this->guestService->newGuest($data);
         if ($result !== false) {
             session()->flash('success', trans('message.create_guest_success'));
@@ -67,13 +68,14 @@ class GuestController extends Controller
             'provincials' => $this->parcelService->getProvincials(),
             'districts'   => $this->parcelService->getDistrictByProvinceId(data_get($guest, 'provincial')),
             'wards'       => $this->parcelService->getWardsByDistrictId(data_get($guest, 'district')),
+            'accounts'    => $this->guestService->getAccountOptions(),
         ];
         return view('admin.guest.edit', $data);
     }
 
     public function update(CreateGuest $request, $id = null)
     {
-        $data = $request->only(['representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'province', 'district', 'ward', 'address']);
+        $data = $request->only(['representative', 'represent_tel', 'represent_email', 'company_name', 'email', 'tel', 'fax', 'tax_code', 'tax_address', 'province', 'district', 'ward', 'address', 'account_apply']);
         list($result, $message) = $this->guestService->updateGuest($data, $id);
         if ($result !== false) {
             session()->flash('success', trans('message.update_guest_success'));

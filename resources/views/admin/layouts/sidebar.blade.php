@@ -32,6 +32,11 @@
             </a>
         </li>
         <li>
+            <a href="{{ route('debt') }}" class="{{ $controller == 'DebtController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/debt.png?v=1.0.1') }}">{{ trans('label.sidebar_debt') }}
+            </a>
+        </li>
+        <li>
             <a href="{{ route('guest') }}" class="{{ $controller == 'GuestController' ? 'active' : ''}}">
                 <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">{{ trans('label.sidebar_guest') }}
             </a>
@@ -43,11 +48,6 @@
             </a>
         </li>
         @endif
-        <li>
-            <a href="{{ route('debt') }}" class="{{ $controller == 'DebtController' ? 'active' : ''}}">
-                <img src="{{ asset('images/admin/sidebar/debt.png?v=1.0.1') }}">{{ trans('label.sidebar_debt') }}
-            </a>
-        </li>
     </ul>
     </div>
 </div>

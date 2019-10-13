@@ -24,7 +24,7 @@ class AccountController extends Controller
     {
         $search = ['keyword' => $request->keyword];
         $data = [
-            'users' => $this->service->getList($search, false, 'is_admin DESC'),
+            'users' => $this->service->getList($search, false),
             'search' => $search,
         ];
         return view('admin.account.index', $data);
