@@ -41,6 +41,21 @@ Route::namespace('User')->group(function(){
     Route::get('/lien-he', 'HomeController@contact')->name('user.contact');
     Route::get('/blog/{blog_id?}', 'HomeController@blog')->name('user.blog');
 
+    Route::group([
+        'prefix' => 'user_input',
+    ], function(){
+        Route::get('/', 'InputController@login')->name('user.login');
+        Route::post('/login', 'InputController@authenticate')->name('user.auth');
+        Route::get('/logout', 'InputController@logout')->name('user.logout');
+    });
+
+    Route::group([
+        'middleware' => 'user_auth',
+        'prefix' => 'user_input',
+    ], function(){
+        Route::get('/input', 'InputController@input')->name('user.input');
+    });
+
     Route::prefix('dich-vu')->group(function () {
         Route::get('/chuyen-phat-nhanh', 'HomeController@cpnService')->name('user.service.cpn');
         Route::get('/hoa-toc', 'HomeController@quickService')->name('user.service.quick');

@@ -117,3 +117,8 @@ function isSuperAdmin()
     //check role
     return true;
 }
+function isUser()
+{
+    //check role
+    return true;
+}
