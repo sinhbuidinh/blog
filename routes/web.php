@@ -44,7 +44,6 @@ Route::namespace('User')->group(function(){
     Route::group([
         'prefix' => 'user_input',
     ], function(){
-        Route::get('/', 'InputController@login')->name('user.login');
         Route::post('/login', 'InputController@authenticate')->name('user.auth');
         Route::get('/logout', 'InputController@logout')->name('user.logout');
     });
@@ -53,6 +52,7 @@ Route::namespace('User')->group(function(){
         'middleware' => 'user_auth',
         'prefix' => 'user_input',
     ], function(){
+        Route::get('/', 'InputController@login')->name('user.login');
         Route::get('/input', 'InputController@input')->name('user.input');
     });
 
