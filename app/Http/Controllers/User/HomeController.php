@@ -28,7 +28,7 @@ class HomeController extends UserController
         $parcel = $histories = $tracks = $transfered = [];
         if (!empty($code)) {
             list($parcel, $histories, $tracks) = $this->parcelService->locateInfo($code);
-            $transfered = $parcel->transfered->first();
+            $transfered = count($parcel) > 0 ? $parcel->transfered->first() : [];
         }
         $data = [
             'code'       => $code,
