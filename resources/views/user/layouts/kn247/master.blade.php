@@ -16,6 +16,7 @@
     <!-- Theme Style -->
     <link rel="stylesheet" href="{{ asset('css/kn247/search.css?v=1.02') }}">
     <link rel="stylesheet" href="{{ asset('css/kn247/style.css?v=1.03') }}">
+    <link rel="stylesheet" href="{{ asset('css/kn247/user.css?v=1.01') }}">
     @yield('style')
 </head>
 <body id="body">

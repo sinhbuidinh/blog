@@ -48,4 +48,5 @@ mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/kn247/search.scss', 'public/css/kn247')
    .sass('resources/sass/kn247/index.scss', 'public/css/kn247')
    .sass('resources/sass/kn247/guest-slider.scss', 'public/css/kn247')
+   .sass('resources/sass/kn247/user.scss', 'public/css/kn247')
    .sass('resources/sass/kn247/style.scss', 'public/css/kn247');

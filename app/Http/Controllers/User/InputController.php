@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Request\Admin\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Services\ParcelService;
+use App\Models\Parcel;
 
 class InputController extends UserController
 {
@@ -17,10 +19,19 @@ class InputController extends UserController
      * @var string
      */
     protected $redirectTo = '/user_input/input';
+    private $parcelService;
+
+    public function __construct(ParcelService $parcelService)
+    {
+        parent::__construct();
+        $this->parcelService = $parcelService;
+    }
 
     public function login()
     {
-        //login first then show input parcel
+        if (Auth::guard()->check()) {
+            return redirect()->route('user.input');
+        }
         return view('user.input.login');
     }
 
@@ -58,7 +69,34 @@ class InputController extends UserController
 
     public function input()
     {
-        dd(__LINE__, 'user input');
-        // return view('user.input.form');
+        list($services, $services_display) = $this->parcelService->getServiceList();
+        $cal_remote = 0;
+        if (old('province') && old('district')) {
+            $cal_remote = Parcel::isCalRemote(old('province'), old('district'));
+        }
+        $val_pack_in = 0;
+        $old_services = $services;
+        if (!empty(old('services'))) {
+            $old_services = stringify2array(old('services'));
+            $pack_in = array_first(array_where($old_services, function($v, $k){
+                return data_get($v, 'key') == 'package_in';
+            }));
+            $val_pack_in = data_get($pack_in, 'value');
+        }
+
+        $data = [
+            'cal_remote'       => $cal_remote,
+            'guests'           => $this->parcelService->guestList(),
+            'services'         => $old_services,
+            'val_pack_in'      => $val_pack_in,
+            'services_display' => $services_display,
+            'default'          => config('setting.default'),
+            'provincials'      => $this->parcelService->getProvincials(),
+            'districts'        => $this->parcelService->getDistrictByProvinceId(old('province')),
+            'wards'            => $this->parcelService->getWardsByDistrictId(old('district')),
+            'parcel_types'     => $this->parcelService->getParcelTypes(),
+            'transfer_types'   => $this->parcelService->getTransferTypes(),
+        ];
+        return view('user.input.form', $data);
     }
 }

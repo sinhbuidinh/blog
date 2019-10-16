@@ -1,0 +1,48 @@
+.file_form_wrap .file_form_top_title {
+    width: 100%;
+    font-size: 14px;
+    color: #121212;
+    font-weight: bold;
+    margin: 0 0 5px;
+    padding: 0 0 5px;
+    border-bottom: 1px #dfdfdf solid;
+}
+.rm-pd-mr {
+    margin: 0;
+    padding: 0;
+}
+
+.file_table_block .file_table {
+    margin: 20px 0;
+    width: 100%;
+    min-width: 600px;
+}
+#price_info tr td.title {
+    width: 100px;
+}
+#price_info tr td input {
+    width: 261px;
+}
+#price_info tr td.bold {
+    font-weight: bold;
+}
+#price_info td.rate_value input:first-child {
+    width: 80px;
+}
+#price_info td.rate_value input:last-child {
+    width: calc(100% - 80px);
+    max-width: 160px;
+}
+#price_info td.rate_value input {
+    display: inline-block;
+}
+.left .row,
+.right .row {
+    margin: 5px;
+}
+#services_display {
+    height: 120px;
+}
+.receiver_info .row:nth-of-type(even) {
+    margin-bottom: 15px;
+}

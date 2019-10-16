@@ -146,4 +146,5 @@ return [
     'change_pass' => 'Đổi mật khẩu',
     'account_apply' => 'Tài khoản khách hàng',
     'account' => 'Tài khoản',
+    'create_parcel' => 'Tạo vận đơn',
 ];
