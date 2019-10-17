@@ -44,17 +44,17 @@ Route::namespace('User')->group(function(){
     Route::group([
         'prefix' => 'user_input',
     ], function(){
-        Route::get('/', 'InputController@login')->name('user.login');
-        Route::post('/login', 'InputController@authenticate')->name('user.auth');
-        Route::get('/logout', 'InputController@logout')->name('user.logout');
+        Route::get('/', 'LoginController@login')->name('user.login');
+        Route::post('/login', 'LoginController@authenticate')->name('user.auth');
+        Route::get('/logout', 'LoginController@logout')->name('user.logout');
     });
 
     Route::group([
         'middleware' => 'user_auth',
         'prefix' => 'user_input',
     ], function(){
-        Route::get('/input', 'InputController@input')->name('user.input');
-        Route::post('/create', 'InputController@create')->name('user.create');
+        Route::get('/input', 'ParcelController@input')->name('user.input');
+        Route::post('/input', 'ParcelController@create')->name('user_input.create');
     });
 
     Route::prefix('dich-vu')->group(function () {

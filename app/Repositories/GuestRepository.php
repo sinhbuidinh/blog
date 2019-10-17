@@ -39,4 +39,10 @@ class GuestRepository extends BaseRepository
     {
         return self::search(['status' => Guest::STATUS_ENABLE], true);
     }
+
+    public function getGuestByAccountApplyId($accountApplyId)
+    {
+        $guest = $this->model->where('account_apply', $accountApplyId)->first();
+        dd($guest);
+    }
 }

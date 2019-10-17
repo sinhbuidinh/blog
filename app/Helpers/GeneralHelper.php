@@ -122,3 +122,7 @@ function isUser()
     //check role
     return true;
 }
+function loginId()
+{
+    return data_get(auth()->user(), 'id');
+}

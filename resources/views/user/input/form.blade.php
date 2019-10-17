@@ -20,7 +20,7 @@ Tạo vận đơn | KN247
     @include('admin.layouts.session-message')
     <div class="row blog-entries">
         <div class="col-md-12 main-content file_form_wrap">
-            <form class="login_form skip_alert_changes" action="{{ route('user.create') }}" id="parcel_form" method="post">
+            <form class="login_form skip_alert_changes" action="{{ route('user_input.create') }}" id="parcel_form" method="post">
                 <div class="hidden">
                     {{ csrf_field() }}
                     <input type="hidden" id="tax_value" value="10" />
@@ -328,97 +328,6 @@ Tạo vận đơn | KN247
                     </div>
                 </div>
 
-                <div class="row col-sm-12">
-                    <p class="file_form_top_title">{{ trans('label.service_info') }}</p>
-                    <div class="row col-sm-12">
-                        <div class="col-sm-5">
-                            <div class="row">
-                                <div class="col-sm-5 my-auto">{{ trans('label.type_transfer') }}</div>
-                                <div class="col-sm-7 my-auto">
-                                    @php
-                                        $type_transfer_invalid = $errors->has('type_transfer') ? ' is-invalid' : '';
-                                    @endphp
-                                    <select name="type_transfer" class="full_width form-control{{ $type_transfer_invalid }}" id="service_type">
-                                        <option value="">{{ trans('label.please_choose') }}</option>
-                                        @if(!empty($transfer_types))
-                                        @foreach ($transfer_types as $id => $name)
-                                            @php
-                                                $transfer_check = '';
-                                                if (old('type_transfer', config('setting.transfer_type.code.quick')) == $id) {
-                                                    $transfer_check = ' selected="selected"';
-                                                }
-                                            @endphp
-                                            <option value="{{ $id }}" {{$transfer_check}}>{{ $name }}</option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('type_transfer'))
-                                    <p class="common_form_error">
-                                        {{ $errors->first('type_transfer') }}
-                                    </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-sm-5 my-auto">{{ trans('label.time_receive') }}</div>
-                                <div class="col-sm-7 my-auto">
-                                    @php
-                                        $time_receive_invalid = $errors->has('time_receive') ? ' is-invalid' : '';
-                                    @endphp
-                                    <input type="text" name="time_receive" value="{{ old('time_receive', now()->format('Y-m-d h:m:s')) }}" class="full_width datepicker form-control{{ $time_receive_invalid }}">
-                                    @if ($errors->has('time_receive'))
-                                    <p class="common_form_error">
-                                        {{ $errors->first('time_receive') }}
-                                    </p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-sm-12">
-                        <div class="col-sm-5">
-                            <div class="row">
-                                <div class="col-sm-5 my-auto">{{ trans('label.services') }}</div>
-                                <div class="col-sm-7 my-auto">
-                                    @php
-                                        $services_invalid = $errors->has('services') ? ' is-invalid' : '';
-                                        $service_names = '';
-                                        if(!empty($services_display)) {
-                                            //services explode to element
-                                            $old_services = stringify2array(old('services'));
-                                            $checked_services = array_pluck($old_services, 'key') ?: [];
-                                            $service_names = array_pluck($old_services, 'name') ?: [];
-                                            $service_names = implode(', ', $service_names);
-                                        }
-                                    @endphp
-                                    <button type="button" name="service_list" id="service_list" class="full_width form-control{{ $services_invalid }}" data-toggle="modal" data-target="#services_list_model">{{ trans('label.services') }}</button>
-                                    <input type="hidden" id="services" name="services" value="{{ old('services') }}">
-                                    @if ($errors->has('services'))
-                                    <p class="common_form_error">
-                                        {{ $errors->first('services') }}
-                                    </p>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="row" style="margin: 5px 0;">
-                                <div class="col-sm-5" style="padding: 0;">{{ trans('label.total_service') }}</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-9 my-auto">
-                                    <input type="text" name="total_service" id="total_service" class="form-control" value="{{ old('total_service') }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="col-sm-12">
-                                <textarea class="form-control" id="services_display" name="services_display" disabled>{{ $service_names }}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="file_table_block row col-sm-12">
                     <p class="file_form_top_title">{{ trans('label.price_info') }}</p>
                     <div class="file_form_table_inner" style="width: 100%">
@@ -431,16 +340,31 @@ Tạo vận đơn | KN247
                                         $price_invalid = $errors->has('price') ? ' is-invalid' : '';
                                     @endphp
                                     <input type="text" id="price" name="price" class="form-control{{ $price_invalid }}" value="{{ old('price') }}">
+                                    @if ($errors->has('price'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('price') }}
+                                    </p>
+                                    @endif
                                 </td>
                                 <td class="title my-auto">{{ trans('label.cod') }}</td>
                                 <td>
                                     <input type="text" id="cod" name="cod" class="form-control" value="{{ old('cod') }}">
+                                    @if ($errors->has('cod'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('cod') }}
+                                    </p>
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
                                 <td class="title my-auto">{{ trans('label.refund') }}</td>
                                 <td>
                                     <input type="text" id="refund" name="refund" class="form-control" value="{{ old('refund') }}">
+                                    @if ($errors->has('refund'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('refund') }}
+                                    </p>
+                                    @endif
                                 </td>
                                 <td class="title my-auto">{{ trans('label.support_remote') }}</td>
                                 <td class="rate_value">
@@ -449,6 +373,11 @@ Tạo vận đơn | KN247
                                         $remote_invalid = $errors->has('support_remote') ? ' is-invalid' : '';
                                     @endphp
                                     <input type="text" class="form-control{{ $remote_rate_invalid }}" id="support_remote_rate" name="support_remote_rate" value="{{ data_get($default, 'support_remote') }}"> % <input type="text" class="form-control{{ $remote_invalid }}" id="support_remote" name="support_remote" value="{{ old('support_remote') }}">
+                                    @if ($errors->has('support_remote'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('support_remote') }}
+                                    </p>
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -463,6 +392,11 @@ Tạo vận đơn | KN247
                                         $gas_invalid = $errors->has('support_gas') ? ' is-invalid' : '';
                                     @endphp
                                     <input type="text" class="form-control{{ $gas_rate_invalid }}" id="support_gas_rate" name="support_gas_rate" value="{{ data_get($default, 'support_gas') }}"> % <input type="text" class="form-control{{ $gas_invalid }}" id="support_gas" name="support_gas" value="{{ old('support_gas') }}">
+                                    @if ($errors->has('support_gas'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('support_gas') }}
+                                    </p>
+                                    @endif
                                 </td>
                             </tr>
                             <tr>
@@ -473,6 +407,11 @@ Tạo vận đơn | KN247
                                         $vat_invalid = $errors->has('price_vat') ? ' is-invalid' : '';
                                     @endphp
                                     <input type="text" id="vat" name="vat" class="form-control{{ $vat_rate_invalid }}" value="{{ data_get($default, 'vat') }}"> % <input type="text" name="price_vat" id="price_vat" class="form-control{{ $vat_invalid }}" value="{{ old('price_vat') }}">
+                                    @if ($errors->has('price_vat'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('price_vat') }}
+                                    </p>
+                                    @endif
                                 </td>
                                 <td class="title bold my-auto">{{ trans('label.total') }}</td>
                                 <td>
@@ -480,6 +419,11 @@ Tạo vận đơn | KN247
                                         $total_invalid = $errors->has('total') ? ' is-invalid' : '';
                                     @endphp
                                     <input type="text" id="total" class="form-control{{ $total_invalid }}" name="total" value="{{ old('total') }}">
+                                    @if ($errors->has('total'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('total') }}
+                                    </p>
+                                    @endif
                                 </td>
                             </tr>
                         </tbody>

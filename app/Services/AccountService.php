@@ -21,5 +21,4 @@ class AccountService
     {
         return $this->repo->search($wheres, $getAll, [], $orderBy);
     }
-
 }

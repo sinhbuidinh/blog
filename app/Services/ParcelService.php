@@ -135,6 +135,43 @@ class ParcelService
         }
     }
 
+    public function newParcelByUser($input)
+    {
+        $error = null;
+        $parcel = [];
+        try {
+            DB::beginTransaction();
+            //from login id => guest by account_apply
+            $user_id = $this->guestRepo->getGuestByAccountApplyId(loginId());
+            $guest_code = data_get($input, 'guest_code');
+
+            $info = self::formatDataParcel($input, true);
+            $parcel = Parcel::create($info);
+            $parcel_id = data_get($parcel, 'id');
+            if (!$parcel_id) {
+                throw new Exception('create parcel fail');
+            }
+            $parcel->parcel_code = genParcelCode($parcel_id, $guest_code);
+            $parcel->save();
+            //insert history
+            $history = [
+                'parcel_id' => $parcel_id,
+                'date_time' => now()->format('Y/m/d H:m:s'),
+                'location'  => config('setting.company_location'),
+                'status'    => Parcel::STATUS_INIT,
+                'note'      => data_get($input, 'note'),
+            ];
+            ParcelHistory::create($history);
+            DB::commit();
+            return [$parcel, $error];
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+            Log::error(generateTraceMessage($e));
+            DB::rollBack();
+            return [false, $error];
+        }
+    }
+
     public function updateParcel($input, $id)
     {
         $error = null;
