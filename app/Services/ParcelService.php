@@ -135,16 +135,22 @@ class ParcelService
         }
     }
 
+    /**
+     * 1 user - 1 account
+     */
+    public function getGuestByUserId($userId = null)
+    {
+        $accountApply = $userId ?: loginId(getGuard());
+        return $this->guestRepo->getGuestByAccountApplyId($accountApply);
+    }
+
     public function newParcelByUser($input)
     {
         $error = null;
         $parcel = [];
         try {
             DB::beginTransaction();
-            //from login id => guest by account_apply
-            $user_id = $this->guestRepo->getGuestByAccountApplyId(loginId('web'));
             $guest_code = data_get($input, 'guest_code');
-
             $info = self::formatDataParcel($input, true);
             $parcel = Parcel::create($info);
             $parcel_id = data_get($parcel, 'id');

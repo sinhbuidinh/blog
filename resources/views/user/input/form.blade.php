@@ -30,6 +30,10 @@ Tạo vận đơn | KN247
                     <input type="hidden" id="service_type_trans" value="{{ config('setting.transfer_type.code.transport') }}" />
                     <input type="hidden" id="fast_transfer_weight" value="{{ config('setting.fast_transfer_weight') }}" />
                     <input type="hidden" id="delivery_transfer_weight" value="{{ config('setting.delivery_transfer_weight') }}" />
+                    @if($guest)
+                    <input type="hidden" name="guest_id" id="guest_id" value="{{ data_get($guest, 'id') }}" />
+                    <input type="hidden" name="guest_code" id="guest_code" value="{{ data_get($guest, 'guest_code') }}" />
+                    @endif
                 </div>
                 <div class="row col-sm-12 receiver_info">
                     <p class="file_form_top_title">{{ trans('label.receiver_info') }}</p>

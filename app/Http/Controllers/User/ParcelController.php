@@ -23,8 +23,16 @@ class ParcelController extends UserController
         if (old('province') && old('district')) {
             $cal_remote = Parcel::isCalRemote(old('province'), old('district'));
         }
+        //from login id => guest by account_apply
+        $loginId = loginId(getGuard());
+        $guests = $this->parcelService->getGuestByUserId($loginId);
+        if (count($guests) == 0 || count($guests) > 1) {
+            return view('user.input.not_found_guest');
+        }
+        $guest = $guests->first();
         $data = [
             'cal_remote' => $cal_remote,
+            'guest' => $guest,
             'guests' => $this->parcelService->guestList(),
             'default' => config('setting.default'),
             'provincials' => $this->parcelService->getProvincials(),
