@@ -55,6 +55,7 @@ Route::namespace('User')->group(function(){
     ], function(){
         Route::get('/input', 'ParcelController@input')->name('user.input');
         Route::post('/input', 'ParcelController@create')->name('user_input.create');
+        Route::get('/success', 'ParcelController@success')->name('user.success');
     });
 
     Route::prefix('dich-vu')->group(function () {

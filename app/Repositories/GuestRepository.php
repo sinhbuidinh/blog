@@ -44,4 +44,9 @@ class GuestRepository extends BaseRepository
     {
         return $this->model->where('account_apply', $accountApplyId)->get();
     }
+
+    public function getGuestById($id)
+    {
+        return $this->model->where('id', $id)->first();
+    }
 }

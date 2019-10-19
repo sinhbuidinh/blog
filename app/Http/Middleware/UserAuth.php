@@ -37,9 +37,6 @@ class UserAuth extends Middleware
         if (!isUser('web') && !isSuperAdmin('web')) {
             return redirect()->route('user.logout', ['error' => 'Access denied']);
         }
-        if (!request()->is('user_input/input')) {
-            return redirect()->route('user.input');
-        }
         return $next($request);
     }
 }

@@ -24,6 +24,8 @@ class InputParcel extends FormRequest
     public function rules()
     {
         return [
+            'guest_id'         => 'required',
+            'guest_code'       => 'required',
             'province'         => 'required',
             'district'         => 'required',
             'ward'             => 'required',

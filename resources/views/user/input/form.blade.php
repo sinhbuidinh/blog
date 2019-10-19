@@ -32,7 +32,7 @@ Tạo vận đơn | KN247
                     <input type="hidden" id="delivery_transfer_weight" value="{{ config('setting.delivery_transfer_weight') }}" />
                     @if($guest)
                     <input type="hidden" name="guest_id" id="guest_id" value="{{ data_get($guest, 'id') }}" />
-                    <input type="hidden" name="guest_code" id="guest_code" value="{{ data_get($guest, 'guest_code') }}" />
+                    <input type="hidden" name="guest_code" id="guest_code" value="{{ data_get($guest, 'guest_code', 'xxxx') }}" />
                     @endif
                 </div>
                 <div class="row col-sm-12 receiver_info">
@@ -434,9 +434,17 @@ Tạo vận đơn | KN247
                         </table>
                     </div>
                 </div>
+                <div class="row col-sm-12">
+                    <p class="file_form_top_title">{{ trans('label.note') }}</p>
+                    <div class="row col-sm-12">
+                        <div class="col-sm-5">
+                            <textarea class="form-control" id="note" name="note">{{ old('note') }}</textarea>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- button action -->
-                <div class="form_btn_area center">
+                <div class="form_btn_area center mt-4">
                     <button class="btn btn-primary" id="create_parcel" type="button">{{ trans('label.create') }}</button>
                 </div>
                 <div style="display:none;">

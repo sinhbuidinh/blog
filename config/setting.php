@@ -9,6 +9,7 @@ return [
     'package_code' => 'PACK',
     'company_location' => 'Quận 11, Hồ Chí Minh',
     'company_transfer_location' => 'Quận 5, Hồ Chí Minh',
+    'guest_address' => 'Địa chỉ khách hàng %s',
     'transport_agent' => [
         'code' => [
             'inside'    => 1,

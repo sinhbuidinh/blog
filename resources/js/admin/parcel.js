@@ -40,7 +40,10 @@ $(function(){
         }
     });
     var guest = $('#guest_id').find(':selected');
-    displayGuestInfo(guest);
+    var code = $('#guest_code').val();
+    if (code.length == 0) {
+        displayGuestInfo(guest);
+    }
     calculateTotal();
 });
 $(document).on('paste cut keyup change', '#weight', function(e){

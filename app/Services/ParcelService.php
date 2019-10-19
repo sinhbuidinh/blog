@@ -151,6 +151,9 @@ class ParcelService
         try {
             DB::beginTransaction();
             $guest_code = data_get($input, 'guest_code');
+            $guest_id = data_get($input, 'guest_id');
+            $guest = $this->guestRepo->getGuestById($guest_id);
+
             $info = self::formatDataParcel($input, true);
             $parcel = Parcel::create($info);
             $parcel_id = data_get($parcel, 'id');
@@ -160,18 +163,25 @@ class ParcelService
             $parcel->parcel_code = genParcelCode($parcel_id, $guest_code);
             $parcel->save();
             //insert history
+            $location = data_get($guest, 'address');
+            if (empty($location)) {
+                $company_name = data_get($guest, 'company_name');
+                $location = sprintf(config('setting.guest_address'), $company_name);
+            }
             $history = [
                 'parcel_id' => $parcel_id,
                 'date_time' => now()->format('Y/m/d H:m:s'),
-                'location'  => config('setting.company_location'),
-                'status'    => Parcel::STATUS_INIT,
+                'location'  => $location,
+                'status'    => Parcel::STATUS_USER_CREATE,
                 'note'      => data_get($input, 'note'),
             ];
             ParcelHistory::create($history);
+            // throw new Exception("Error Processing Request");
             DB::commit();
             return [$parcel, $error];
         } catch (Exception $e) {
             $error = $e->getMessage();
+            dd($error);
             Log::error(generateTraceMessage($e));
             DB::rollBack();
             return [false, $error];
