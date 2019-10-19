@@ -48,11 +48,16 @@ class ParcelController extends Controller
 
     public function export(Request $request)
     {
+        // set error level
+        $internalErrors = libxml_use_internal_errors(true);
         $params['search'] = self::getSearchParams($request);
         $parcels = $this->parcelService->getList($params['search'], true);
         $params['amounts'] = self::calTotalAmount($parcels);
         list($fileName, $params['guest']) = self::parcelFileName($params['search']);
-        return Excel::download(new ParcelExport($parcels, $params), $fileName);
+        $excel = Excel::download(new ParcelExport($parcels, $params), $fileName);
+        // Restore error level
+        libxml_use_internal_errors($internalErrors);
+        return $excel;
     }
 
     private function calTotalAmount($parcels)
