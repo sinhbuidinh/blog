@@ -45,7 +45,7 @@ Route::namespace('User')->group(function(){
         'prefix' => 'user_input',
     ], function(){
         Route::get('/', 'LoginController@login')->name('user.login');
-        Route::post('/login', 'LoginController@authenticate')->name('user.auth');
+        Route::post('/', 'LoginController@authenticate')->name('user.auth');
         Route::get('/logout', 'LoginController@logout')->name('user.logout');
     });
 

@@ -142,7 +142,7 @@ class ParcelService
         try {
             DB::beginTransaction();
             //from login id => guest by account_apply
-            $user_id = $this->guestRepo->getGuestByAccountApplyId(loginId());
+            $user_id = $this->guestRepo->getGuestByAccountApplyId(loginId('web'));
             $guest_code = data_get($input, 'guest_code');
 
             $info = self::formatDataParcel($input, true);

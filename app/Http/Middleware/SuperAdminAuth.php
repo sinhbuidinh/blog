@@ -17,7 +17,7 @@ class SuperAdminAuth
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check() && (data_get(auth()->user(), 'is_admin') != 1 || !isSuperAdmin())) {
+        if (Auth::guard('admin')->check() && (data_get(auth('admin')->user(), 'is_admin') != 1 || !isSuperAdmin('admin'))) {
             return redirect()->route('dashboard');
         }
 

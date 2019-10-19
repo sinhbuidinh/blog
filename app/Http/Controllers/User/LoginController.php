@@ -20,7 +20,7 @@ class LoginController extends UserController
 
     public function login()
     {
-        if (Auth::guard()->check()) {
+        if (Auth::guard('web')->check()) {
             return redirect()->route('user.input');
         }
         return view('user.input.login');
@@ -29,7 +29,7 @@ class LoginController extends UserController
     public function authenticate(Login $request)
     {
         $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials)) {
             $is_admin = data_get(auth()->user(), 'is_admin');
             if ($is_admin == 0 || $is_admin == 1) {
                 return redirect()->route('user.input');
@@ -48,7 +48,7 @@ class LoginController extends UserController
      */
     public function logout(Request $request)
     {
-        $this->guard()->logout();
+        $this->guard('web')->logout();
 
         $request->session()->invalidate();
 

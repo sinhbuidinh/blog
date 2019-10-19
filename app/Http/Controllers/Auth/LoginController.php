@@ -44,8 +44,8 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            if (data_get(auth()->user(), 'is_admin') == 1) {
+        if (Auth::guard('admin')->attempt($credentials)) {
+            if (data_get(auth('admin')->user(), 'is_admin') == 1) {
                 return redirect()->intended('/admin/dashboard');
             }
             return redirect()->route('get.logout', ['error' => 'Not allow login']);
@@ -67,7 +67,7 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        $this->guard()->logout();
+        $this->guard('admin')->logout();
 
         $request->session()->invalidate();
 

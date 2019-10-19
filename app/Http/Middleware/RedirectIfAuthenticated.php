@@ -17,8 +17,8 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            if (data_get(auth()->user(), 'is_admin') == 1) {
+        if (Auth::guard('admin')->check()) {
+            if (data_get(auth('admin')->user(), 'is_admin') == 1) {
                 return redirect('/admin/dashboard');
             }
             return redirect()->route('get.logout', ['error' => 'Permission denied']);

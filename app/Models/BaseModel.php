@@ -16,13 +16,13 @@ class BaseModel extends Model
         static::creating(function($model)
         {
             //change to Auth::user() if you are using the default auth provider
-            $model->user_id = data_get(auth()->user(), 'id');
+            $model->user_id = data_get(auth(getGuard())->user(), 'id');
         });
 
         static::updating(function($model)
         {
             //change to Auth::user() if you are using the default auth provider
-            $model->user_id = data_get(auth()->user(), 'id');
+            $model->user_id = data_get(auth(getGuard())->user(), 'id');
         });
     }
 }

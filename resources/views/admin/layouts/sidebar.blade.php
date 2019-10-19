@@ -41,7 +41,7 @@
                 <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">{{ trans('label.sidebar_guest') }}
             </a>
         </li>
-        @if(isSuperAdmin())
+        @if(isSuperAdmin('admin'))
         <li>
             <a href="{{ route('users') }}" class="{{ $controller == 'AccountController' ? 'active' : ''}}">
                 <img src="{{ asset('images/admin/sidebar/account.png?v=1.0.1') }}">{{ trans('label.sidebar_users') }}

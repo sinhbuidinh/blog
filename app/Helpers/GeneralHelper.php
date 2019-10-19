@@ -112,17 +112,23 @@ function sqlNumberFormat(string $obj)
 {
     return "FORMAT($obj, 0)";
 }
-function isSuperAdmin()
+function isSuperAdmin($guard)
 {
     //check role
     return true;
 }
-function isUser()
+function isUser($guard)
 {
     //check role
     return true;
 }
-function loginId()
+function loginId($guard)
 {
-    return data_get(auth()->user(), 'id');
+    return data_get(auth($guard)->user(), 'id');
+}
+function getGuard(){
+    if(Auth::guard('admin')->check()) {
+        return "admin";
+    }
+    return "web";
 }

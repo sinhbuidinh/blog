@@ -31,10 +31,10 @@ class UserAuth extends Middleware
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        if (!Auth::guard($guards)->check()) {
+        if (!Auth::guard('web')->check()) {
             return redirect()->route('user.logout', ['error' => 'Please login first']);
         }
-        if (!isUser() && !isSuperAdmin()) {
+        if (!isUser('web') && !isSuperAdmin('web')) {
             return redirect()->route('user.logout', ['error' => 'Access denied']);
         }
         if (!request()->is('user_input/input')) {
