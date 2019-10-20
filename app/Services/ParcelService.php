@@ -18,6 +18,7 @@ use Exception;
 use Google_Service_Drive;
 use Google_Service_Drive_DriveFile;
 use App\Components\GoogleClient;
+use Google_Client as BaseGoogleClient;
 
 class ParcelService
 {
@@ -25,11 +26,10 @@ class ParcelService
     private $guestRepo;
     private $client;
 
-    public function __construct(ParcelRepository $repo, GuestRepository $guestRepo, GoogleClient $client)
+    public function __construct(ParcelRepository $repo, GuestRepository $guestRepo)
     {
         $this->repo      = $repo;
         $this->guestRepo = $guestRepo;
-        $this->client    = $client->getClient();
     }
 
     public function getList($wheres = [], $getAll = false, $getPackage = false)
@@ -243,6 +243,9 @@ class ParcelService
             //image_id
             $path = null;
             if ($request->hasFile('picture_confirm')) {
+                $baseClient = new BaseGoogleClient();
+                $client = new GoogleClient($baseClient);
+                $this->client = $client->getClient();
                 $imageId = self::getImageID($request->file('picture_confirm'));
                 if (is_null($imageId)) {
                     throw new Exception('Upload image fail');
