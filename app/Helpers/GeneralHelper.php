@@ -112,23 +112,38 @@ function sqlNumberFormat(string $obj)
 {
     return "FORMAT($obj, 0)";
 }
+function getAuthUser($guard)
+{
+    return auth($guard)->user();
+}
 function isSuperAdmin($guard)
 {
-    //check role
-    return true;
+    $auth = getAuthUser($guard);
+    if (count($auth) == 0) {
+        return false;
+    }
+    if (in_array(data_get($auth, 'email'), config('setting.super_admin', []))) {
+        return true;
+    }
+    return false;
 }
 function isUser($guard)
 {
-    //check role
-    return true;
+    $auth = getAuthUser($guard);
+    if (data_get($auth, 'is_admin') == 0) {
+        return true;
+    }
+    return false;
 }
 function loginId($guard)
 {
     return data_get(auth($guard)->user(), 'id');
 }
-function getGuard(){
-    if(Auth::guard('admin')->check()) {
-        return "admin";
+function getGuard()
+{
+    $pathAdmin = request()->is('admin/*') ? true : false;
+    if ($pathAdmin == true) {
+        return 'admin';
     }
     return "web";
 }

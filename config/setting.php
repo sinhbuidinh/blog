@@ -4,6 +4,7 @@ return [
     'pager' => [
         'common_limit' => 30
     ],
+    'super_admin' => ['sinh.buidinh@gmail.com', 'admin@kn247.vn'],
     'guest_code' => 'KH',
     'parcel_code' => 'BP',
     'package_code' => 'PACK',

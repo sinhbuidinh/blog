@@ -20,7 +20,7 @@ class LoginController extends UserController
 
     public function login()
     {
-        if (Auth::guard('web')->check()) {
+        if (auth('web')->check()) {
             return redirect()->route('user.input');
         }
         return view('user.input.login');
@@ -29,8 +29,8 @@ class LoginController extends UserController
     public function authenticate(Login $request)
     {
         $credentials = $request->only('email', 'password');
-        if (Auth::guard('web')->attempt($credentials)) {
-            $is_admin = data_get(auth()->user(), 'is_admin');
+        if (auth('web')->attempt($credentials)) {
+            $is_admin = data_get(auth('web')->user(), 'is_admin');
             if ($is_admin == 0) {
                 return redirect()->route('user.input');
             }
@@ -48,13 +48,18 @@ class LoginController extends UserController
      */
     public function logout(Request $request)
     {
-        $this->guard('web')->logout();
+        // $admin_loged = auth('admin')->check();
+        // $web_loged = auth('web')->check();
+        // $this->guard()->logout();
+        // $this->guard('web')->logout();
+        auth('web')->logout();
 
         $request->session()->invalidate();
 
         if ($request->get('error')) {
             session()->flash('error', $request->get('error'));
         }
-        return $this->loggedOut($request) ?: redirect()->route('user.login');
+        // dd(auth()->guard()->getName(), $web_loged, $admin_loged, auth('web')->check(), auth('admin')->check());
+        return redirect()->route('user.login');
     }
 }

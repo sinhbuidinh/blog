@@ -44,7 +44,7 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (auth('admin')->attempt($credentials)) {
             if (data_get(auth('admin')->user(), 'is_admin') == 1) {
                 return redirect()->intended('/admin/dashboard');
             }
@@ -67,13 +67,14 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        $this->guard('admin')->logout();
+        // $this->guard('admin')->logout();
+        auth('admin')->logout();
 
         $request->session()->invalidate();
 
         if ($request->get('error')) {
             session()->flash('error', $request->get('error'));
         }
-        return $this->loggedOut($request) ?: redirect()->route('login');
+        return redirect()->route('login');
     }
 }

@@ -31,7 +31,7 @@ class UserAuth extends Middleware
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        if (!Auth::guard('web')->check()) {
+        if (!auth('web')->check()) {
             return redirect()->route('user.logout', ['error' => 'Please login first']);
         }
         if (!isUser('web')) {
