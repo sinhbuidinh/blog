@@ -36,7 +36,9 @@ class CreateGuest extends FormRequest
             'address'        => 'required',
         ];
         if (!empty($this->account_apply) ) {
-            $rules['account_apply'] = 'unique:guests,account_apply,'.$this->id;
+            $rules['account_apply'] = Rule::unique('guests', 'account_apply')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($this->id);
         }
         return $rules;
     }

@@ -3,6 +3,7 @@
 namespace App\Request\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateParcel extends FormRequest
 {
@@ -42,7 +43,9 @@ class CreateParcel extends FormRequest
             'total'            => 'required',
         ];
         if (!empty($this->bill_code)) {
-            $rules['bill_code'] = 'unique:parcels,bill_code,'.$this->id;
+            $rules['bill_code'] = Rule::unique('parcels', 'bill_code')->where(function ($query) {
+                return $query->whereNull('deleted_at');
+            })->ignore($this->id);
         }
         return $rules;
     }
