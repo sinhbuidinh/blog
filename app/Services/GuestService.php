@@ -98,10 +98,23 @@ class GuestService
         ];
     }
 
-    public function getAccountOptions($wheres = [])
+    public function getAccountOptions($wheres = [], $presentAccount = null)
     {
-        $selects = ['CONCAT(name, " - ", email) AS account_display', 'id'];
-        $accounts = $this->accRepo->search(array_merge($wheres, ['is_admin' => 0]), true, $selects);
+        $selects = ['CONCAT(email, " - ", name) AS account_display', 'id'];
+        $raw = 'id NOT IN (
+            SELECT DISTINCT account_apply
+            FROM guests
+            WHERE deleted_at IS NULL
+                AND account_apply IS NOT NULL';
+        if (!is_null($presentAccount)) {
+            $raw .= ' AND account_apply <> '.$presentAccount;
+        }
+        $raw .= ')';
+        $default = [
+            'raw'      => $raw,
+            'is_admin' => 0,
+        ];
+        $accounts = $this->accRepo->search(array_merge($default, $wheres), true, $selects);
         $result = $accounts->pluck('account_display', 'id');
         return $result;
     }

@@ -31,7 +31,7 @@ class LoginController extends UserController
         $credentials = $request->only('email', 'password');
         if (Auth::guard('web')->attempt($credentials)) {
             $is_admin = data_get(auth()->user(), 'is_admin');
-            if ($is_admin == 0 || $is_admin == 1) {
+            if ($is_admin == 0) {
                 return redirect()->route('user.input');
             }
             return redirect()->route('user.logout', ['error' => 'Not allow login']);

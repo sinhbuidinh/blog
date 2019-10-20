@@ -21,6 +21,7 @@
                 <div class="hidden">
                     {{ csrf_field() }}
                     <input type="hidden" id="tax_value" value="10" />
+                    <input type="hidden" name="id" value="{{ data_get($guest, 'id') }}" />
                 </div>
                 <div class="row col-sm-12">
                     <p class="file_form_top_title">{{ trans('label.representative_info') }}</p>
@@ -270,9 +271,9 @@
                                 @endforeach
                                 @endif
                             </select>
-                            @if ($errors->has('address'))
+                            @if ($errors->has('account_apply'))
                             <p class="common_form_error">
-                                {{ $errors->first('address') }}
+                                {{ $errors->first('account_apply') }}
                             </p>
                             @endif
                         </div>

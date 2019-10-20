@@ -25,6 +25,11 @@ class UserRepository extends BaseRepository
                     ->orWhere('email', 'like', '%' . $keyword . '%');
             });
         });
+        $users = $users->when(array_key_exists('is_admin', $wheres), function ($query) use($wheres) {
+            $query->where('is_admin', data_get($wheres, 'is_admin'));
+        })->when(array_key_exists('raw', $wheres), function ($query) use($wheres) {
+            $query->whereRaw(data_get($wheres, 'raw'));
+        });
         $users = $users->orderByRaw($orderBy);
         if ($getAll === true) {
             return $users->get();

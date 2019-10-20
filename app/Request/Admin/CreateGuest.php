@@ -23,8 +23,7 @@ class CreateGuest extends FormRequest
      */
     public function rules()
     {
-        // dd(request()->all());
-        return [
+        $rules = [
             'representative' => 'required',
             'represent_tel'  => 'required',
             'company_name'   => 'required',
@@ -36,6 +35,10 @@ class CreateGuest extends FormRequest
             'ward'           => 'required',
             'address'        => 'required',
         ];
+        if (!empty($this->account_apply) ) {
+            $rules['account_apply'] = 'unique:guests,account_apply,'.$this->id;
+        }
+        return $rules;
     }
 
     public function attributes()
@@ -51,6 +54,7 @@ class CreateGuest extends FormRequest
             'district'       => trans('label.district'),
             'ward'           => trans('label.ward'),
             'address'        => trans('label.address'),
+            'account_apply'  => trans('label.account_apply'),
         ];
     }
 
@@ -58,6 +62,7 @@ class CreateGuest extends FormRequest
     {
         return [
             'required' => "Bắt buộc nhập",
+            'account_apply.unique' => "Tài khoản đã đc sử dụng",
         ];
     }
 }

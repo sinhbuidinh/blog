@@ -34,7 +34,7 @@ class UserAuth extends Middleware
         if (!Auth::guard('web')->check()) {
             return redirect()->route('user.logout', ['error' => 'Please login first']);
         }
-        if (!isUser('web') && !isSuperAdmin('web')) {
+        if (!isUser('web')) {
             return redirect()->route('user.logout', ['error' => 'Access denied']);
         }
         return $next($request);

@@ -264,9 +264,9 @@
                                 @endforeach
                                 @endif
                             </select>
-                            @if ($errors->has('address'))
+                            @if ($errors->has('account_apply'))
                             <p class="common_form_error">
-                                {{ $errors->first('address') }}
+                                {{ $errors->first('account_apply') }}
                             </p>
                             @endif
                         </div>

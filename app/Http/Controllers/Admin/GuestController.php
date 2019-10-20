@@ -68,7 +68,7 @@ class GuestController extends Controller
             'provincials' => $this->parcelService->getProvincials(),
             'districts'   => $this->parcelService->getDistrictByProvinceId(data_get($guest, 'provincial')),
             'wards'       => $this->parcelService->getWardsByDistrictId(data_get($guest, 'district')),
-            'accounts'    => $this->guestService->getAccountOptions(),
+            'accounts'    => $this->guestService->getAccountOptions([], data_get($guest, 'account_apply')),
         ];
         return view('admin.guest.edit', $data);
     }
