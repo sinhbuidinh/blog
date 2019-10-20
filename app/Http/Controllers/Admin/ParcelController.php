@@ -16,6 +16,13 @@ class ParcelController extends Controller
 {
     private $parcelService;
     private $guestService;
+    private $varsIndexKeys = [
+        'keyword',
+        'guest_id',
+        'status',
+        'dates',
+    ];
+
     public function __construct(ParcelService $parcelService, GuestService $guestService)
     {
         $this->parcelService = $parcelService;
@@ -102,7 +109,7 @@ class ParcelController extends Controller
             $cal_remote = Parcel::isCalRemote(old('province'), old('district'));
         }
         $val_pack_in = 0;
-        $old_services = $services;
+        $old_services = json_encode($services);
         if (!empty(old('services'))) {
             $old_services = stringify2array(old('services'));
             $pack_in = array_first(array_where($old_services, function($v, $k){
@@ -157,7 +164,7 @@ class ParcelController extends Controller
         } else {
             $cal_remote = Parcel::isCalRemote($parcel->provincial, $parcel->district);
         }
-        $old_services = $services;
+        $old_services = json_encode($services);
         $val_pack_in = '';
         $input_services = !empty(old('services')) ? stringify2array(old('services')) : json_decode($parcel->services, true);
         if (!empty($input_services)) {
@@ -167,7 +174,10 @@ class ParcelController extends Controller
             }));
             $val_pack_in = data_get($pack_in, 'value');
         }
+        //get params in path
+        $varsIndex = $request->only($this->varsIndexKeys);
         $data = [
+            'varsIndex'        => $varsIndex,
             'cal_remote'       => $cal_remote,
             'parcel'           => $parcel,
             'transfered'       => $transfered,
@@ -187,11 +197,12 @@ class ParcelController extends Controller
 
     public function update(CreateParcel $request, $id = null)
     {
-        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'receiver_company', 'value_declare', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_receive', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note', 'transfered']);
+        $data = $request->only(['bill_code', 'guest_id', 'guest_code', 'receiver', 'receiver_tel', 'receiver_company', 'value_declare', 'province', 'district', 'ward', 'address', 'type', 'weight', 'real_weight', 'long', 'wide', 'height', 'num_package', 'type_transfer', 'time_receive', 'total_service', 'services', 'price', 'cod', 'refund', 'forward', 'vat', 'price_vat', 'support_gas_rate', 'support_gas', 'support_remote_rate', 'support_remote', 'total', 'note', 'transfered', 'index']);
         list($result, $message) = $this->parcelService->updateParcel($data, $id);
         if ($result !== false) {
+            $varsIndex = $request->only(['index']);
             session()->flash('success', trans('message.update_parcel_success'));
-            return redirect()->route('parcel');
+            return redirect()->route('parcel')->withInput($varsIndex['index']);
         }
         session()->flash('error', $message);
         return redirect()->route('parcel.edit', $id)->withInput();
@@ -205,7 +216,8 @@ class ParcelController extends Controller
         } else {
             session()->flash('success', trans('message.delete_parcel_success'));
         }
-        return redirect()->route('parcel');
+        $varsIndex = $request->only($this->varsIndexKeys);
+        return redirect()->route('parcel')->withInput($varsIndex);
     }
 
     public function ajaxGetDistricts($provinceId = null) 

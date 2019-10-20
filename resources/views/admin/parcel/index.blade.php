@@ -50,8 +50,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    p#download {
+    p#download, .parcel_edit, .parcel_delete {
         cursor: pointer;
+    }
+    #parcels_tbl a.parcel_edit{
+        color: blue !important;
     }
 </style>
 @endsection
@@ -72,10 +75,10 @@
                         <input type="text" id="keyword" name="keyword" placeholder="{{ trans('label.parcel_keyword_holder') }}" value="{{ old('keyword', data_get($search, 'keyword')) }}" autocomplete="off" />
                     </div>
                     <div class="col-sm-2">
-                        <select class="form-control" name="guest_id" id="guest_id">
-                            @php
-                                $guest_id = old('guest_id', data_get($search, 'guest_id'));
-                            @endphp
+                        @php
+                            $guest_id = old('guest_id', data_get($search, 'guest_id'));
+                        @endphp
+                        <select class="form-control {{ $guest_id }}" name="guest_id" id="guest_id">
                             <option value="">{{ trans('label.please_choose_guest') }}</option>
                             @if(!empty($guests))
                             @foreach($guests as $guest)
@@ -159,14 +162,14 @@
                             @endif
                         </td>
                         <td class="table_text parcel_code">
-                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
+                            <a class="inline parcel_edit" data-link="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
                         </td>
                         <td class="table_text">{{ $parcel->guest_code }}</td>
                         <td class="table_text">
                             <p class="status_label">{{ $parcel->statusName }}</p>
                         </td>
                         <td class="table_text parcel_code">
-                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
+                            <a class="inline parcel_edit" data-link="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
                         </td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->time_receive }}</td>
@@ -176,12 +179,12 @@
                         <td class="table_text">{{ $parcel->total }}</td>
                         <td class="table_text">{{ $parcel->note }}</td>
                         <td class="table_text small">
-                            <a href="{{ route('parcel.edit', $parcel->id) }}">
+                            <a class="parcel_edit" data-link="{{ route('parcel.edit', $parcel->id) }}">
                                 <img src="{{ asset('images/edit.png?v=1.0.1') }}">
                             </a>
                         </td>
                         <td class="table_text small">
-                            <a href="{{ route('parcel.delete', $parcel->id) }}">
+                            <a class="parcel_delete" data-link="{{ route('parcel.delete', $parcel->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
                         </td>
@@ -203,6 +206,12 @@
     $(function(){
         $('table').on('scroll', function() {
             $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());
+        });
+        $(document).on('click', '.parcel_edit, .parcel_delete', function(){
+            var link = $(this).data('link');
+            var vars = $('#search_form').serialize();
+            var included = link + '?' + vars;
+            window.location.href = included;
         });
         $(document).on('click', '#download', function(){
             var vars = $('#search_form').serialize();

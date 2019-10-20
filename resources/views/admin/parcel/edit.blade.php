@@ -46,6 +46,11 @@
                 <div class="hidden">
                     {{ csrf_field() }}
                     <input type="hidden" id="tax_value" value="10" />
+                    @if(!empty($varsIndex))
+                    @foreach($varsIndex as $var => $value)
+                    <input type="hidden" name="index[{{ $var }}]" value="{{ $value }}" />
+                    @endforeach
+                    @endif
                 </div>
                 <div class="row col-sm-12 full_width">
                     <div class="row col-sm-6 full_width">
