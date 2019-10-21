@@ -20,7 +20,6 @@ class SuperAdminAuth
         if (auth('admin')->check() && (data_get(auth('admin')->user(), 'is_admin') != 1 || !isSuperAdmin('admin'))) {
             return redirect()->route('dashboard');
         }
-
         return $next($request);
     }
 }
