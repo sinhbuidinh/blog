@@ -44,7 +44,7 @@ class ParcelController extends Controller
 
     private function getSearchParams(Request $request)
     {
-        $dates = $request->has('dates') ? $request->dates : getThisMonthDatepicker();
+        $dates = $request->has('dates') ? $request->dates : getNowDatepicker();
         return [
             'keyword'  => $request->keyword,
             'guest_id' => $request->guest_id,

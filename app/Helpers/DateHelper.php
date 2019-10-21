@@ -56,3 +56,8 @@ function getThisMonthDatepicker()
     $end = date('Y-m-t');
     return $start . ' to '. $end;
 }
+function getNowDatepicker()
+{
+    $start = $end = date('Y-m-d');
+    return $start . ' to '. $end;
+}

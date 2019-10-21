@@ -119,7 +119,7 @@ function getAuthUser($guard)
 function isSuperAdmin($guard)
 {
     $auth = getAuthUser($guard);
-    if (count($auth) == 0) {
+    if (is_null($auth)) {
         return false;
     }
     if (in_array(data_get($auth, 'email'), config('setting.super_admin', []))) {
