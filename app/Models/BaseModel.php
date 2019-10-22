@@ -12,20 +12,22 @@ class BaseModel extends Model
     public static function boot()
     {
         parent::boot();
-        $logedId = data_get(auth(getGuard())->user(), 'id');
 
         static::creating(function($model)
         {
+            $logedId = data_get(auth(getGuard())->user(), 'id');
             $model->created_by = $logedId;
         });
 
         static::updating(function($model)
         {
+            $logedId = data_get(auth(getGuard())->user(), 'id');
             $model->updated_by = $logedId;
         });
 
         static::deleting(function($model)
         {
+            $logedId = data_get(auth(getGuard())->user(), 'id');
             $model->user_id = $logedId;
         });
     }
