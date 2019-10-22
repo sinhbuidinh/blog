@@ -87,6 +87,9 @@ class GuestController extends Controller
 
     public function delete(Request $request, $id = null)
     {
+        if (!isSuperAdmin('admin')) {
+            throw new Exception('Không có quyền xóa khách hàng.');
+        }
         $guest = $this->guestService->findById($id);
         $guest->delete();
         $guest->status = Guest::STATUS_DISABLE;

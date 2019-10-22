@@ -84,5 +84,4 @@ class Package extends BaseModel
         $provincial = getProvinceById($this->provincial);
         return data_get($provincial, 'name');
     }
-
 }

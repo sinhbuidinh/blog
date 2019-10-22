@@ -72,6 +72,9 @@ class AccountController extends Controller
                 session()->flash('error', 'Not have this account.');
                 return redirect()->route('users');
             }
+            if (!isSuperAdmin('admin')) {
+                throw new Exception('Không có quyền xóa tài khoản.');
+            }
             $user_name = data_get($user, 'name');
             $user->delete();
             DB::commit();

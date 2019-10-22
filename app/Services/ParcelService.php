@@ -198,6 +198,9 @@ class ParcelService
             if (!data_get($parcel, 'id')) {
                 throw new Exception('Not found');
             }
+            if (!$parcel->canAction) {
+                throw new Exception('Không có quyền chỉnh sửa vận đơn.');
+            }
             if (($transfered = data_get($input, 'transfered')) && ($transfered_id = data_get($transfered, 'id'))) {
                 unset($transfered['id']);
                 $transfered = Transfered::where('id', $transfered_id)->update($transfered);
@@ -390,6 +393,9 @@ class ParcelService
         try {
             DB::beginTransaction();
             $parcel = self::findById($id);
+            if (!$parcel->canAction) {
+                throw new Exception('Không có quyền xóa vận đơn.');
+            }
             //find parcel_histories, package_items, forwards, transfered delete too
             ParcelHistory::where('parcel_id', $id)->delete();
             PackageItem::where('parcel_id', $id)->delete();

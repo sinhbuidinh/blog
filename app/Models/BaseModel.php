@@ -12,17 +12,33 @@ class BaseModel extends Model
     public static function boot()
     {
         parent::boot();
+        $logedId = data_get(auth(getGuard())->user(), 'id');
 
         static::creating(function($model)
         {
-            //change to Auth::user() if you are using the default auth provider
-            $model->user_id = data_get(auth(getGuard())->user(), 'id');
+            $model->created_by = $logedId;
         });
 
         static::updating(function($model)
         {
-            //change to Auth::user() if you are using the default auth provider
-            $model->user_id = data_get(auth(getGuard())->user(), 'id');
+            $model->updated_by = $logedId;
         });
+
+        static::deleting(function($model)
+        {
+            $model->user_id = $logedId;
+        });
+    }
+
+    protected function getCanActionAttribute()
+    {
+        if (isSuperAdmin('admin')) {
+            return true;
+        }
+        if (is_null($this->created_by)) {
+            return true;
+        }
+        $loginId = loginId('admin');
+        return ($this->created_by == $loginId || $this->user_id == $loginId);
     }
 }

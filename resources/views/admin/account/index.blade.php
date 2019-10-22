@@ -45,14 +45,18 @@
                         <td class="table_text">{{ $user->email }}</td>
                         <td class="table_text">{{ $user->typeName }}</td>
                         <td class="table_text">
+                            @if($user->canAction)
                             <a href="{{ route('user.change_pass', $user->id) }}">
                                 <img src="{{ asset('images/change_pass.svg?v=1.0.1') }}">
                             </a>
+                            @endif
                         </td>
                         <td class="table_text small">
+                            @if($user->canAction)
                             <a href="{{ route('user.delete', $user->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
+                            @endif
                         </td>
                     </tr>
                     </tbody>

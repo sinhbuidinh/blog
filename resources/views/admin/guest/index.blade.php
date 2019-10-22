@@ -69,14 +69,18 @@ Danh sách khách hàng
                         <td class="table_text">{{ $guest->representative }}</td>
                         <td class="table_text">{{ $guest->represent_tel }}</td>
                         <td class="table_text small">
+                            @if($guest->canAction)
                             <a href="{{ route('guest.edit', $guest->id) }}">
                                 <img src="{{ asset('images/edit.png?v=1.0.1') }}">
                             </a>
+                            @endif
                         </td>
                         <td class="table_text small">
+                            @if($guest->canAction)
                             <a href="{{ route('guest.delete', $guest->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
+                            @endif
                         </td>
                     </tr>
                     </tbody>

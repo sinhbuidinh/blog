@@ -130,8 +130,6 @@
                             <th class="table_title">{{ trans('label.address') }}</th>
                             <th class="table_title">{{ trans('label.total') }}</th>
                             <th class="table_title">{{ trans('label.note') }}</th>
-                            <th class="table_title small">{{ trans('label.edit') }}</th>
-                            <th class="table_title small">{{ trans('label.delete') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -163,16 +161,6 @@
                         <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">{{ $parcel->total }}</td>
                         <td class="table_text">{{ $parcel->note }}</td>
-                        <td class="table_text small">
-                            <a href="{{ route('parcel.edit', $parcel->id) }}">
-                                <img src="{{ asset('images/edit.png?v=1.0.1') }}">
-                            </a>
-                        </td>
-                        <td class="table_text small">
-                            <a href="{{ route('parcel.delete', $parcel->id) }}">
-                                <img src="{{ asset('images/delete.png?v=1.0.1') }}">
-                            </a>
-                        </td>
                     </tr>
                     @endforeach
                     @endif

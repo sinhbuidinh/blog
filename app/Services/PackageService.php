@@ -111,6 +111,9 @@ class PackageService
         try {
             DB::beginTransaction();
             $package = self::findById($packageId);
+            if (!$package->canAction) {
+                throw new Exception('Không có quyền chọn đơn vị vận chuyển.');
+            }
 
             //find parcel list in package
             $parcels = $package->parcelIds();
@@ -159,6 +162,9 @@ class PackageService
         $package = [];
         try {
             $package = self::findById($id);
+            if (!$package->canAction) {
+                throw new Exception('Không có quyền chỉnh sửa bảng kê.');
+            }
             //find all parcel => Change status to init
             $parcels = $package->parcelIds();
             Parcel::whereIn('id', $parcels)->update(['status' => Parcel::STATUS_INIT]);

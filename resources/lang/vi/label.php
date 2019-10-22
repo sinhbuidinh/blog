@@ -146,4 +146,5 @@ return [
     'account_apply' => 'Tài khoản khách hàng',
     'account' => 'Tài khoản',
     'create_parcel' => 'Tạo vận đơn',
+    'access_deny' => 'Không có quyền',
 ];

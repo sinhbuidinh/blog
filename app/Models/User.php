@@ -32,4 +32,16 @@ class User extends Authenticatable
     {
         return $this->is_admin == 1 ? trans('label.is_admin') : trans('label.is_user');
     }
+
+    public function getCanActionAttribute()
+    {
+        if (isSuperAdmin('admin')) {
+            return true;
+        }
+        if (is_null($this->created_by)) {
+            return true;
+        }
+        $loginId = loginId('admin');
+        return ($this->created_by == $loginId || $this->user_id == $loginId);
+    }
 }

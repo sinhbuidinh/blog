@@ -96,19 +96,25 @@
                             <a class="p-15" href="{{ route('package.parcels', $package->id) }}">{{ $package->package_code }}</a>
                         </td>
                         <td class="table_text">
-                            @if($package->readyTransfer)
-                            <button type="button" data-url="{{ route('package.transfer', $package->id) }}" class="btn btn-primary confirm_transfer">{{ trans('label.transfer') }}</button>
+                            @if($package->canAction)
+                                @if($package->readyTransfer)
+                                <button type="button" data-url="{{ route('package.transfer', $package->id) }}" class="btn btn-primary confirm_transfer">{{ trans('label.transfer') }}</button>
+                                @else
+                                <p class="status_label">{{ $package->statusName }}</p>
+                                @endif
                             @else
-                            <p class="status_label">{{ $package->statusName }}</p>
+                                <p class="status_label">{{ __('label.access_deny') }}</p>
                             @endif
                         </td>
                         <td class="table_text">{{ $package->agencyName }}</td>
                         <td class="table_text">{{ $package->created_at }}</td>
                         <td class="table_text">{{ $package->note }}</td>
                         <td class="table_text small" style="text-align:center;">
+                            @if($package->canAction)
                             <a href="{{ route('package.delete', $package->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
