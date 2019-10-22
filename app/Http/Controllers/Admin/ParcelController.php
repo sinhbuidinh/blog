@@ -44,13 +44,24 @@ class ParcelController extends Controller
 
     private function getSearchParams(Request $request)
     {
-        $dates = $request->has('dates') ? $request->dates : getNowDatepicker();
-        return [
-            'keyword'  => $request->keyword,
-            'guest_id' => $request->guest_id,
+        $keyword  = $request->has('keyword') ? $request->keyword : '';
+        $guest_id = $request->has('guest_id') ? $request->guest_id : null;
+        $dates    = $request->has('dates') ? $request->dates : getNowDatepicker();
+        $status   = $request->has('status') ? $request->status : null;
+        if ($request->session()->has('_old_input')) {
+            $input = $request->session()->get('_old_input');
+            $keyword  = data_get($input, 'keyword');
+            $guest_id = data_get($input, 'guest_id');
+            $dates    = data_get($input, 'dates');
+            $status   = data_get($input, 'status');
+        }
+        $rs = [
+            'keyword'  => $keyword,
+            'guest_id' => $guest_id,
             'dates'    => $dates,
-            'status'   => $request->status,
+            'status'   => $status,
         ];
+        return $rs;
     }
 
     public function export(Request $request)
@@ -202,7 +213,7 @@ class ParcelController extends Controller
         if ($result !== false) {
             $varsIndex = $request->only(['index']);
             session()->flash('success', trans('message.update_parcel_success'));
-            return redirect()->route('parcel')->withInput($varsIndex['index']);
+            return redirect()->route('parcel')->withInput(data_get($varsIndex, 'index'));
         }
         session()->flash('error', $message);
         return redirect()->route('parcel.edit', $id)->withInput();

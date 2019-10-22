@@ -56,6 +56,10 @@
     #parcels_tbl a.parcel_edit{
         color: blue !important;
     }
+    #parcels_tbl .small .parcel_edit,
+    #parcels_tbl .small .parcel_delete {
+        width: 26px;
+    }
 </style>
 @endsection
 @section('content')
@@ -140,16 +144,17 @@
                             <th class="table_title small">{{ trans('label.delete') }}</th>
                             <th class="table_title">{{ trans('label.guest_code') }}</th>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
-                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
+                            <th class="table_title">{{ trans('label.delivery_to_company_name') }}</th>
                             <th class="table_title">{{ trans('label.address') }}</th>
+                            <th class="table_title">{{ trans('label.status') }}</th>
+                            <th class="table_title">{{ trans('label.note') }}</th>
+                            <th class="table_title receiver_info">{{ trans('label.receiver_info') }}</th>
+                            <th class="table_title">{{ trans('label.total') }}</th>
+                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.time_get') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
                             <th class="table_title">{{ trans('label.agency') }}</th>
-                            <th class="table_title">{{ trans('label.total') }}</th>
-                            <th class="table_title">{{ trans('label.note') }}</th>
-                            <th class="table_title receiver_info">{{ trans('label.receiver_info') }}</th>
-                            <th class="table_title">{{ trans('label.status') }}</th>
                         </tr>
                     </thead>
                     @if($parcels)
@@ -172,6 +177,18 @@
                         <td class="table_text parcel_code">
                             <a class="inline parcel_edit" data-link="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
                         </td>
+                        <td class="table_text">{{ $parcel->receiver_company }}</td>
+                        <td class="table_text">{{ $parcel->address }}</td>
+                        <td class="table_text">
+                            <p class="status_label">{{ $parcel->statusName }}</p>
+                        </td>
+                        <td class="table_text">{{ $parcel->note }}</td>
+                        <td class="receiver_info">
+                            @if($parcel->isTransfered)
+                            <p>{!! $parcel->receiverParcelExport !!}</p>
+                            @endif
+                        </td>
+                        <td class="table_text">{{ $parcel->total }}</td>
                         <td class="table_text parcel_code">
                             <a class="inline parcel_edit" data-link="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
                         </td>
@@ -179,17 +196,6 @@
                         <td class="table_text">{{ $parcel->time_receive }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>
                         <td class="table_text">{{ $parcel->agencyName }}</td>
-                        <td class="table_text">{{ $parcel->address }}</td>
-                        <td class="table_text">{{ $parcel->total }}</td>
-                        <td class="table_text">{{ $parcel->note }}</td>
-                        <td class="receiver_info">
-                            @if($parcel->isTransfered)
-                            <p>{!! $parcel->receiverParcelExport !!}</p>
-                            @endif
-                        </td>
-                        <td class="table_text">
-                            <p class="status_label">{{ $parcel->statusName }}</p>
-                        </td>
                     </tr>
                     @endforeach
                     </tbody>

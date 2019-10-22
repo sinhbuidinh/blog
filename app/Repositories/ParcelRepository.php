@@ -31,8 +31,14 @@ class ParcelRepository extends BaseRepository
         })->when(data_get($wheres, 'package_id'), function($query, $packageId){
             $query->where('package_items.package_id', $packageId);
         })->when(data_get($wheres, 'dates'), function($query, $dates){
-            list($from, $to) = explode(' to ', $dates);
-            $query->whereRaw("DATE_FORMAT(`time_receive`, '%Y-%m-%d') >= '$from' AND DATE_FORMAT(`time_receive`, '%Y-%m-%d') <= '$to'");
+            $dates = explode(' to ', $dates);
+            if (count($dates) == 2) {
+                $from = $dates[0];
+                $to = $dates[1];
+                $query->whereRaw("DATE_FORMAT(`time_receive`, '%Y-%m-%d') >= '$from' AND DATE_FORMAT(`time_receive`, '%Y-%m-%d') <= '$to'");
+            } else {
+                $query->whereNull('id');
+            }
         })->when(data_get($wheres, 'guest_id'), function($query, $guestId){
             $query->where('guest_id', $guestId);
         })->when(data_get($wheres, 'bill_code_check'), function($query){
