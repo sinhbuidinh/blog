@@ -13,6 +13,12 @@ use App\Request\Admin\FailInfo;
 class TransferedController extends Controller
 {
     private $parcelService;
+    private $varsIndexKeys = [
+        'keyword',
+        'guest_id',
+        'status',
+        'dates',
+    ];
 
     public function __construct(ParcelService $parcelService)
     {
@@ -48,7 +54,8 @@ class TransferedController extends Controller
     public function transfered(Request $request, $id)
     {
         $data = [
-            'parcel' => $this->parcelService->findById($id),
+            'parcel'    => $this->parcelService->findById($id),
+            'varsIndex' => $request->only($this->varsIndexKeys),
         ];
         return view('admin.transfered.transfer', $data);
     }
@@ -59,17 +66,18 @@ class TransferedController extends Controller
         list($result, $message) = $this->parcelService->completeTransfered($data, $id, $request);
         if ($result !== false) {
             session()->flash('success', trans('message.parcel_complete_transfered'));
-            return redirect()->route('transfereds');
+            return redirect()->route('transfereds')->withInput($request->only($this->varsIndexKeys));
         }
         session()->flash('error', $message);
-        return redirect()->route('transfer', $id)->withInput();
+        return redirect()->route('transfer', $id)->withInput($request->only($this->varsIndexKeys));
     }
 
     public function fail(Request $request, $id)
     {
         $data = [
-            'reasons' => $this->parcelService->allReason(),
-            'parcel' => $this->parcelService->findById($id),
+            'reasons'   => $this->parcelService->allReason(),
+            'parcel'    => $this->parcelService->findById($id),
+            'varsIndex' => $request->only($this->varsIndexKeys),
         ];
         return view('admin.transfered.fail', $data);
     }
@@ -80,9 +88,9 @@ class TransferedController extends Controller
         list($result, $message) = $this->parcelService->failTransfered($data, $id);
         if ($result !== false) {
             session()->flash('success', trans('message.parcel_updated_fail'));
-            return redirect()->route('transfereds');
+            return redirect()->route('transfereds')->withInput($request->only($this->varsIndexKeys));
         }
         session()->flash('error', $message);
-        return redirect()->route('fail', $id)->withInput();
+        return redirect()->route('fail', $id)->withInput($request->only($this->varsIndexKeys));
     }
 }

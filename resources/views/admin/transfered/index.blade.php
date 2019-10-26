@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="search_form">
-        <form action="{{ route('transfereds')}}" method="get">
+        <form action="{{ route('transfereds')}}" method="get" id="search_form">
             <div class="list_search list_search_with_button">
                 <div class="row col-sm-12">
                     <div class="col-sm-3">
@@ -179,11 +179,11 @@
 <script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(function(){
-        $(document).on('click', '.confirm_complete', function(){
-            window.location.href = $(this).data('url');
-        });
-        $(document).on('click', '.fail_transfer', function(){
-            window.location.href = $(this).data('url');
+        $(document).on('click', '.confirm_complete, .fail_transfer', function(){
+            var link = $(this).data('url');
+            var vars = $('#search_form').serialize();
+            var included = link + '?' + vars;
+            window.location.href = included;
         });
         $('table.scroll-table').on('scroll', function() {
             $("#" + this.id + " > *").width($(this).width() + $(this).scrollLeft());

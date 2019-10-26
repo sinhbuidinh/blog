@@ -8,7 +8,9 @@
         </div>
         @include('admin.layouts.session-message')
         <div class="file_form_wrap">
-            <form class="login_form skip_alert_changes" action="{{ route('fail_info', $parcel->id) }}" id="parcel_form" method="post">
+            <form class="login_form skip_alert_changes" action="{{ route('fail_info', array_merge([
+                'id' => $parcel->id,
+            ], $varsIndex)) }}" id="parcel_form" method="post">
                 <div class="hidden">
                     {{ csrf_field() }}
                 </div>
@@ -152,6 +154,7 @@
                 </div>
                 <!-- button action -->
                 <div class="form_btn_area center">
+                    <a class="btn btn-primary" href="{{ route('transfereds', $varsIndex) }}">{{ trans('label.back') }}</a>
                     <button class="btn btn-primary" id="update_complete" type="button">{{ trans('label.update') }}</button>
                 </div>
             </form>
