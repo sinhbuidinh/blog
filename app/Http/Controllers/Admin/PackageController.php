@@ -15,6 +15,11 @@ class PackageController extends Controller
 {
     private $packageService;
     private $parcelService;
+    private $varsIndexKeys = [
+        'keyword',
+        'status',
+        'dates',
+    ];
 
     public function __construct(PackageService $packageService, ParcelService $parcelService)
     {
@@ -73,7 +78,7 @@ class PackageController extends Controller
         } else {
             session()->flash('error', $message);
         }
-        return redirect()->route('package');
+        return redirect()->route('package')->withInput($request->only($this->varsIndexKeys));
     }
 
     public function transfer(Request $request, $id = null)
@@ -87,7 +92,7 @@ class PackageController extends Controller
         } else {
             session()->flash('success', trans('message.update_transfer_success'));
         }
-        return redirect()->route('package');
+        return redirect()->route('package')->withInput($request->only($this->varsIndexKeys));
     }
 
     public function parcels(Request $request, $id = null)
@@ -95,9 +100,10 @@ class PackageController extends Controller
         list($package, $parcels) = $this->packageService->getParcels($id);
         $amounts = self::calTotalAmount($parcels);
         $data = [
-            'parcels' => $parcels,
-            'package' => $package,
-            'amounts' => formatPrice($amounts),
+            'parcels'   => $parcels,
+            'package'   => $package,
+            'amounts'   => formatPrice($amounts),
+            'varsIndex' => $request->only($this->varsIndexKeys),
         ];
         return view('admin.package.parcels', $data);
     }

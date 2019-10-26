@@ -62,6 +62,9 @@
             </div>
         </div>
     </div>
+    <div class="row col-sm-12">
+        <a class="btn btn-primary" href="{{ route('package', $varsIndex) }}">{{ trans('label.back') }}</a>
+    </div>
 </div>
 @endsection
 @section('script')

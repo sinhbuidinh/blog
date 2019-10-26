@@ -15,6 +15,10 @@
     .p-15 {
         padding: 15px;
     }
+    .add_vars_index {
+        color: blue !important;
+        cursor: pointer;
+    }
 </style>
 @endsection
 @section('content')
@@ -27,7 +31,7 @@
         </div>
     </div>
     <div class="search_form">
-        <form action="{{ route('package')}}" method="get">
+        <form action="{{ route('package')}}" method="get" id="search_form">
             <div class="list_search list_search_with_button">
                 <div class="row col-sm-12">
                     <div class="col-sm-3">
@@ -93,7 +97,7 @@
                     @endphp
                     <tr>
                         <td>
-                            <a class="p-15" href="{{ route('package.parcels', $package->id) }}">{{ $package->package_code }}</a>
+                            <a class="p-15 add_vars_index" data-link="{{ route('package.parcels', $package->id) }}">{{ $package->package_code }}</a>
                         </td>
                         <td class="table_text">
                             @if($package->canAction)
@@ -111,7 +115,7 @@
                         <td class="table_text">{{ $package->note }}</td>
                         <td class="table_text small" style="text-align:center;">
                             @if($package->canAction)
-                            <a href="{{ route('package.delete', $package->id) }}">
+                            <a class="add_vars_index" data-link="{{ route('package.delete', $package->id) }}">
                                 <img src="{{ asset('images/delete.png?v=1.0.1') }}">
                             </a>
                             @endif
@@ -160,6 +164,12 @@
 <script src="{{ asset('js/daterangepicker.min.js') }}"></script>
 <script type="text/javascript">
     $(function(){
+        $(document).on('click', '.add_vars_index', function(){
+            var link = $(this).data('link');
+            var vars = $('#search_form').serialize();
+            var included = link + '?' + vars;
+            window.location.href = included;
+        });
         $('select.select2').select2();
         $('input[name="dates"]').daterangepicker({
             autoUpdateInput: false,
@@ -185,7 +195,9 @@
             return false;
         }
         var page_destination = $('#transfer_url').val() + '?agency=' + agency;
-        window.location.href = page_destination;
+        var vars = $('#search_form').serialize();
+        var included = page_destination + '&' + vars;
+        window.location.href = included;
     });
 </script>
 @endsection

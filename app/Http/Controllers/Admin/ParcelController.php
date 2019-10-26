@@ -33,10 +33,10 @@ class ParcelController extends Controller
     {
         $search = self::getSearchParams($request);
         $data = [
-            'user' => $request->user(),
-            'guests' => $this->parcelService->guestList(),
-            'search' => $search,
-            'parcels' => $this->parcelService->getList($search),
+            'user'     => $request->user(),
+            'guests'   => $this->parcelService->guestList(),
+            'search'   => $search,
+            'parcels'  => $this->parcelService->getList($search),
             'statuses' => $this->parcelService->getStatuses(),
         ];
         return view('admin.parcel.index', $data);
@@ -44,12 +44,12 @@ class ParcelController extends Controller
 
     private function getSearchParams(Request $request)
     {
-        $keyword  = $request->has('keyword') ? $request->keyword : '';
+        $keyword  = $request->has('keyword')  ? $request->keyword  : '';
         $guest_id = $request->has('guest_id') ? $request->guest_id : null;
-        $dates    = $request->has('dates') ? $request->dates : getNowDatepicker();
-        $status   = $request->has('status') ? $request->status : null;
+        $dates    = $request->has('dates')    ? $request->dates    : getNowDatepicker();
+        $status   = $request->has('status')   ? $request->status   : null;
         if ($request->session()->has('_old_input')) {
-            $input = $request->session()->get('_old_input');
+            $input    = $request->session()->get('_old_input');
             $keyword  = data_get($input, 'keyword');
             $guest_id = data_get($input, 'guest_id');
             $dates    = data_get($input, 'dates');
