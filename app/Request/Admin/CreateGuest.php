@@ -3,6 +3,7 @@
 namespace App\Request\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateGuest extends FormRequest
 {
