@@ -118,29 +118,29 @@
                 <table class="page_table table table-bordered scroll-table full_width" id="parcels_tbl">
                     <thead>
                         <tr>
+                            <th class="table_title">{{ trans('label.company_name') }}</th>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
-                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
                             <th class="table_title parcel_code">{{ trans('label.already_transfer') }}</th>
+                            <th class="table_title">{{ trans('label.delivery_to_company_name') }}</th>
+                            <th class="table_title">{{ trans('label.address') }}</th>
                             <th class="table_title">{{ trans('label.status') }}</th>
-                            <th class="table_title">{{ trans('label.guest_code') }}</th>
+                            <th class="table_title">{{ trans('label.note') }}</th>
                             <th class="table_title">{{ trans('label.type_transfer') }}</th>
                             <th class="table_title">{{ trans('label.time_input') }}</th>
                             <th class="table_title">{{ trans('label.parcel_type') }}</th>
                             <th class="table_title">{{ trans('label.agency') }}</th>
-                            <th class="table_title">{{ trans('label.address') }}</th>
                             <th class="table_title">{{ trans('label.total') }}</th>
-                            <th class="table_title">{{ trans('label.note') }}</th>
+                            <th class="table_title parcel_code">{{ trans('label.bill_code') }}</th>
                         </tr>
                     </thead>
                     <tbody>
                     @if($parcels)
                     @foreach ($parcels as $parcel)
                     <tr>
+                        <td class="table_text">{{ $parcel->companyName }}</td>
                         <td class="table_text parcel_code">
                             <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
                         </td>
-                        <td class="table_text parcel_code">
-                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
                         </td>
                         <td class="table_text">
                             @if($parcel->readyComplete)
@@ -150,17 +150,19 @@
                             {!! $parcel->failInfo !!}
                             @endif
                         </td>
+                        <td class="table_text">{{ $parcel->receiver_company }}</td>
+                        <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">
                             <p class="status_label">{{ $parcel->statusName }}</p>
                         </td>
-                        <td class="table_text">{{ $parcel->guest_code }}</td>
+                        <td class="table_text">{{ $parcel->note }}</td>
                         <td class="table_text">{{ $parcel->transferName }}</td>
                         <td class="table_text">{{ $parcel->time_receive }}</td>
                         <td class="table_text">{{ $parcel->typeName }}</td>
                         <td class="table_text">{{ $parcel->agencyName }}</td>
-                        <td class="table_text">{{ $parcel->address }}</td>
                         <td class="table_text">{{ $parcel->total }}</td>
-                        <td class="table_text">{{ $parcel->note }}</td>
+                        <td class="table_text parcel_code">
+                            <a class="inline" href="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->parcel_code }}</a>
                     </tr>
                     @endforeach
                     @endif

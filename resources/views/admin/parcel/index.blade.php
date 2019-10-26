@@ -142,7 +142,7 @@
                         <tr>
                             <th class="table_title small">{{ trans('label.edit') }}</th>
                             <th class="table_title small">{{ trans('label.delete') }}</th>
-                            <th class="table_title">{{ trans('label.guest_code') }}</th>
+                            <th class="table_title">{{ trans('label.company_name') }}</th>
                             <th class="table_title parcel_code">{{ trans('label.parcel_code') }}</th>
                             <th class="table_title">{{ trans('label.delivery_to_company_name') }}</th>
                             <th class="table_title">{{ trans('label.address') }}</th>
@@ -173,7 +173,7 @@
                             </a>
                             @endif
                         </td>
-                        <td class="table_text">{{ $parcel->guest_code }}</td>
+                        <td class="table_text">{{ $parcel->companyName }}</td>
                         <td class="table_text parcel_code">
                             <a class="inline parcel_edit" data-link="{{ route('parcel.edit', $parcel->id) }}">{{ $parcel->bill_code }}</a>
                         </td>

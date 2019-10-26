@@ -28,10 +28,13 @@
                             @foreach($parcels as $parcel)
                             <option data-code="{{ data_get($parcel, 'parcel_code') }}" 
                             data-id="{{ data_get($parcel, 'id') }}"
+                            data-company_name="{{ data_get($parcel, 'companyName') }}"
+                            data-receiver_company="{{ data_get($parcel, 'receiver_company') }}"
                             data-bill_code="{{ data_get($parcel, 'bill_code') }}"
                             data-type_transfer="{{ data_get($parcel, 'transferName') }}"
                             data-type="{{ data_get($parcel, 'typeName') }}"
                             data-address="{{ data_get($parcel, 'address') }}"
+                            data-status="{{ data_get($parcel, 'statusName') }}"
                             data-note="{{ data_get($parcel, 'note') }}"
                             value="{{ data_get($parcel, 'id') }}">{{ data_get($parcel, 'parcelDisplayForPackage') }}</option>
                             @endforeach
@@ -47,11 +50,11 @@
                         <table class="table full_width table-bordered" id="parcels_tbl">
                             <thead>
                             <tr>
+                                <th scope="col">{{ trans('label.company_name') }}</th>
                                 <th scope="col">{{ trans('label.parcel_code') }}</th>
-                                <th scope="col">{{ trans('label.bill_code') }}</th>
-                                <th scope="col">{{ trans('label.type_transfer') }}</th>
-                                <th scope="col">{{ trans('label.parcel_type') }}</th>
+                                <th scope="col">{{ trans('label.delivery_to_company_name') }}</th>
                                 <th scope="col">{{ trans('label.address') }}</th>
+                                <th scope="col">{{ trans('label.status') }}</th>
                                 <th scope="col">{{ trans('label.note') }}</th>
                             </tr>
                             </thead>

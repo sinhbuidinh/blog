@@ -61,7 +61,7 @@ $(function(){
             return false;
         }
         var isExist = isExistParcel(code);
-        if (isExist !== false) {
+        if (isExist === true) {
             return false;
         }
         var html = genRow(code, data);
@@ -75,23 +75,30 @@ $(function(){
         }
         return true;
     }
+    function getValueInSelect(data, key)
+    {
+        return (typeof data[key] != 'undefined') ? data[key] : '';
+    }
     function genRow(code, info)
     {
-        var id = typeof info.id != 'undefined' ? info.id : '';
-        var bill_code = typeof info.bill_code != 'undefined' ? info.bill_code : '';
-        var type_transfer = typeof info.type_transfer != 'undefined' ? info.type_transfer : '';
-        var type = typeof info.type != 'undefined' ? info.type : '';
-        var address = typeof info.address != 'undefined' ? info.address : '';
-        var note = typeof info.note != 'undefined' ? info.note : '';
+        var id        = getValueInSelect(info, 'id');
+        var code      = getValueInSelect(info, 'code');
+        var bill_code = getValueInSelect(info, 'bill_code');
+        var company   = getValueInSelect(info, 'company_name');
+        var receiver  = getValueInSelect(info, 'receiver_company');
+        var address   = getValueInSelect(info, 'address');
+        var status    = getValueInSelect(info, 'status');
+        var note      = getValueInSelect(info, 'note');
+
         var result = '<tr id="parcel_code_'+code+'">';
-        result += '<th scope="row">'+code;
+        result += '<td>'+company+'</td>';
+        result += '<th scope="row">'+bill_code;
         result += '<input type="hidden" name="parcel[id][]" value="'+id+'">';
         result += '<input type="hidden" name="parcel[code][]" value="'+code+'">';
         result += '</th>';
-        result += '<td>'+bill_code+'</td>';
-        result += '<td>'+type_transfer+'</td>';
-        result += '<td>'+type+'</td>';
+        result += '<td>'+receiver+'</td>';
         result += '<td>'+address+'</td>';
+        result += '<td>'+status+'</td>';
         result += '<td>'+note+'</td>';
         result += '</tr>';
         return result;
