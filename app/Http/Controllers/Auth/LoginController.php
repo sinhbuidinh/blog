@@ -43,8 +43,8 @@ class LoginController extends Controller
     public function authenticate(Login $request)
     {
         $credentials = $request->only('email', 'password');
-
-        if (auth('admin')->attempt($credentials)) {
+        $remember = $request->has('remember') ? true : false;
+        if (auth('admin')->viaRemember() || auth('admin')->attempt($credentials, $remember)) {
             if (data_get(auth('admin')->user(), 'is_admin') == 1) {
                 return redirect()->intended('/admin/dashboard');
             }
