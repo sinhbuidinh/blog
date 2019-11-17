@@ -165,6 +165,14 @@ class ParcelController extends Controller
         return view('admin.parcel.complete', $data);
     }
 
+    public function debt(Request $request, $id)
+    {
+        $parcel = $this->parcelService->findById($id);
+        $transfered = $parcel->transfered->first();
+        $parcel_code = $parcel->bill_code;
+        return view('admin.parcel.debt', compact('parcel', 'transfered', 'parcel_code'));
+    }
+
     public function edit(Request $request, $id = null)
     {
         list($services, $services_display) = $this->parcelService->getServiceList();

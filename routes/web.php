@@ -114,6 +114,7 @@ Route::group([
         Route::post('/create', 'ParcelController@create')->name('parcel.create');
         Route::get('/complete', 'ParcelController@complete')->name('create.parcel.complete');
         Route::get('/edit/{id}', 'ParcelController@edit')->name('parcel.edit');
+        Route::get('/debt/{id}', 'ParcelController@debt')->name('parcel.debt');
         Route::get('/delete/{id}', 'ParcelController@delete')->name('parcel.delete');
         Route::post('/update/{id}', 'ParcelController@update')->name('parcel.update');
         Route::get('/export', 'ParcelController@export')->name('parcel.export');
