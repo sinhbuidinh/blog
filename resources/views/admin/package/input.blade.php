@@ -2,7 +2,7 @@
 @section('title'){{ trans('message.create_package') }}@endsection
 @section('head')
 <style type="text/css">
-    #parcels_tbl th, td {
+    #parcels_tbl th, #parcels_tbl td {
         min-width: 120px;
     }
 </style>
@@ -64,6 +64,15 @@
                     </div>
                 </div>
                 <div class="row col-sm-12">
+                    <div class="col-sm-2">{{ trans('label.time_receive') }}</div>
+                    <div class="col-sm-8">
+                        @php
+                            $date_time_invalid = $errors->has('date_time') ? ' is-invalid' : '';
+                        @endphp
+                        <input type="text" name="date_time" value="{{ old('date_time', now()->format('Y-m-d h:m:s')) }}" class="full_width datepicker form-control{{ $date_time_invalid }}">
+                    </div>
+                </div>
+                <div class="row col-sm-12">
                     <div class="col-sm-2">{{ trans('label.note') }}</div>
                     <div class="col-sm-8">
                         <textarea class="form-control full_width" name="note" id="note">{{ old('note') }}</textarea>
@@ -97,4 +106,24 @@
 @endsection
 @section('script')
 <script src="{{ asset('js/admin/package.js') }}"></script>
+<script type="text/javascript">
+$(function(){
+    $('.datepicker').datepicker({
+        todayHighlight: true,
+        dateFormat: 'yy-mm-dd',
+        startDate: '-0d',
+        onSelect: function(datetext) {
+            var d = new Date(); // for now
+            var h = d.getHours();
+            h = (h < 10) ? ("0" + h) : h;
+            var m = d.getMinutes();
+            m = (m < 10) ? ("0" + m) : m;
+            var s = d.getSeconds();
+            s = (s < 10) ? ("0" + s) : s;
+            datetext = datetext + " " + h + ":" + m + ":" + s;
+            $('.datepicker').val(datetext);
+        }
+    });
+});
+</script>
 @endsection

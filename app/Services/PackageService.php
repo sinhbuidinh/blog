@@ -73,7 +73,7 @@ class PackageService
                 ];
                 $histories[] = [
                     'parcel_id' => $parcel_id,
-                    'date_time' => $now,
+                    'date_time' => $input['date_time'],
                     'location'  => trans('message.note_history_inpackage'),
                     'status'    => Parcel::STATUS_INPACKAGE,
                     'note'      => trans('message.note_history_inpackage'),
@@ -103,7 +103,7 @@ class PackageService
         return [$pack, $parcels];
     }
 
-    public function updateTransfer($packageId, $agency)
+    public function updateTransfer($packageId, $agency, $date_time)
     {
         $error = null;
         $package = [];
@@ -130,7 +130,7 @@ class PackageService
                 $ids[] = $parcel_id;
                 $histories[] = [
                     'parcel_id'  => $parcel_id,
-                    'date_time'  => $now,
+                    'date_time'  => $date_time,
                     'location'   => trans('message.note_history_company_transfer'),
                     'status'     => Parcel::STATUS_TRANSFER,
                     'note'       => trans('message.note_history_company_transfer'),

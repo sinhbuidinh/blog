@@ -19,6 +19,9 @@
         color: blue !important;
         cursor: pointer;
     }
+    .ui-datepicker { 
+        position: absolute !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -111,7 +114,7 @@
                             @endif
                         </td>
                         <td class="table_text">{{ $package->agencyName }}</td>
-                        <td class="table_text">{{ $package->created_at }}</td>
+                        <td class="table_text">{{ $package->date_time }}</td>
                         <td class="table_text">{{ $package->note }}</td>
                         <td class="table_text small" style="text-align:center;">
                             @if($package->canAction)
@@ -150,6 +153,9 @@
                     @endforeach
                     @endif
                 </select>
+                <div class="col-sm-5" style="margin: 0; margin-top: 10px; padding: 0">
+                    <input type="text" id="date_time_receive" name="date_time" value="{{ old('date_time', now()->format('Y-m-d h:m:s')) }}" class="full_width datepicker form-control">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('label.close') }}</button>
@@ -183,6 +189,22 @@
         $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
+        $('.datepicker').datepicker({
+            todayHighlight: true,
+            dateFormat: 'yy-mm-dd',
+            startDate: '-0d',
+            onSelect: function(datetext) {
+                var d = new Date(); // for now
+                var h = d.getHours();
+                h = (h < 10) ? ("0" + h) : h;
+                var m = d.getMinutes();
+                m = (m < 10) ? ("0" + m) : m;
+                var s = d.getSeconds();
+                s = (s < 10) ? ("0" + s) : s;
+                datetext = datetext + " " + h + ":" + m + ":" + s;
+                $('.datepicker').val(datetext);
+            }
+        });
     });
     $(document).on('click', '.confirm_transfer', function(){
         $('#agency_list').click();
@@ -195,6 +217,7 @@
             return false;
         }
         var page_destination = $('#transfer_url').val() + '?agency=' + agency;
+        page_destination += '&date_time=' + $('#date_time_receive').val();
         var vars = $('#search_form').serialize();
         var included = page_destination + '&' + vars;
         window.location.href = included;

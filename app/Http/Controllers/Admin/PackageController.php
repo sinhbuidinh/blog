@@ -54,7 +54,7 @@ class PackageController extends Controller
 
     public function create(CreatePackage $request)
     {
-        $data = $request->only(['parcel', 'note']);
+        $data = $request->only(['parcel', 'note', 'date_time']);
         list($result, $message) = $this->packageService->newPackage($data);
         if ($result !== false) {
             session()->flash('success', trans('message.create_package_success'));
@@ -85,7 +85,8 @@ class PackageController extends Controller
     {
         $result = $message = false;
         if (!empty($agency = $request->get('agency'))) {
-            list($result, $message) = $this->packageService->updateTransfer($id, $agency);
+            $date_time = $request->get('date_time', now()->format('Y-m-d h:m:s'));
+            list($result, $message) = $this->packageService->updateTransfer($id, $agency, $date_time);
         }
         if ($result === false) {
             session()->flash('error', $message ?: trans('message.update_transfer_error'));
