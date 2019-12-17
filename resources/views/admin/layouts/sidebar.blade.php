@@ -41,6 +41,11 @@
                 <img src="{{ asset('images/admin/sidebar/guest.png?v=1.0.1') }}">{{ trans('label.sidebar_guest') }}
             </a>
         </li>
+        <li>
+            <a href="{{ route('print.debt') }}" class="{{ $controller == 'PrintController' ? 'active' : ''}}">
+                <img src="{{ asset('images/admin/sidebar/print_debt.png?v=1.0.1') }}">{{ trans('label.sidebar_print_debt') }}
+            </a>
+        </li>
         @if(isSuperAdmin('admin'))
         <li>
             <a href="{{ route('users') }}" class="{{ $controller == 'AccountController' ? 'active' : ''}}">

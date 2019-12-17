@@ -11,6 +11,7 @@ use App\Models\Parcel;
 use App\Request\Admin\CompleteTransfer;
 use App\Exports\ParcelExport;
 use Excel;
+use App\Services\BarcodeService;
 
 class ParcelController extends Controller
 {
@@ -170,7 +171,15 @@ class ParcelController extends Controller
         $parcel = $this->parcelService->findById($id);
         $transfered = $parcel->transfered->first();
         $parcel_code = $parcel->bill_code;
-        return view('admin.parcel.debt', compact('parcel', 'transfered', 'parcel_code'));
+        $barcodeService = new BarcodeService();
+        list($barcode, $code) = $barcodeService->genBarCode(BarcodeService::BARCODE_TYPE, 450, 70, BarcodeService::RETURN_TYPE_IMAGE, $parcel_code);
+        $data = [
+            'barcode' => $barcode,
+            'code' => $code,
+            'parcel' => $parcel, 
+            'transfered' => $transfered
+        ];
+        return view('admin.parcel.debt', $data);
     }
 
     public function edit(Request $request, $id = null)

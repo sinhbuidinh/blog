@@ -156,4 +156,6 @@ Route::group([
         Route::get('/', 'DebtController@index')->name('debt');
         Route::get('/export', 'DebtController@export')->name('debt.export');
     });
+
+    Route::get('/print/debt', 'PrintController@debt')->name('print.debt');
 });

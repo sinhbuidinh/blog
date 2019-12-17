@@ -148,4 +148,5 @@ return [
     'create_parcel' => 'Tạo vận đơn',
     'access_deny' => 'Không có quyền',
     'back' => 'Trở về',
+    'sidebar_print_debt' => 'In hóa đơn mẫu',
 ];

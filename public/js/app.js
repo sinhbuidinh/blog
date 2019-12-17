@@ -40085,6 +40085,17 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
+/***/ "./resources/sass/debt_print.scss":
+/*!****************************************!*\
+  !*** ./resources/sass/debt_print.scss ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/fonts_api_josefin-sans-300-400-700.scss":
 /*!****************************************************************!*\
   !*** ./resources/sass/fonts_api_josefin-sans-300-400-700.scss ***!
@@ -40152,9 +40163,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 /***/ }),
 
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/admin/index.scss ./resources/sass/fonts_api_josefin-sans-300-400-700.scss ./resources/sass/base/style.scss ./resources/sass/base/bootstrap.scss ./resources/sass/base/animate.scss ./resources/sass/base/owl.carousel.min.scss ./resources/fonts/ionicons/css/ionicons.min.scss ./resources/fonts/fontawesome/css/font-awesome.min.scss ./resources/fonts/flaticon/font/flaticon.scss ./resources/sass/app.scss ./resources/sass/kn247/search.scss ./resources/sass/kn247/index.scss ./resources/sass/kn247/guest-slider.scss ./resources/sass/kn247/user.scss ./resources/sass/kn247/style.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/admin/index.scss ./resources/sass/fonts_api_josefin-sans-300-400-700.scss ./resources/sass/base/style.scss ./resources/sass/base/bootstrap.scss ./resources/sass/base/animate.scss ./resources/sass/base/owl.carousel.min.scss ./resources/fonts/ionicons/css/ionicons.min.scss ./resources/fonts/fontawesome/css/font-awesome.min.scss ./resources/fonts/flaticon/font/flaticon.scss ./resources/sass/app.scss ./resources/sass/debt_print.scss ./resources/sass/kn247/search.scss ./resources/sass/kn247/index.scss ./resources/sass/kn247/guest-slider.scss ./resources/sass/kn247/user.scss ./resources/sass/kn247/style.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40169,6 +40180,7 @@ __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\fonts\ionicons\
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\fonts\fontawesome\css\font-awesome.min.scss */"./resources/fonts/fontawesome/css/font-awesome.min.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\fonts\flaticon\font\flaticon.scss */"./resources/fonts/flaticon/font/flaticon.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\debt_print.scss */"./resources/sass/debt_print.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\kn247\search.scss */"./resources/sass/kn247/search.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\kn247\index.scss */"./resources/sass/kn247/index.scss");
 __webpack_require__(/*! D:\Web\xampp_php71\htdocs\blog\resources\sass\kn247\guest-slider.scss */"./resources/sass/kn247/guest-slider.scss");
