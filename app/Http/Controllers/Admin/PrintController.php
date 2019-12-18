@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use \App\Services\BarcodeService;
+
 
 class PrintController extends Controller
 {
     public function debt(Request $request)
     {
-        $barcodeService = new App\Services\BarcodeService();
+        $barcodeService = new BarcodeService();
         list($barcode, $code) = $barcodeService->genBarCode(BarcodeService::BARCODE_TYPE);
         $data = [
             'barcode' => $barcode,
