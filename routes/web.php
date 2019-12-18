@@ -19,6 +19,7 @@ Route::prefix('artisan')->group(function () {
 
     Route::get('/clear-cache', function() {
         \Artisan::call('config:cache');
+        \Artisan::call('cache:clear');
         return 'clear done';
     });
 
