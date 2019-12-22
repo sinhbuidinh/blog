@@ -332,6 +332,69 @@ Tạo vận đơn | KN247
                     </div>
                 </div>
 
+                <div class="row col-sm-12">
+                    <p class="file_form_top_title">{{ trans('label.service_info') }}</p>
+                    <div class="row col-sm-12">
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-5 my-auto">{{ trans('label.total_service') }}</div>
+                                <div class="col-sm-7 my-auto">
+                                    <input type="text" name="total_service" id="total_service" class="form-control" value="{{ old('total_service') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-5 my-auto">{{ trans('label.time_receive') }}</div>
+                                <div class="col-sm-7 my-auto">
+                                    @php
+                                        $time_receive_invalid = $errors->has('time_receive') ? ' is-invalid' : '';
+                                    @endphp
+                                    <input type="text" name="time_receive" value="{{ old('time_receive', now()->format('Y-m-d h:m:s')) }}" class="full_width datepicker form-control{{ $time_receive_invalid }}">
+                                    @if ($errors->has('time_receive'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('time_receive') }}
+                                    </p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-sm-12 mt-2">
+                        <div class="col-sm-5">
+                            <div class="row">
+                                <div class="col-sm-5 my-auto">{{ trans('label.services') }}</div>
+                                <div class="col-sm-7 my-auto">
+                                    @php
+                                        $services_invalid = $errors->has('services') ? ' is-invalid' : '';
+                                        $service_names = '';
+                                        if(!empty($services_display)) {
+                                            //services explode to element
+                                            $old_services = stringify2array(old('services'));
+                                            $checked_services = array_pluck($old_services, 'key') ?: [];
+                                            $service_names = array_pluck($old_services, 'name') ?: [];
+                                            $service_names = implode(', ', $service_names);
+                                        }
+                                    @endphp
+                                    <button type="button" name="service_list" id="service_list" class="full_width form-control{{ $services_invalid }}" data-toggle="modal" data-target="#services_list_model">{{ trans('label.choose_services') }}</button>
+                                    <input type="hidden" id="services" name="services" value="{{ old('services') }}">
+                                    @if ($errors->has('services'))
+                                    <p class="common_form_error">
+                                        {{ $errors->first('services') }}
+                                    </p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-sm-12 mt-2">
+                        <div class="col-sm-2">{{ trans('label.services_list') }}</div>
+                        <div class="col-sm-7" style="margin-left: 6px;">
+                            <textarea class="form-control" id="services_display" name="services_display" disabled>{{ $service_names }}</textarea>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="file_table_block row col-sm-12">
                     <p class="file_form_top_title">{{ trans('label.price_info') }}</p>
                     <div class="file_form_table_inner" style="width: 100%">
@@ -455,6 +518,7 @@ Tạo vận đơn | KN247
         </div>
     </div>
 </div>
+@include('layouts.service_list_model')
 @endsection
 
 @section('script')

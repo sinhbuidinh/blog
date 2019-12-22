@@ -34,6 +34,8 @@ return [
     'price_info' => 'Giá cước',
     'type_transfer' => 'Loại vận chuyển',
     'services' => 'Dịch vụ GTGT',
+    'choose_services' => 'Chọn dịch vụ thêm',
+    'services_list' => 'Danh sách dịch vụ',
     'user_services_disp' => 'Dịch vụ cộng thêm',
     'time_input' => 'Thời gian nhập',
     'time_get' => 'Thời gian lấy',
