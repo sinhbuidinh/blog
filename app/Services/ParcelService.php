@@ -460,7 +460,7 @@ class ParcelService
             'parcels.*',
             'parcel_histories.id AS history_id',
             'parcel_histories.parcel_id',
-            'parcel_histories.date_time AS date_time',
+            DB::raw('IF((`parcel_histories`.`status` = '.Parcel::STATUS_INIT.' OR `parcel_histories`.`status` = '.Parcel::STATUS_USER_CREATE.'), `parcels`.`time_receive`, `parcel_histories`.`date_time`) AS date_time'),
             // 'parcel_histories.date_time',
             'parcel_histories.location',
             'parcel_histories.status AS history_status',
