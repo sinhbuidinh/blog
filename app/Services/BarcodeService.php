@@ -46,7 +46,7 @@ class BarcodeService
     private function genImgTag($object)
     {
         $img_data = $object->getPngData();
-        return '<img alt="Embedded Image" src="data:image/png;base64,'.base64_encode($img_data).'" />';
+        return '<img alt="Embedded Image" style="width: 220px;" src="data:image/png;base64,'.base64_encode($img_data).'" />';
     }
 
     public function storeBarcodeImg()
