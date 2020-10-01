@@ -8,5 +8,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-*.lock
 package-lock.json
+composer.lock
+webpack.mix.js

@@ -25,9 +25,7 @@ About Page
                         <h2>My Latest Posts</h2>
                     </div>
                     <div class="col-md-12">
-                        @include('user.layouts.post.latest', [
-                            'gen_post_entry' => true,
-                        ])
+                        @include('user.layouts.post.latest', ['gen_post_entry' => true])
                     </div>
                 </div>
                 <div class="row">
@@ -48,7 +46,7 @@ About Page
             </div>
             <!-- END main-content -->
             @if(!isset($without_sidebar))
-            @include('user.layouts.sidebar')
+                @include('user.layouts.sidebar')
             @endif
         </div>
     </div>

@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function() {
     return view('welcome');
 });
 
 Route::get('/customers', 'CustomersController@index')->name('customers');
 
-Route::prefix('user')->namespace('User')->group(function(){
+Route::prefix('user')->namespace('User')->group(function() {
     Route::get('/', 'HomeController@index')->name('user.index');
     Route::get('/contact', 'HomeController@contact')->name('user.contact');
     Route::get('/about', 'HomeController@about')->name('user.about');
@@ -25,5 +25,5 @@ Route::prefix('user')->namespace('User')->group(function(){
     Route::get('/blog/{blog_id?}', 'HomeController@blog')->name('user.blog');
 });
 
-Route::prefix('admin')->namespace('Admin')->group(function(){
+Route::prefix('admin')->namespace('Admin')->group(function() {
 });

@@ -2,6 +2,7 @@
 @section('title')
 HomePage
 @endsection
+
 @section('content')
 <section class="site-section py-lg">
     <div class="container">
